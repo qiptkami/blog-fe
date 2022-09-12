@@ -1,7 +1,7 @@
 import React from 'react';
 
 const TopBar: React.FC = () => {
-  const handleSubmut = () => {
+  const handleSubmit = () => {
 
   }
   return (
@@ -22,7 +22,7 @@ const TopBar: React.FC = () => {
           <form name="search" action="@{/search}" method="post" target="_blank">
             <div className="ui icon inverted input m-margin-tb-tiny">
               <input type="text" name="query" placeholder="Search..." value="query"/>
-              <i onClick={handleSubmut} className="search icon link"></i>
+              <i onClick={handleSubmit} className="search icon link"></i>
             </div>
           </form>
         </div>
