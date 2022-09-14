@@ -1,6 +1,6 @@
 const FooterBar: React.FC = () => {
   return (
-    <div className="ui inverted vertical segment m-padded-tb-massive">
+    <footer className="ui inverted vertical segment m-padded-tb-massive">
       <div className="ui center aligned container">
         <div className="ui inverted divided stackable grid">
           <div className="three wide column">
@@ -52,7 +52,7 @@ const FooterBar: React.FC = () => {
           </p>
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
 
