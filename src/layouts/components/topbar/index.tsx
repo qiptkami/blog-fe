@@ -1,7 +1,7 @@
 import { HomeOutlined, TagsOutlined, BlockOutlined, InfoOutlined, SearchOutlined } from '@ant-design/icons';
 
 import React, { useState } from 'react';
-import "./index.css"
+import "./index.less"
 
 const TopBar: React.FC = () => {
   const [query, setQuery] = useState<string>('');

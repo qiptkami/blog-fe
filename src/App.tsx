@@ -1,9 +1,12 @@
 import React from 'react';
-
+import TopBar from './layouts/components/topbar';
+import FooterBar from './layouts/components/footerbar';
 function App() {
   return (
-    <div className="App">
-    </div>
+    <>
+      <TopBar></TopBar>
+      <FooterBar></FooterBar>
+    </>
   );
 }
 
