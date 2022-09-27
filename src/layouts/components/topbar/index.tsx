@@ -1,5 +1,6 @@
 import { HomeOutlined, TagsOutlined, BlockOutlined, InfoOutlined, SearchOutlined } from '@ant-design/icons';
 
+import classnames from 'classnames'
 import React, { useState } from 'react';
 import "./index.less"
 
@@ -14,21 +15,21 @@ const TopBar: React.FC = () => {
   }
   return (
     <header className='header-container'>
-      <div className='header-menu'> {/* <!--stackable手机移动端相应，屏幕小时会将内容堆叠到一起--> */}
-        <span className='header-menu-title'>Blog</span>
-        <a href='@{/index}' className='header-menu-index'>
+      <div className='header-menu'>
+        <span className={classnames('header-menu-title', 'header-menu-item')}>Blog</span>
+        <a href='@{/index}' className={classnames('header-menu-index', 'header-menu-item')}>
           <HomeOutlined />
           <span>首页</span>
         </a>
-        <a href='@{/types/-1}' className='header-menu-types'>
+        <a href='@{/types/-1}'className={classnames('header-menu-types', 'header-menu-item')}>
           <TagsOutlined />
           <span>分类</span>
         </a>
-        <a href='@{/archives}' className='header-menu-archives'>
+        <a href='@{/archives}' className={classnames('header-menu-archives', 'header-menu-item')}>
           <BlockOutlined />
           <span>归档</span>
         </a>
-        <a href='@{/about}' className='header-menu-about'>
+        <a href='@{/about}' className={classnames('header-menu-about', 'header-menu-item')}>
           <InfoOutlined />
           <span>关于我</span>
         </a>
