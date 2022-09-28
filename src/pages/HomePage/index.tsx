@@ -1,16 +1,13 @@
 import classnames from "classnames";
 import React, { useState } from "react";
+import BlogList from "./components/BlogList";
 import "./index.less";
 
 const HomePage: React.FC = () => {
   return (
     <body className="home-page-container">
       <div className="home-page-blog">
-        <div className="home-page-blog-title">
-          <div>博客</div>
-          <div>共 total 篇</div>
-        </div>
-        <div className="home-page-blog-list">blog-list</div>
+        <BlogList />
       </div>
       <div className="home-page-info">
         <div className="home-page-user-info">个人信息</div>
