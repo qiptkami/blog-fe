@@ -1,58 +1,49 @@
 .blog-list-container {
-  .home-page-blog-title {
+  .blog-list-item {
     display: flex;
-    justify-content: space-between;
-  }
-  .blog-list-body {
-    display: flex;
-    flex-flow: column wrap;
-    align-items: center;
-    .blog-list-item {
+    width: 700px;
+    height: 100px;
+    border-radius: 8px;
+    background: #fff;
+    margin-bottom: 20px;
+    .blog-list-item-content {
+      flex: 1;
       display: flex;
-      width: 700px;
-      height: 100px;
-      border-radius: 8px;
-      background: #fff;
-      margin-bottom: 20px;
-      .blog-list-item-content {
+      flex-direction: column;
+      .blog-list-item-title {
+      }
+      .blog-list-item-desc {
         flex: 1;
+      }
+      .blog-list-item-user {
         display: flex;
-        flex-direction: column;
-        .blog-list-item-title {
+        justify-content: space-between;
+        .blog-list-item-avatar {
         }
-        .blog-list-item-desc {
-          flex: 1;
+        .blog-list-item-username {
+          color: #4183c4;
         }
-        .blog-list-item-user {
+        .blog-list-item-time {
+          color: rgba(0, 0, 0, 0.4);
+        }
+        .blog-list-item-views {
+          color: rgba(0, 0, 0, 0.4);
+        }
+        .blog-list-item-types {
+          background: none #fff;
+          color: #00b5ad;
+          border: 1px solid #00b5ad;
+          border-radius: 5px;
+          box-shadow: none;
           display: flex;
-          justify-content: space-between;
-          .blog-list-item-avatar {
-          }
-          .blog-list-item-username {
-            color: #4183c4;
-          }
-          .blog-list-item-time {
-            color: rgba(0, 0, 0, 0.4);
-          }
-          .blog-list-item-views {
-            color: rgba(0, 0, 0, 0.4);
-          }
-          .blog-list-item-types {
-            background: none #fff;
-            color: #00b5ad;
-            border: 1px solid #00b5ad;
-            border-radius: 5px;
-            box-shadow: none;
-            display: flex;
-            align-items: center;
-            .blog-list-item-types-info {
-              padding: 0 5px;
-            }
+          align-items: center;
+          .blog-list-item-types-info {
+            padding: 0 5px;
           }
         }
       }
-      .blog-list-item-img {
-      }
+    }
+    .blog-list-item-img {
     }
   }
 }
