@@ -23,10 +23,14 @@ const MyPagination: React.FC<Props> = ({ total, page, size }) => {
   };
 
   const prePage = () => {
-    console.log("pre");
+    if (currentPage <= 1) return;
+    setCurrentPage(currentPage - 1);
+    console.log("当前页：", currentPage);
   };
   const nextPage = () => {
-    console.log("next");
+    if (currentPage >= pageNum) return;
+    setCurrentPage(currentPage + 1);
+    console.log("当前页：", currentPage);
   };
   const numList = () => {
     const list = [];
