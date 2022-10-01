@@ -10,23 +10,35 @@ interface Props {
 
 const MyPagination: React.FC<Props> = ({ total, page, size }) => {
   const [pageNum, setPageNum] = useState<number>(1); //总页数
+  const [pageList, setPageList] = useState<any>();
   useEffect(() => {
     setPageNum(Math.ceil(total / size));
-  }, [total, page, size]);
+    numList();
+  }, [total, page, size, pageNum]);
+  const handleChange = (i: number) => {
+    console.log("当前页：", i);
+  };
+
   const prePage = () => {
     console.log("pre");
   };
   const nextPage = () => {
     console.log("next");
   };
-  const liList = () => {
-    if (pageNum) {
-      for (let i = 1; i <= pageNum; i++) {
-        <li key={i} className="pagination-li">
-          i
-        </li>;
-      }
+  const numList = () => {
+    const list = [];
+    for (let i = 1; i <= pageNum; i++) {
+      list.push(
+        <li
+          key={i}
+          className={page === i ? "pagination-li" : "pagination-li"}
+          onClick={handleChange(i)}
+        >
+          {i}
+        </li>
+      );
     }
+    setPageList(list);
   };
   return (
     <div className="pagination-container">
@@ -34,7 +46,7 @@ const MyPagination: React.FC<Props> = ({ total, page, size }) => {
         style={{ fontSize: "12px", fontWeight: "700" }}
         onClick={prePage}
       />
-      <ul className="pagination-ul"></ul>
+      <ul className="pagination-ul">{pageList}</ul>
       <RightOutlined
         style={{ fontSize: "12px", fontWeight: "700" }}
         onClick={nextPage}
