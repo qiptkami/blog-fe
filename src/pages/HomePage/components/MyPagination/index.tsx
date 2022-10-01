@@ -32,7 +32,7 @@ const MyPagination: React.FC<Props> = ({ total, page, size }) => {
         <li
           key={i}
           className={page === i ? "pagination-li" : "pagination-li"}
-          onClick={handleChange(i)}
+          onClick={() => handleChange(i)}
         >
           {i}
         </li>
