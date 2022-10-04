@@ -35,7 +35,7 @@ const BlogItem: React.FC<Props> = ({ blog }) => {
             <EyeFilled />
             {blog.views}
           </div>
-          <a target="_blank" className="blog-item-types">
+          <a href="#" target="_blank" className="blog-item-types">
             <span className="blog-item-types-info">{blog.types}</span>
           </a>
         </div>
