@@ -8,16 +8,9 @@ export const api = axios.create({
 });
 
 export const post = async (url: string, data: Record<string | number, any>) => {
-  axios
-    .post(`${baseURL}${url}`, data, {
-      headers: { withCredentials: true }, //withCredentials 跨域问题
-    })
-    .then((response) => {
-      if (response.data.status) {
-        return false;
-      }
-      return response.data || true;
-    });
+  return axios.post(`${baseURL}${url}`, data, {
+    headers: { withCredentials: true }, //withCredentials 跨域问题
+  });
 };
 
 export const get = async (
@@ -32,11 +25,7 @@ export const get = async (
       realUrl += `&${item}=${data[item]}`;
     }
   });
-  axios
-    .get(realUrl, {
-      headers: { withCredentials: true },
-    })
-    .then((response) => {
-      return response.data.data || true;
-    });
+  return axios.get(realUrl, {
+    headers: { withCredentials: true },
+  });
 };

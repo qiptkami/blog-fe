@@ -122,25 +122,22 @@ const BlogList: React.FC = () => {
   const [total, setTotal] = useState<number>(80); //数据总量
   const [page, setPage] = useState<number>(1); //当前页数
   const [size, setSize] = useState<number>(10); //页面大小
-  const [data, setData] = useState<any>();
+  const [data, setData] = useState<any>([]);
 
   useEffect(() => {
     getData();
-    console.log(data);
-  }, [data]);
+  }, []);
 
   const getData = () => {
-    getIndexData().then((res: any) => {
-      console.log(res);
-      if (!res?.status) {
-        console.log(res);
+    getIndexData().then((res) => {
+      if (res?.data?.status) {
+        setData(res?.data?.data?.list);
       }
-      setData(res);
     });
   };
 
-  const blogs = blogList.map((item) => {
-    return <BlogItem blog={item}></BlogItem>;
+  const blogs = data.map((item: any) => {
+    return <BlogItem key={item.id} blog={item}></BlogItem>;
   });
 
   return (
