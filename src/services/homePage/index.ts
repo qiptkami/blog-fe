@@ -1,3 +1,5 @@
 import { get, post } from "../index";
 
-export const getIndexData = () => get("/index");
+const baseUrl = "/home";
+
+export const getIndexData = () => get(baseUrl + "/page");

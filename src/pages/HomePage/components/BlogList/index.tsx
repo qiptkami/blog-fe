@@ -131,6 +131,7 @@ const BlogList: React.FC = () => {
   const getData = () => {
     getIndexData().then((res) => {
       if (res?.data?.status) {
+        console.log(res?.data?.msg);
         setData(res?.data?.data?.list);
       }
     });
