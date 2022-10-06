@@ -1,7 +1,7 @@
 import axios from "axios";
 import classnames from "classnames";
 import React, { useEffect, useState } from "react";
-import { getIndexData } from "../../../../services/homePage";
+import { getPaginationInfo } from "../../../../services/homePage";
 import MyPagination from "../MyPagination";
 import BlogItem from "./BlogItem";
 import "./index.less";
@@ -129,7 +129,7 @@ const BlogList: React.FC = () => {
   }, []);
 
   const getData = () => {
-    getIndexData().then((res) => {
+    getPaginationInfo().then((res) => {
       if (res?.data?.status) {
         console.log(res?.data?.msg);
         setData(res?.data?.data?.list);
