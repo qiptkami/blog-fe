@@ -1,46 +1,34 @@
 import { ClockCircleFilled, EyeFilled } from "@ant-design/icons";
 import classnames from "classnames";
 import React, { useState } from "react";
+import { Blog } from "../../../../../typings/index";
+import moment from "moment";
 import "./index.less";
 
-interface IBlog {
-  title: string;
-  description: string;
-  avatar: string;
-  username: string;
-  createAt: string;
-  views: number;
-  types: string[];
-  img: string;
-}
-
 interface Props {
-  blog: IBlog;
+  blog: Blog;
 }
 
 const BlogItem: React.FC<Props> = ({ blog }) => {
   return (
     <div className="blog-item">
       <div className="blog-item-content">
-        <div className="blog-item-title"> {blog.title} </div>
-        <div className="blog-item-desc"> {blog.description} </div>
-        <div className="blog-item-user">
-          <div className="blog-item-avatar">{blog.avatar}</div>
-          <div className="blog-item-username">{blog.username}</div>
-          <div className="blog-item-time">
-            <ClockCircleFilled />
-            {blog.createAt}
-          </div>
-          <div className="blog-item-views">
+        <span className="blog-item-title"> {blog.title} </span>
+        <div className="blog-item-info">
+          <span className="blog-item-time">
+            {moment(blog.createTime).format("YYYY-MM-DD HH:mm:ss")}
+          </span>
+          <span className="blog-item-views">
             <EyeFilled />
             {blog.views}
-          </div>
+          </span>
           <a href="#" target="_blank" className="blog-item-types">
-            <span className="blog-item-types-info">{blog.types}</span>
+            <span className="blog-item-types-info">{blog.type.name}</span>
           </a>
         </div>
+        <div className="blog-item-desc"> {blog.description} </div>
       </div>
-      <div className="blog-item-img"> {blog.img} </div>
+      <img className="blog-item-img" src={blog.firstPicture} alt="" />
     </div>
   );
 };

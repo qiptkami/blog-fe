@@ -3,13 +3,19 @@ import classNames from "classnames";
 import React, { useEffect, useState } from "react";
 import "./index.less";
 
+interface Param {
+  page: number;
+  size: number;
+}
+
 interface Props {
   total: number; //数据总量
   page: number; //当前页数
   size: number; //页面大小
+  getData: (param: Param) => void;
 }
 
-const MyPagination: React.FC<Props> = ({ total, page, size }) => {
+const MyPagination: React.FC<Props> = ({ total, page, size, getData }) => {
   const [pageNum, setPageNum] = useState<number>(1); //总页数
   const [pageList, setPageList] = useState<any>();
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -18,19 +24,19 @@ const MyPagination: React.FC<Props> = ({ total, page, size }) => {
     numList();
   }, [total, page, size, pageNum, currentPage]);
   const handleChange = (i: number) => {
-    console.log("当前页：", i);
+    getData({ page: i, size: size });
     setCurrentPage(i);
   };
 
   const prePage = () => {
     if (currentPage <= 1) return;
+    getData({ page: currentPage - 1, size: size });
     setCurrentPage(currentPage - 1);
-    console.log("当前页：", currentPage);
   };
   const nextPage = () => {
     if (currentPage >= pageNum) return;
+    getData({ page: currentPage + 1, size: size });
     setCurrentPage(currentPage + 1);
-    console.log("当前页：", currentPage);
   };
   const numList = () => {
     const list = [];
