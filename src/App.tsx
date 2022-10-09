@@ -3,6 +3,7 @@ import TopBar from "./pages/TopBar";
 import FooterBar from "./pages/FooterBar";
 import HomePage from "./pages/HomePage";
 import "./App.less";
+
 const App: React.FC = () => {
   return (
     <div className="app-container">

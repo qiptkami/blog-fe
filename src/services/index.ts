@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "http://127.0.0.1:80/blog";
+const baseURL = "http://localhost/blog";
 
 export const api = axios.create({
   baseURL,

@@ -1,19 +1,21 @@
 import classnames from "classnames";
 import React, { useEffect, useState } from "react";
+import "react-router";
+
 import { getPaginationInfo } from "../../../../services/homePage";
 import MyPagination from "../MyPagination";
 import BlogItem from "./BlogItem";
 import "./index.less";
 
 const BlogList: React.FC = () => {
-  const [total, setTotal] = useState<number>(10); //数据总量
+  const [total, setTotal] = useState<number>(0); //数据总量
   const [page, setPage] = useState<number>(1); //当前页数
-  const [size, setSize] = useState<number>(10); //页面大小
+  const [size, setSize] = useState<number>(0); //页面大小
   const [data, setData] = useState<any>([]);
 
   useEffect(() => {
     getData();
-  }, [data]);
+  }, []);
 
   const getData = (param?: { page: number; size: number }) => {
     getPaginationInfo(param).then((res) => {

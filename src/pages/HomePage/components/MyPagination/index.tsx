@@ -58,7 +58,7 @@ const MyPagination: React.FC<Props> = ({ total, page, size, getData }) => {
     setPageList(list);
   };
   return (
-    <div className="pagination-container">
+    <div className={total ? "pagination-container" : "pagination-hidden"}>
       <LeftOutlined
         className={currentPage === 1 ? "pagination-disabled" : ""}
         style={{ fontSize: "12px", fontWeight: "700" }}
