@@ -1,33 +1,17 @@
-import { lazy } from "react";
-const App = lazy(() => import("./App"));
-const TypePage = lazy(() => import("./pages/TypePage"));
+// import { RouteConfig } from "react-router-config";
+import TypePage from "./pages/TypePage";
+import App from "./App";
 
 const routes = [
   {
     path: "/",
-    exact: true,
     component: App,
+    routes: [
+      {
+        path: "/inquiry",
+        component: TypePage,
+      },
+    ],
   },
-  {
-    path: "/type",
-    exact: true,
-    component: TypePage,
-  },
-  //嵌套路由
-  // {
-  //   path: "/home",
-  //   component: Page,
-  //   children: [
-  //     {
-  //       path: "/home",
-  //       exact: true,
-  //       render: () => {
-  //         return <Redirect to={"/home/first"} />;
-  //       },
-  //     },
-  //     { path: "/home/first", component: Demo },
-  //     { path: "/home/second", component: Page1 },
-  //   ],
-  // },
 ];
 export default routes;

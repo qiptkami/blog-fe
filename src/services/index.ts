@@ -9,7 +9,7 @@ export const api = axios.create({
 
 export const post = async (url: string, data: Record<string | number, any>) => {
   return axios.post(`${baseURL}${url}`, data, {
-    headers: { withCredentials: true }, //withCredentials 跨域问题
+    headers: { withCredentials: true },
   });
 };
 
