@@ -2,7 +2,7 @@ import classnames from "classnames";
 import React, { useEffect, useState } from "react";
 import "react-router";
 
-import { getPaginationInfo } from "../../../../services/homePage";
+import { getBlogsPaginationInfo } from "../../../../services/homePage";
 import MyPagination from "../MyPagination";
 import BlogItem from "./BlogItem";
 import "./index.less";
@@ -18,7 +18,7 @@ const BlogList: React.FC = () => {
   }, []);
 
   const getData = (param?: { page: number; size: number }) => {
-    getPaginationInfo(param).then((res) => {
+    getBlogsPaginationInfo(param).then((res) => {
       if (res?.data?.status) {
         setData(res?.data?.data?.list);
         setTotal(res?.data?.data?.total);

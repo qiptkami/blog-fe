@@ -19,6 +19,9 @@ export const get = async (
 ) => {
   let realUrl = baseURL + url;
   Object.keys(data).forEach((item, index) => {
+    if (item === "id") {
+      realUrl += `/${data[item]}`;
+    }
     if (index === 0) {
       realUrl += `?${item}=${data[item]}`;
     } else {

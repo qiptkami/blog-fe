@@ -8,7 +8,7 @@ const routes = [
     component: App,
     routes: [
       {
-        path: "/inquiry",
+        path: "/types",
         component: TypePage,
       },
     ],

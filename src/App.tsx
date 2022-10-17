@@ -5,17 +5,15 @@ import HomePage from "./pages/HomePage";
 import TypePage from "./pages/TypePage";
 import "./App.less";
 
-const App: React.FC = () => {
-  return (
-    <div className="app-container">
-      <TopBar></TopBar>
-      <div className="app-body">
-        {/* <HomePage></HomePage> */}
-        <TypePage></TypePage>
-      </div>
-      <FooterBar></FooterBar>
+const App: React.FC = () => (
+  <div className="app-container">
+    <TopBar></TopBar>
+    <div className="app-body">
+      {/* <HomePage></HomePage> */}
+      <TypePage></TypePage>
     </div>
-  );
-};
+    <FooterBar></FooterBar>
+  </div>
+);
 
 export default App;
