@@ -55,7 +55,7 @@ const TypePage: React.FC = () => {
     return (
       <div className="type-item" key={type.type.id}>
         <a className="type-item-content">{type.type.name}</a>
-        <div className="type-item-num">{type.num}</div>
+        <span className="type-item-num">{type.num}</span>
       </div>
     );
   });
@@ -65,16 +65,12 @@ const TypePage: React.FC = () => {
   return (
     <div className="type-container">
       <div className="type-info">
-        <div>
-          <h3>分类</h3>
-        </div>
-        <div>
-          共 <h2>{types.length}</h2> 类
+        <div className="type-info-header">
+          <span>分类</span>
+          <span>共 {types.length} 类</span>
         </div>
         <div className="type-list">{typeList}</div>
       </div>
-      <div></div>
-
       <div className="type-content">{blogList}</div>
       <MyPagination
         total={total}

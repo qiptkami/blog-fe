@@ -5,12 +5,16 @@ import {
   InfoOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-import { Link, Router } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import classnames from "classnames";
 import React, { useState } from "react";
 import "./index.less";
 
 const TopBar: React.FC = () => {
+  const activeStyle = {
+    textDecoration: "underline",
+  };
+
   const [query, setQuery] = useState<string>("");
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
@@ -22,38 +26,45 @@ const TopBar: React.FC = () => {
   return (
     <header className="header-container">
       <div className="header-menu">
-        <Link to={`/`}> 123</Link>
         <span className={classnames("header-menu-title", "header-menu-item")}>
           Blog
         </span>
-        <a
-          href="@{/index}"
-          className={classnames("header-menu-index", "header-menu-item")}
-        >
-          <HomeOutlined />
-          <span>首页</span>
-        </a>
-        <a
-          href="@{/types/-1}"
-          className={classnames("header-menu-types", "header-menu-item")}
-        >
-          <TagsOutlined />
-          <span>分类</span>
-        </a>
-        <a
-          href="@{/archives}"
-          className={classnames("header-menu-archives", "header-menu-item")}
-        >
-          <BlockOutlined />
-          <span>归档</span>
-        </a>
-        <a
-          href="@{/about}"
-          className={classnames("header-menu-about", "header-menu-item")}
-        >
-          <InfoOutlined />
-          <span>关于我</span>
-        </a>
+        <div className={classnames("header-menu-index", "header-menu-item")}>
+          <NavLink
+            to="/home"
+            style={({ isActive }) => (isActive ? activeStyle : undefined)}
+          >
+            <HomeOutlined />
+            <span>首页</span>
+          </NavLink>
+        </div>
+        <div className={classnames("header-menu-types", "header-menu-item")}>
+          <NavLink
+            to="/types"
+            style={({ isActive }) => (isActive ? activeStyle : undefined)}
+          >
+            <TagsOutlined />
+            <span>分类</span>
+          </NavLink>
+        </div>
+        <div className={classnames("header-menu-archives", "header-menu-item")}>
+          <NavLink
+            to="/archives"
+            style={({ isActive }) => (isActive ? activeStyle : undefined)}
+          >
+            <BlockOutlined />
+            <span>归档</span>
+          </NavLink>
+        </div>
+        <div className={classnames("header-menu-about", "header-menu-item")}>
+          <NavLink
+            to="/about"
+            style={({ isActive }) => (isActive ? activeStyle : undefined)}
+          >
+            <InfoOutlined />
+            <span>关于我</span>
+          </NavLink>
+        </div>
       </div>
       <form className="header-menu-search" onSubmit={(e) => handleSubmit(e)}>
         <input
