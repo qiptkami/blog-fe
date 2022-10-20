@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import "react-router";
 
 import { getBlogsPaginationInfo } from "../../../../services/homePage";
-import MyPagination from "../MyPagination";
+import MyPagination from "../../../../components/MyPagination";
 import BlogItem from "./BlogItem";
 import "./index.less";
 

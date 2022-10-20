@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Type, Blog } from "../../typings/index";
 import { parseType } from "../../utils/JsonParser";
 import BlogItem from "../HomePage/components/BlogList/BlogItem";
-import MyPagination from "../HomePage/components/MyPagination";
+import MyPagination from "../../components/MyPagination";
 import "./index.less";
 
 interface IType {
@@ -90,7 +90,6 @@ const TypePage: React.FC = () => {
         size={size}
         getData={getPaginationInfoByType}
       ></MyPagination>
-      {/* 翻页 */}
     </div>
   );
 };
