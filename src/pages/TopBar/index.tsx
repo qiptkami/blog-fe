@@ -5,16 +5,15 @@ import {
   InfoOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import classnames from "classnames";
 import React, { useState } from "react";
 import "./index.less";
 
 const TopBar: React.FC = () => {
-  const activeStyle = {
-    textDecoration: "underline",
-  };
+  const navigate = useNavigate();
 
+  const [activeUrl, setActiveUrl] = useState<string>("/");
   const [query, setQuery] = useState<string>("");
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
@@ -29,41 +28,77 @@ const TopBar: React.FC = () => {
         <span className={classnames("header-menu-title", "header-menu-item")}>
           Blog
         </span>
-        <div className={classnames("header-menu-index", "header-menu-item")}>
-          <NavLink
-            to="/home"
-            style={({ isActive }) => (isActive ? activeStyle : undefined)}
-          >
-            <HomeOutlined />
-            <span>首页</span>
-          </NavLink>
+        <div
+          className={
+            activeUrl === "/"
+              ? classnames(
+                  "header-menu-index",
+                  "header-menu-item",
+                  "header-active"
+                )
+              : classnames("header-menu-index", "header-menu-item")
+          }
+          onClick={() => {
+            navigate("/");
+            setActiveUrl("/");
+          }}
+        >
+          <HomeOutlined />
+          <span>首页</span>
         </div>
-        <div className={classnames("header-menu-types", "header-menu-item")}>
-          <NavLink
-            to="/types"
-            style={({ isActive }) => (isActive ? activeStyle : undefined)}
-          >
-            <TagsOutlined />
-            <span>分类</span>
-          </NavLink>
+        <div
+          className={
+            activeUrl === "/types"
+              ? classnames(
+                  "header-menu-types",
+                  "header-menu-item",
+                  "header-active"
+                )
+              : classnames("header-menu-types", "header-menu-item")
+          }
+          onClick={() => {
+            navigate("/types");
+            setActiveUrl("/types");
+          }}
+        >
+          <TagsOutlined />
+          <span>分类</span>
         </div>
-        <div className={classnames("header-menu-archives", "header-menu-item")}>
-          <NavLink
-            to="/archives"
-            style={({ isActive }) => (isActive ? activeStyle : undefined)}
-          >
-            <BlockOutlined />
-            <span>归档</span>
-          </NavLink>
+        <div
+          className={
+            activeUrl === "/archives"
+              ? classnames(
+                  "header-menu-archives",
+                  "header-menu-item",
+                  "header-active"
+                )
+              : classnames("header-menu-archives", "header-menu-item")
+          }
+          onClick={() => {
+            navigate("/archives");
+            setActiveUrl("/archives");
+          }}
+        >
+          <BlockOutlined />
+          <span>归档</span>
         </div>
-        <div className={classnames("header-menu-about", "header-menu-item")}>
-          <NavLink
-            to="/about"
-            style={({ isActive }) => (isActive ? activeStyle : undefined)}
-          >
-            <InfoOutlined />
-            <span>关于我</span>
-          </NavLink>
+        <div
+          className={
+            activeUrl === "/about"
+              ? classnames(
+                  "header-menu-about",
+                  "header-menu-item",
+                  "header-active"
+                )
+              : classnames("header-menu-about", "header-menu-item")
+          }
+          onClick={() => {
+            navigate("/about");
+            setActiveUrl("/about");
+          }}
+        >
+          <InfoOutlined />
+          <span>关于我</span>
         </div>
       </div>
       <form className="header-menu-search" onSubmit={(e) => handleSubmit(e)}>

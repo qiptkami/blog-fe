@@ -1,6 +1,6 @@
-import { type } from "os";
 import { useEffect, useState } from "react";
 import { getPaginationInfoByType, getTypes } from "../../services/typePage";
+import { useNavigate } from "react-router-dom";
 import { Type, Blog } from "../../typings/index";
 import { parseType } from "../../utils/JsonParser";
 import BlogItem from "../HomePage/components/BlogList/BlogItem";
@@ -13,11 +13,13 @@ interface IType {
 }
 
 const TypePage: React.FC = () => {
+  const navigate = useNavigate();
   const [total, setTotal] = useState<number>(0); //数据总量
   const [page, setPage] = useState<number>(1); //当前页数
   const [size, setSize] = useState<number>(0); //页面大小
   const [types, setTypes] = useState<IType[]>([]);
   const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [typeId, setTypeId] = useState<number>(-1);
 
   useEffect(() => {
     getData();
@@ -49,13 +51,23 @@ const TypePage: React.FC = () => {
       setPage(res?.data?.data?.pageNum);
       setSize(res?.data?.data?.pageSize);
       setBlogs(res?.data?.data?.list);
+      setTypeId(params?.id ?? -1);
     });
   };
   const typeList = types.map((type) => {
+    console.log(type);
     return (
-      <div className="type-item" key={type.type.id}>
-        <a className="type-item-content">{type.type.name}</a>
-        <span className="type-item-num">{type.num}</span>
+      <div
+        className="type-item"
+        key={type.type.id}
+        onClick={() => {
+          getBlogByType({ id: type.type.id, page: page, size: size });
+          navigate(`/types/${type.type.id}`);
+        }}
+      >
+        <div className="type-item-content">{type.type.name}</div>
+        <div className="type-item-line">|</div>
+        <div className="type-item-num">{type.num}</div>
       </div>
     );
   });

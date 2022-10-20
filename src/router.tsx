@@ -6,6 +6,10 @@ import HomePage from "./pages/HomePage";
 const AppRouters: React.FC = () => {
   const routes = useRoutes([
     {
+      path: "/",
+      element: <HomePage />,
+    },
+    {
       path: "/home",
       element: <HomePage />,
     },
