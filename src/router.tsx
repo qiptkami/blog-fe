@@ -3,6 +3,7 @@ import { useRoutes } from "react-router-dom";
 import TypePage from "./pages/TypePage";
 import HomePage from "./pages/HomePage";
 import Archives from "./pages/ArchivesPage";
+import InfiniteScroll from "./components/InfiniteScroll";
 
 const AppRouters: React.FC = () => {
   const routes = useRoutes([
@@ -24,7 +25,7 @@ const AppRouters: React.FC = () => {
     },
     {
       path: "/archives",
-      element: <Archives />,
+      element: <InfiniteScroll />,
     },
   ]);
   return routes;
