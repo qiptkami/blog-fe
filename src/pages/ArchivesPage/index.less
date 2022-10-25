@@ -1,56 +1,64 @@
 .archives-container {
   margin: 0;
-  font-size: 14px;
   list-style: none;
-  .archives-item {
-    padding-bottom: 20px;
-    .archives-timeline {
-      position: absolute;
-      left: 40px;
-      height: 100%;
-      border-left: 2px solid #e4e7ed;
-    }
-    .archives-timeline-node {
-      position: absolute;
-      background-color: #e4e7ed;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .archives-timeline-node-normal {
-      color: aquamarine;
-      left: 35px;
-      width: 12px;
-      height: 12px;
-    }
-    .archives-item-info {
-      position: relative;
-      padding-left: 28px;
-      top: -3px;
-      .archives-item-content {
-        color: #303133;
-        .archives-item-tag {
-          margin-right: 5px;
-          line-height: 16px;
-          height: 20px;
-          padding: 0 5px;
-          border-color: #3eaf7c;
-          background-color: #3eaf7c;
-          color: #fff;
-          display: inline-block;
-          font-size: 12px;
-          border: 1px solid #d8efe5;
-          border-radius: 4px;
-          box-sizing: border-box;
-          white-space: nowrap;
+  width: 100%;
+  .archives-body {
+    height: 100%;
+    .archives-item {
+      padding-bottom: 20px;
+      // .archives-timeline {
+      //   position: absolute;
+      //   left: 40px;
+      //   height: 100%;
+      //   border-left: 2px solid #e4e7ed;
+      // }
+      .archives-timeline-node {
+        position: absolute;
+        background-color: #e4e7ed;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .archives-timeline-node-normal {
+        color: aquamarine;
+        left: 35px;
+        width: 12px;
+        height: 12px;
+      }
+      .archives-item-info {
+        position: relative;
+        padding-left: 28px;
+        top: -3px;
+        .archives-item-content {
+          color: #303133;
+          .archives-item-tag {
+            margin-right: 5px;
+            line-height: 16px;
+            height: 20px;
+            padding: 0 5px;
+            border-color: #3eaf7c;
+            background-color: #3eaf7c;
+            color: #fff;
+            display: inline-block;
+            font-size: 12px;
+            border: 1px solid #d8efe5;
+            border-radius: 4px;
+            box-sizing: border-box;
+            white-space: nowrap;
+          }
+        }
+        .archives-item-timestamp {
+          color: #909399;
+          line-height: 1;
+          font-size: 13px;
+          margin-top: 8px;
         }
       }
-      .archives-item-timestamp {
-        color: #909399;
-        line-height: 1;
-        font-size: 13px;
-        margin-top: 8px;
+    }
+    .archives-item:last-child {
+      .archives-timeline {
+        display: none;
       }
     }
   }

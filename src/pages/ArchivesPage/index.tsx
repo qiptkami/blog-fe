@@ -1,52 +1,30 @@
 import classnames from "classnames";
 import moment from "moment";
 import { useNavigate } from "react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getArchivesPaginationInfo } from "../../services/archivesPage";
 import { Blog } from "../../typings/index";
+import InfiniteScroll from "../../components/InfiniteScroll";
 import "./index.less";
 
 const Archives: React.FC = () => {
+  const [page, setPage] = useState<number>(1);
+  const [list, setList] = useState<any[]>([]);
   const [total, setTotal] = useState<number>(0);
-  const [blogArchives, setBlogArchives] = useState<Blog[]>([]);
-  useEffect(() => {
-    getData();
-  }, []);
 
-  const getData = () => {
-    getArchivesPaginationInfo({ page: 1, size: 5 }).then((res: any) => {
+  const getData = (page: number) => {
+    getArchivesPaginationInfo({ page: page, size: 5 }).then((res: any) => {
       if (res?.data?.status) {
-        setBlogArchives(res?.data?.data?.list);
         setTotal(res?.data?.data?.total);
+        setList((prev: any) => [...prev, ...res?.data?.data?.list]);
+      }
+      if (!res?.data?.data?.list?.length) {
       }
     });
   };
 
-  const archivesList = blogArchives.map((blog: Blog) => {
-    return (
-      <li className="archives-item" key={blog.id}>
-        <div className="archives-timeline"></div>
-        <div
-          className={classnames(
-            "archives-timeline-node",
-            "archives-timeline-node-normal"
-          )}
-        ></div>
-        <div className="archives-item-info">
-          <div className="archives-item-content">
-            <div className="archives-item-content">{blog.title}</div>{" "}
-            <span className="archives-item-tag">{blog.type.name}</span>
-          </div>
-          <div className="archives-item-timestamp">
-            {moment(blog.createTime).format("YYYY-MM-DD HH:mm:ss")}
-          </div>
-        </div>
-      </li>
-    );
-  });
-
-  return (
-    <ul className="archives-container">
+  const archives = () => (
+    <div className="archives-body">
       <li className="archives-item">
         <div className="archives-timeline"></div>
         <div
@@ -59,8 +37,33 @@ const Archives: React.FC = () => {
           <div className="archives-item-content">共计 {total} 篇文章</div>
           <div className="archives-item-timestamp"></div>
         </div>
-      </li>{" "}
-      {archivesList}
+      </li>
+      {list.map((blog: Blog) => (
+        <li className="archives-item" key={blog.id}>
+          <div className="archives-timeline"></div>
+          <div
+            className={classnames(
+              "archives-timeline-node",
+              "archives-timeline-node-normal"
+            )}
+          ></div>
+          <div className="archives-item-info">
+            <div className="archives-item-content">
+              <div className="archives-item-content">{blog.title}</div>{" "}
+              <span className="archives-item-tag">{blog.type.name}</span>
+            </div>
+            <div className="archives-item-timestamp">
+              {moment(blog.createTime).format("YYYY-MM-DD HH:mm:ss")}
+            </div>
+          </div>
+        </li>
+      ))}
+    </div>
+  );
+
+  return (
+    <ul className="archives-container">
+      <InfiniteScroll getData={getData} render={archives}></InfiniteScroll>
     </ul>
   );
 };

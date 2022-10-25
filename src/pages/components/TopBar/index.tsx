@@ -23,7 +23,7 @@ const TopBar: React.FC = () => {
     alert(query);
   };
   return (
-    <header className="header-container">
+    <div className="header-container">
       <div className="header-menu">
         <span className={classnames("header-menu-title", "header-menu-item")}>
           Blog
@@ -117,7 +117,7 @@ const TopBar: React.FC = () => {
           onClick={(e) => handleSubmit(e)}
         />
       </form>
-    </header>
+    </div>
   );
 };
 
