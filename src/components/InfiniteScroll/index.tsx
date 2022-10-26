@@ -17,6 +17,9 @@ const InfiniteScroll: React.FC<Props> = ({ getData, render }) => {
 
   const loadMore = useCallback(async () => {
     try {
+      if (loading) {
+        return;
+      }
       await setLoading(true);
       await setError(false);
       await getData(page);
