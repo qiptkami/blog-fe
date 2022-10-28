@@ -4,22 +4,18 @@ import React, { useCallback, useRef, useState, useEffect } from "react";
 interface Props {
   getData: (param?: any) => void;
   render: any;
+  msg: string;
 }
 
-const InfiniteScroll: React.FC<Props> = ({ getData, render }) => {
+const InfiniteScroll: React.FC<Props> = ({ getData, render, msg }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
-  const [msg, setMsg] = useState<string>("");
-
   const container = useRef<any>();
   const [page, setPage] = useState<number>(1);
   const scrollFooter = useRef<any>(null);
 
   const loadMore = useCallback(async () => {
     try {
-      if (loading) {
-        return;
-      }
       await setLoading(true);
       await setError(false);
       await getData(page);

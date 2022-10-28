@@ -8,7 +8,7 @@ import InfiniteScroll from "../../components/InfiniteScroll";
 import "./index.less";
 
 const Archives: React.FC = () => {
-  const [page, setPage] = useState<number>(1);
+  const [msg, setMsg] = useState<string>("");
   const [list, setList] = useState<any[]>([]);
   const [total, setTotal] = useState<number>(0);
 
@@ -19,6 +19,7 @@ const Archives: React.FC = () => {
         setList((prev: any) => [...prev, ...res?.data?.data?.list]);
       }
       if (!res?.data?.data?.list?.length) {
+        setMsg("我也是有底线的...");
       }
     });
   };
@@ -63,7 +64,11 @@ const Archives: React.FC = () => {
 
   return (
     <ul className="archives-container">
-      <InfiniteScroll getData={getData} render={archives}></InfiniteScroll>
+      <InfiniteScroll
+        getData={getData}
+        render={archives}
+        msg={msg}
+      ></InfiniteScroll>
     </ul>
   );
 };
