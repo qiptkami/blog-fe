@@ -1,6 +1,6 @@
 import React from "react";
-import TopBar from "./pages/components/TopBar";
-import FooterBar from "./pages/components/FooterBar";
+import TopBar from "./components/TopBar";
+import FooterBar from "./components/FooterBar";
 import "./App.less";
 import AppRouters from "./router";
 
