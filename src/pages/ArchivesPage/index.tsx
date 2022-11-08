@@ -27,13 +27,10 @@ const Archives: React.FC = () => {
   const archives = () => (
     <div className="archives-body">
       <li className="archives-item">
-        <div className="archives-timeline"></div>
-        <div
-          className={classnames(
-            "archives-timeline-node",
-            "archives-timeline-node-normal"
-          )}
-        ></div>
+        <div className="archives-timeline">
+          <div className="archives-timeline-node"></div>
+          <div className="archives-timeline-line"></div>
+        </div>
         <div className="archives-item-info">
           <div className="archives-item-content">共计 {total} 篇文章</div>
           <div className="archives-item-timestamp"></div>
@@ -41,13 +38,10 @@ const Archives: React.FC = () => {
       </li>
       {list.map((blog: Blog) => (
         <li className="archives-item" key={blog.id}>
-          <div className="archives-timeline"></div>
-          <div
-            className={classnames(
-              "archives-timeline-node",
-              "archives-timeline-node-normal"
-            )}
-          ></div>
+          <div className="archives-timeline">
+            <div className="archives-timeline-node"></div>
+            <div className="archives-timeline-line"></div>
+          </div>
           <div className="archives-item-info">
             <div className="archives-item-content">
               <div className="archives-item-content">{blog.title}</div>{" "}

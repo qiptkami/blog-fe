@@ -1,35 +1,35 @@
 .archives-container {
   margin: 0;
   list-style: none;
+  height: 100%;
   width: 100%;
   .archives-body {
     height: 100%;
     .archives-item {
-      padding-bottom: 20px;
+      display: flex;
+      height: 90px;
       .archives-timeline {
-        position: absolute;
-        left: 40px;
-        height: 100%;
-        border-left: 2px solid #e4e7ed;
-      }
-      .archives-timeline-node {
-        position: absolute;
-        background-color: #e4e7ed;
-        border-radius: 50%;
         display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      .archives-timeline-node-normal {
-        color: aquamarine;
-        left: 35px;
-        width: 12px;
-        height: 12px;
+        flex-flow: column wrap;
+        height: 100%;
+        &-node {
+          width: 12px;
+          height: 12px;
+          background-color: #e4e7ed;
+          border-radius: 50%;
+        }
+        &-line {
+          margin-left: 5px;
+          height: calc(100% - 12px);
+          width: 2px;
+          background: #e4e7ed;
+        }
       }
       .archives-item-info {
         position: relative;
         padding-left: 28px;
-        top: -3px;
+        display: flex;
+        flex-direction: column;
         .archives-item-content {
           color: #303133;
           .archives-item-tag {
@@ -56,9 +56,14 @@
         }
       }
     }
+    .archives-item:first-child {
+      height: 50px;
+    }
     .archives-item:last-child {
       .archives-timeline {
-        display: none;
+        .archives-timeline-line {
+          height: 0;
+        }
       }
     }
   }
