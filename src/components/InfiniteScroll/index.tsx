@@ -1,5 +1,5 @@
-import "./index.less";
-import React, { useCallback, useRef, useState, useEffect } from "react";
+import './index.less';
+import React, { useCallback, useRef, useState, useEffect } from 'react';
 
 interface Props {
   getData: (param?: any) => void;
@@ -39,7 +39,7 @@ const InfiniteScroll: React.FC<Props> = ({ getData, render, msg }) => {
   useEffect(() => {
     const option = {
       root: null,
-      rootMargin: "0px",
+      rootMargin: '0px',
       threshold: 0,
     };
     const observer = new IntersectionObserver(handleObserver, option);
@@ -48,13 +48,13 @@ const InfiniteScroll: React.FC<Props> = ({ getData, render, msg }) => {
 
   return (
     <>
-      <div ref={container} className="infinite-scroll-container">
+      <div ref={container} className='infinite-scroll-container'>
         {render()}
         {loading && <p>Loading...</p>}
         {error && <p>Error!</p>}
         <span>{msg}</span>
       </div>
-      <div ref={scrollFooter} className="infinite-scroll-footer" />
+      <div ref={scrollFooter} className='infinite-scroll-footer' />
     </>
   );
 };

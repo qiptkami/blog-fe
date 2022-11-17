@@ -1,9 +1,8 @@
-import { get } from "../index";
+import { get } from '../index';
 
-const baseUrl = "/archives";
+const baseUrl = '/archives';
 
 export const getArchivesPaginationInfo = (param?: {
   page: number;
   size: number;
-}) => get(baseUrl + "/pagination", param);
-
+}) => get(baseUrl + '/pagination', param);

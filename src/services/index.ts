@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios from 'axios';
 
-const baseURL = "http://localhost/blog";
+const baseURL = 'http://localhost/blog';
 
 export const api = axios.create({
   baseURL,
@@ -14,12 +14,12 @@ export const post = async (url: string, data: Record<string | number, any>) => {
 };
 
 export const get = async (
-  url = "",
+  url = '',
   data: Record<string | number, any> = {}
 ) => {
   let realUrl = baseURL + url;
   Object.keys(data).forEach((item, index) => {
-    if (item === "id") {
+    if (item === 'id') {
       realUrl += `/${data[item]}`;
     }
     if (index === 0) {

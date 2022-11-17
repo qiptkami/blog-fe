@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import ReactDom from 'react-dom';
-import { Blog } from "../../../../typings/index";
 
-const MarkDown2Html: React.FC = () => {
-  const [data, setData] = useState<Blog>();
-  return <div className="blog-detail"></div>;
+interface Props {
+  content?: string;
+}
+
+const MarkDown2Html: React.FC<Props> = ({ content }) => {
+  return (
+    <div className='blog-info'>
+      {content && <ReactMarkdown>{content}</ReactMarkdown>}
+    </div>
+  );
 };
 
 export default MarkDown2Html;

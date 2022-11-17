@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { getPaginationInfoByType, getTypes } from "../../services/typePage";
-import { useNavigate } from "react-router-dom";
-import { Type, Blog } from "../../typings/index";
-import { parseType } from "../../utils/JsonParser";
-import BlogItem from "../HomePage/components/BlogList/BlogItem";
-import MyPagination from "../../components/MyPagination";
-import "./index.less";
+import { useEffect, useState } from 'react';
+import { getPaginationInfoByType, getTypes } from '../../services/typePage';
+import { useNavigate } from 'react-router-dom';
+import { Type, Blog } from '../../typings/index';
+import { parseType } from '../../utils/JsonParser';
+import BlogItem from '../HomePage/components/BlogList/BlogItem';
+import MyPagination from '../../components/MyPagination';
+import './index.less';
 
 interface IType {
   type: Type;
@@ -58,16 +58,16 @@ const TypePage: React.FC = () => {
     console.log(type);
     return (
       <div
-        className="type-item"
+        className='type-item'
         key={type.type.id}
         onClick={() => {
           getBlogByType({ id: type.type.id, page: page, size: size });
           navigate(`/types/${type.type.id}`);
         }}
       >
-        <div className="type-item-content">{type.type.name}</div>
-        <div className="type-item-line">|</div>
-        <div className="type-item-num">{type.num}</div>
+        <div className='type-item-content'>{type.type.name}</div>
+        <div className='type-item-line'>|</div>
+        <div className='type-item-num'>{type.num}</div>
       </div>
     );
   });
@@ -75,15 +75,15 @@ const TypePage: React.FC = () => {
     return <BlogItem key={blog.id} blog={blog}></BlogItem>;
   });
   return (
-    <div className="type-container">
-      <div className="type-info">
-        <div className="type-info-header">
+    <div className='type-container'>
+      <div className='type-info'>
+        <div className='type-info-header'>
           <span>分类</span>
           <span>共 {types.length} 类</span>
         </div>
-        <div className="type-list">{typeList}</div>
+        <div className='type-list'>{typeList}</div>
       </div>
-      <div className="type-content">{blogList}</div>
+      <div className='type-content'>{blogList}</div>
       <MyPagination
         total={total}
         page={page}

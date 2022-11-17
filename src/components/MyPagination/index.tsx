@@ -1,7 +1,7 @@
-import { LeftOutlined, RightOutlined } from "@ant-design/icons";
-import classNames from "classnames";
-import React, { useEffect, useState } from "react";
-import "./index.less";
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import classNames from 'classnames';
+import React, { useEffect, useState } from 'react';
+import './index.less';
 
 interface Param {
   page: number;
@@ -46,8 +46,8 @@ const MyPagination: React.FC<Props> = ({ total, page, size, getData }) => {
           key={i}
           className={
             currentPage === i
-              ? classNames("pagination-li", "pagination-li-active")
-              : "pagination-li"
+              ? classNames('pagination-li', 'pagination-li-active')
+              : 'pagination-li'
           }
           onClick={() => handleChange(i)}
         >
@@ -58,16 +58,16 @@ const MyPagination: React.FC<Props> = ({ total, page, size, getData }) => {
     setPageList(list);
   };
   return (
-    <div className={total ? "pagination-container" : "pagination-hidden"}>
+    <div className={total ? 'pagination-container' : 'pagination-hidden'}>
       <LeftOutlined
-        className={currentPage === 1 ? "pagination-disabled" : ""}
-        style={{ fontSize: "12px", fontWeight: "700" }}
+        className={currentPage === 1 ? 'pagination-disabled' : ''}
+        style={{ fontSize: '12px', fontWeight: '700' }}
         onClick={prePage}
       />
-      <ul className="pagination-ul">{pageList}</ul>
+      <ul className='pagination-ul'>{pageList}</ul>
       <RightOutlined
-        className={currentPage === pageNum ? "pagination-disabled" : ""}
-        style={{ fontSize: "12px", fontWeight: "700" }}
+        className={currentPage === pageNum ? 'pagination-disabled' : ''}
+        style={{ fontSize: '12px', fontWeight: '700' }}
         onClick={nextPage}
       />
     </div>

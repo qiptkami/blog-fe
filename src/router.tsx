@@ -1,29 +1,29 @@
-import React from "react";
-import { useRoutes } from "react-router-dom";
-import TypePage from "./pages/TypePage";
-import HomePage from "./pages/HomePage";
-import Archives from "./pages/ArchivesPage";
+import React from 'react';
+import { useRoutes } from 'react-router-dom';
+import TypePage from './pages/TypePage';
+import HomePage from './pages/HomePage';
+import Archives from './pages/ArchivesPage';
 
 const AppRouters: React.FC = () => {
   const routes = useRoutes([
     {
-      path: "/",
+      path: '/',
       element: <HomePage />,
     },
     {
-      path: "/home",
+      path: '/home',
       element: <HomePage />,
     },
     {
-      path: "/types",
+      path: '/types',
       element: <TypePage />,
     },
     {
-      path: "/types/:id",
+      path: '/types/:id',
       element: <TypePage />,
     },
     {
-      path: "/archives",
+      path: '/archives',
       element: <Archives />,
     },
   ]);

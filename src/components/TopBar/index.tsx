@@ -4,17 +4,17 @@ import {
   BlockOutlined,
   InfoOutlined,
   SearchOutlined,
-} from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
-import classnames from "classnames";
-import React, { useState } from "react";
-import "./index.less";
+} from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+import classnames from 'classnames';
+import React, { useState } from 'react';
+import './index.less';
 
 const TopBar: React.FC = () => {
   const navigate = useNavigate();
 
-  const [activeUrl, setActiveUrl] = useState<string>("/");
-  const [query, setQuery] = useState<string>("");
+  const [activeUrl, setActiveUrl] = useState<string>('/');
+  const [query, setQuery] = useState<string>('');
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
@@ -23,24 +23,24 @@ const TopBar: React.FC = () => {
     alert(query);
   };
   return (
-    <div className="header-container">
-      <div className="header-menu">
-        <span className={classnames("header-menu-title", "header-menu-item")}>
+    <div className='header-container'>
+      <div className='header-menu'>
+        <span className={classnames('header-menu-title', 'header-menu-item')}>
           Blog
         </span>
         <div
           className={
-            activeUrl === "/"
+            activeUrl === '/'
               ? classnames(
-                  "header-menu-index",
-                  "header-menu-item",
-                  "header-active"
+                  'header-menu-index',
+                  'header-menu-item',
+                  'header-active'
                 )
-              : classnames("header-menu-index", "header-menu-item")
+              : classnames('header-menu-index', 'header-menu-item')
           }
           onClick={() => {
-            navigate("/");
-            setActiveUrl("/");
+            navigate('/');
+            setActiveUrl('/');
           }}
         >
           <HomeOutlined />
@@ -48,17 +48,17 @@ const TopBar: React.FC = () => {
         </div>
         <div
           className={
-            activeUrl === "/types"
+            activeUrl === '/types'
               ? classnames(
-                  "header-menu-types",
-                  "header-menu-item",
-                  "header-active"
+                  'header-menu-types',
+                  'header-menu-item',
+                  'header-active'
                 )
-              : classnames("header-menu-types", "header-menu-item")
+              : classnames('header-menu-types', 'header-menu-item')
           }
           onClick={() => {
-            navigate("/types");
-            setActiveUrl("/types");
+            navigate('/types');
+            setActiveUrl('/types');
           }}
         >
           <TagsOutlined />
@@ -66,17 +66,17 @@ const TopBar: React.FC = () => {
         </div>
         <div
           className={
-            activeUrl === "/archives"
+            activeUrl === '/archives'
               ? classnames(
-                  "header-menu-archives",
-                  "header-menu-item",
-                  "header-active"
+                  'header-menu-archives',
+                  'header-menu-item',
+                  'header-active'
                 )
-              : classnames("header-menu-archives", "header-menu-item")
+              : classnames('header-menu-archives', 'header-menu-item')
           }
           onClick={() => {
-            navigate("/archives");
-            setActiveUrl("/archives");
+            navigate('/archives');
+            setActiveUrl('/archives');
           }}
         >
           <BlockOutlined />
@@ -84,36 +84,36 @@ const TopBar: React.FC = () => {
         </div>
         <div
           className={
-            activeUrl === "/about"
+            activeUrl === '/about'
               ? classnames(
-                  "header-menu-about",
-                  "header-menu-item",
-                  "header-active"
+                  'header-menu-about',
+                  'header-menu-item',
+                  'header-active'
                 )
-              : classnames("header-menu-about", "header-menu-item")
+              : classnames('header-menu-about', 'header-menu-item')
           }
           onClick={() => {
-            navigate("/about");
-            setActiveUrl("/about");
+            navigate('/about');
+            setActiveUrl('/about');
           }}
         >
           <InfoOutlined />
           <span>关于我</span>
         </div>
       </div>
-      <form className="header-menu-search" onSubmit={(e) => handleSubmit(e)}>
+      <form className='header-menu-search' onSubmit={(e) => handleSubmit(e)}>
         <input
-          className="header-menu-search-input"
-          type="text"
-          name="query"
-          placeholder="Search..."
+          className='header-menu-search-input'
+          type='text'
+          name='query'
+          placeholder='Search...'
           value={query}
           onChange={(e) => {
             handleChange(e);
           }}
         />
         <SearchOutlined
-          className="header-menu-search-icon"
+          className='header-menu-search-icon'
           onClick={(e) => handleSubmit(e)}
         />
       </form>

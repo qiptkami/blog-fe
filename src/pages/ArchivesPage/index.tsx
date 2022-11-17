@@ -1,14 +1,14 @@
-import classnames from "classnames";
-import moment from "moment";
-import { useNavigate } from "react-router";
-import { useState } from "react";
-import { getArchivesPaginationInfo } from "../../services/archivesPage";
-import { Blog } from "../../typings/index";
-import InfiniteScroll from "../../components/InfiniteScroll";
-import "./index.less";
+import classnames from 'classnames';
+import moment from 'moment';
+import { useNavigate } from 'react-router';
+import { useState } from 'react';
+import { getArchivesPaginationInfo } from '../../services/archivesPage';
+import { Blog } from '../../typings/index';
+import InfiniteScroll from '../../components/InfiniteScroll';
+import './index.less';
 
 const Archives: React.FC = () => {
-  const [msg, setMsg] = useState<string>("");
+  const [msg, setMsg] = useState<string>('');
   const [list, setList] = useState<any[]>([]);
   const [total, setTotal] = useState<number>(0);
 
@@ -19,36 +19,36 @@ const Archives: React.FC = () => {
         setList((prev: any) => [...prev, ...res?.data?.data?.list]);
       }
       if (!res?.data?.data?.list?.length) {
-        setMsg("我也是有底线的...");
+        setMsg('我也是有底线的...');
       }
     });
   };
 
   const archives = () => (
-    <div className="archives-body">
-      <li className="archives-item">
-        <div className="archives-timeline">
-          <div className="archives-timeline-node"></div>
-          <div className="archives-timeline-line"></div>
+    <div className='archives-body'>
+      <li className='archives-item'>
+        <div className='archives-timeline'>
+          <div className='archives-timeline-node'></div>
+          <div className='archives-timeline-line'></div>
         </div>
-        <div className="archives-item-info">
-          <div className="archives-item-content">共计 {total} 篇文章</div>
-          <div className="archives-item-timestamp"></div>
+        <div className='archives-item-info'>
+          <div className='archives-item-content'>共计 {total} 篇文章</div>
+          <div className='archives-item-timestamp'></div>
         </div>
       </li>
       {list.map((blog: Blog) => (
-        <li className="archives-item" key={blog.id}>
-          <div className="archives-timeline">
-            <div className="archives-timeline-node"></div>
-            <div className="archives-timeline-line"></div>
+        <li className='archives-item' key={blog.id}>
+          <div className='archives-timeline'>
+            <div className='archives-timeline-node'></div>
+            <div className='archives-timeline-line'></div>
           </div>
-          <div className="archives-item-info">
-            <div className="archives-item-content">
-              <div className="archives-item-content">{blog.title}</div>{" "}
-              <span className="archives-item-tag">{blog.type.name}</span>
+          <div className='archives-item-info'>
+            <div className='archives-item-content'>
+              <div className='archives-item-content'>{blog.title}</div>{' '}
+              <span className='archives-item-tag'>{blog.type.name}</span>
             </div>
-            <div className="archives-item-timestamp">
-              {moment(blog.createTime).format("YYYY-MM-DD HH:mm:ss")}
+            <div className='archives-item-timestamp'>
+              {moment(blog.createTime).format('YYYY-MM-DD HH:mm:ss')}
             </div>
           </div>
         </li>
@@ -57,7 +57,7 @@ const Archives: React.FC = () => {
   );
 
   return (
-    <ul className="archives-container">
+    <ul className='archives-container'>
       <InfiniteScroll
         getData={getData}
         render={archives}

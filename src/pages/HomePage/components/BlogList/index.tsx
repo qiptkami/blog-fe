@@ -1,11 +1,11 @@
-import classnames from "classnames";
-import React, { useEffect, useState } from "react";
-import "react-router";
+import classnames from 'classnames';
+import React, { useEffect, useState } from 'react';
+import 'react-router';
 
-import { getBlogsPaginationInfo } from "../../../../services/homePage";
-import MyPagination from "../../../../components/MyPagination";
-import BlogItem from "./BlogItem";
-import "./index.less";
+import { getBlogsPaginationInfo } from '../../../../services/homePage';
+import MyPagination from '../../../../components/MyPagination';
+import BlogItem from './BlogItem';
+import './index.less';
 
 const BlogList: React.FC = () => {
   const [total, setTotal] = useState<number>(0); //数据总量
@@ -33,7 +33,7 @@ const BlogList: React.FC = () => {
   });
 
   return (
-    <div className="blog-list-container">
+    <div className='blog-list-container'>
       {blogs}
       <MyPagination
         total={total}
