@@ -7,10 +7,12 @@ import './index.less';
 const BlogDetail: React.FC = () => {
   const [bid, setBid] = useState<number>(1);
   const [blog, setBlog] = useState<Blog>();
+
   useEffect(() => {
-    getBlogInfo(bid).then((res: any) => {
-      console.log(res);
-    });
+    console.log('blogasdasdaset');
+    // getBlogInfo(bid).then((res: any) => {
+    //   console.log(res);
+    // });
   }, []);
 
   return (

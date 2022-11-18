@@ -3,27 +3,30 @@ import { useRoutes } from 'react-router-dom';
 import TypePage from './pages/TypePage';
 import HomePage from './pages/HomePage';
 import Archives from './pages/ArchivesPage';
+import BlogDetail from './pages/BlogDetail';
 
 const AppRouters: React.FC = () => {
   const routes = useRoutes([
     {
       path: '/',
-      element: <HomePage />,
+      children: [
+        { path: '', element: <HomePage /> },
+        {
+          path: 'blog/:id',
+          element: <BlogDetail />,
+        },
+      ],
     },
     {
-      path: '/home',
-      element: <HomePage />,
-    },
-    {
-      path: '/types',
+      path: 'types',
       element: <TypePage />,
     },
     {
-      path: '/types/:id',
+      path: 'types/:id',
       element: <TypePage />,
     },
     {
-      path: '/archives',
+      path: 'archives',
       element: <Archives />,
     },
   ]);
