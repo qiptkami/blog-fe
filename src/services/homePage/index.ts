@@ -1,6 +1,6 @@
 import { get } from '../index';
 
-const baseUrl = '/home';
+const baseUrl = '';
 
 export const getBlogsPaginationInfo = (param?: {
   page: number;

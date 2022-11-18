@@ -10,9 +10,12 @@ const BlogDetail: React.FC = () => {
 
   useEffect(() => {
     console.log('blogasdasdaset');
-    // getBlogInfo(bid).then((res: any) => {
-    //   console.log(res);
-    // });
+    getBlogInfo(bid).then((res: any) => {
+      if (res.data.status) {
+        setBlog(res.data.data);
+      }
+      console.log(res.data);
+    });
   }, []);
 
   return (
