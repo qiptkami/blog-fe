@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { marked } from 'marked';
 import hljs from 'highlight.js';
-import 'highlight.js/styles/base16/Atom-One-Dark.css'; //css 详见https://highlightjs.org/static/demo
+import 'github-markdown-css';
+import 'highlight.js/styles/atom-one-dark.css'; //css 详见https://highlightjs.org/static/demo
 
 interface Props {
   content?: string;
@@ -13,8 +14,9 @@ const MarkDown2Html: React.FC<Props> = ({ content }) => {
 
   marked.setOptions({
     renderer: new marked.Renderer(),
-    highlight: function (code) {
-      return hljs.highlightAuto(code).value;
+    highlight: function (code, lang) {
+      const language = hljs.getLanguage(lang) ? lang : 'plaintext';
+      return hljs.highlight(code, { language }).value;
     },
     gfm: true, // 允许 GitHub标准的markdown.
     pedantic: false, // 不纠正原始模型任何的不良行为和错误（默认为false）
@@ -26,16 +28,14 @@ const MarkDown2Html: React.FC<Props> = ({ content }) => {
   });
 
   useEffect(() => {
-    const html =
-      content && marked(content).replace(/<pre>/g, "<pre class='hljs'>");
+    const html = content && marked(content);
     html && setMarkdownContent(html);
   }, [content]);
 
   return (
-    <div
-      className='blog-info'
-      dangerouslySetInnerHTML={{ __html: markdownContent }}
-    ></div>
+    <div v-html='content' className='markdown-body'>
+      <div dangerouslySetInnerHTML={{ __html: markdownContent }}></div>
+    </div>
   );
 };
 
