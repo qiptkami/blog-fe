@@ -28,7 +28,8 @@ const MarkDown2Html: React.FC<Props> = ({ content }) => {
   });
 
   useEffect(() => {
-    const html = content && marked(content);
+    const html =
+      content && marked(content).replace(/<pre>/g, "<pre class='hljs-code'>");
     html && setMarkdownContent(html);
   }, [content]);
 

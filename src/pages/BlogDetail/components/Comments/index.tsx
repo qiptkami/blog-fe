@@ -1,7 +1,26 @@
-const Comment: React.FC = () => {
+import React, { useEffect, useState } from 'react';
+
+interface IProps {
+  bid: number;
+  list: Comment[];
+}
+
+const Comments: React.FC<IProps> = ({ bid, list }) => {
+  const [commentInfo, setCommentInfo] = useState<string>('');
+  const [nickname, serNickName] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [commentPid, setCommentPid] = useState<number>(-1);
+
+  useEffect(() =>
+    //session.getUser ? serNickName(nickname) & setEmail(email) : 'serNickName('') & setEmail('');
+    {}, [list]);
+  const handleSubmit = () => {};
+
+  const buildCommentTree = () => {};
+
   return (
     <div className='ui attached segment ${!blog.commentAble}'>
-      <div id='comment-container' className='ui teal segment'>
+      <div className='comments-container'>
         <div className='ui threaded comments'>
           <h3 className='ui dividing header' style={{ maxWidth: '100%' }}>
             评论
@@ -71,48 +90,35 @@ const Comment: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className='ui form'>
+      <div className='comment-input'>
         <div className='field'>
           <textarea name='content' placeholder='请输入评论信息...'></textarea>
-          <input type='hidden' name='blog.id' value='${blog.id}' />
-          <input type='hidden' name='parentComment.id' value='-1' />
         </div>
         <div className='fields'>
           <div className='field m-mobile-wide m-margin-bottom-small'>
-            <div className='ui left icon input'>
-              <i className='user icon'></i>
-              <input
-                type='text'
-                name='nickname'
-                placeholder='姓名'
-                value="${session.user} != null ? ${session.user.username} : ''"
-              />
-            </div>
+            <i className='user icon'></i>
+            <input
+              type='text'
+              name='nickname'
+              placeholder='昵称'
+              value={nickname}
+            />
           </div>
           <div className='field m-mobile-wide m-margin-bottom-small'>
-            <div className='ui left icon input'>
-              <i className='mail icon'></i>
-              <input
-                type='text'
-                name='email'
-                placeholder='邮箱'
-                value="${session.user} != null ? ${session.user.email} : ''"
-              />
-            </div>
+            <i className='mail icon'></i>
+            <input type='text' name='email' placeholder='邮箱' value={email} />
           </div>
-          <div className='field m-mobile-wide m-margin-bottom-small'>
-            <button
-              id='comment-post-btn'
-              type='button'
-              className='ui teal button m-mobile-wide'
-            >
-              <i className='edit icon'></i>发布
-            </button>
-          </div>
+          <button
+            type='button'
+            className='comment-post-btn'
+            onClick={handleSubmit}
+          >
+            <i className='edit icon'></i>发布
+          </button>
         </div>
       </div>
     </div>
   );
 };
 
-export default Comment;
+export default Comments;
