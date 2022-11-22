@@ -1,5 +1,7 @@
 import moment from 'moment';
+import { ClockCircleFilled } from '@ant-design/icons';
 import { Comment } from '../../../../../typings/index';
+import './index.less';
 
 interface IProps {
   replyList?: Comment[];
@@ -24,6 +26,7 @@ const ReplyList: React.FC<IProps> = ({ replyList }) => {
             )}
           </a>
           <div className='comment-date'>
+            <ClockCircleFilled />
             {moment(reply.createTime).format('YYYY-MM-DD HH:mm:ss')}
           </div>
           <div className='comment-text'>{reply.content}</div>

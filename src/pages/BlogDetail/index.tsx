@@ -5,17 +5,21 @@ import { getBlogInfo } from '../../services/homePage';
 import { Blog, User, Comment } from '../../typings/index';
 import Comments from './components/CommentList';
 import MarkDown2Html from './components/MarkDown2Html';
+import { useParams } from 'react-router-dom';
 import './index.less';
 
 const BlogDetail: React.FC = () => {
-  const [bid, setBid] = useState<number>(2);
+  const { id } = useParams();
+  const [bid, setBid] = useState<number>(0);
   const [blog, setBlog] = useState<Blog>();
   const [commentList, setCommentList] = useState<Comment[]>();
 
   useEffect(() => {
-    getBlog(bid);
-    getComments(bid);
-  }, [bid]);
+    const blogId = (id && parseInt(id)) || 0;
+    setBid(blogId);
+    getBlog(blogId);
+    getComments(blogId);
+  }, [id]);
 
   const getBlog = (id: number) => {
     getBlogInfo(id).then((res: any) => {
@@ -45,8 +49,6 @@ const BlogDetail: React.FC = () => {
           <div className='blog-header-flag'>{blog?.flag}</div>
           <div className='blog-header-reader'>
             本文章共 1055 字 / 预计阅读时间 3 分钟
-            {/* 总之，大多数人阅读一篇文章的时间=文章数字÷（300~500字/分钟）
-           例：文章字数为15000字，那么阅读时间=15000÷（300~500）=50~30分钟 */}
           </div>
         </div>
         <div className='blog-header-type'>{blog?.type.name}</div>

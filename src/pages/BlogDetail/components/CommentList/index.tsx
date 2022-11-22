@@ -2,6 +2,7 @@ import { UserOutlined, MailOutlined, EditOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import { Comment } from '../../../../typings/index';
 import ReplyList from './ReplyList';
+import './index.less';
 
 interface IProps {
   bid: number;
@@ -15,7 +16,7 @@ const CommentList: React.FC<IProps> = ({ bid, list }) => {
   const [commentPid, setCommentPid] = useState<number>(-1);
 
   useEffect(() => {
-    //session.getUser ? serNickName(nickname) & setEmail(email) : 'serNickName('') & setEmail('');
+    //session.getUser ? setNickName(nickname) & setEmail(email) : setNickName('') & setEmail('');
     list && buildCommentTree(list);
   }, [list]);
 
@@ -73,10 +74,10 @@ const CommentList: React.FC<IProps> = ({ bid, list }) => {
   };
 
   return (
-    <div className='comments-container'>
-      <h3 className='comments-header' style={{ maxWidth: '100%' }}>
+    <div className='comment-container'>
+      <div className='comment-header' style={{ maxWidth: '100%' }}>
         评论
-      </h3>
+      </div>
       <div className='comment-list'></div>
       <ReplyList replyList={parentComment}></ReplyList>
       <div className='comment-input'>

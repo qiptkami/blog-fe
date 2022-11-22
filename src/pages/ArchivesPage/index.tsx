@@ -11,6 +11,15 @@ const Archives: React.FC = () => {
   const [msg, setMsg] = useState<string>('');
   const [list, setList] = useState<any[]>([]);
   const [total, setTotal] = useState<number>(0);
+  const navigate = useNavigate();
+
+  const handleClickBlog = (id: number) => {
+    navigate(`/blog/${id}`);
+  };
+
+  const handleClickType = (id: number) => {
+    navigate(`/types/${id}`);
+  };
 
   const getData = (page: number) => {
     getArchivesPaginationInfo({ page: page, size: 5 }).then((res: any) => {
@@ -44,8 +53,18 @@ const Archives: React.FC = () => {
           </div>
           <div className='archives-item-info'>
             <div className='archives-item-content'>
-              <div className='archives-item-content'>{blog.title}</div>{' '}
-              <span className='archives-item-tag'>{blog.type.name}</span>
+              <div
+                className='archives-item-content'
+                onClick={() => handleClickBlog(blog.id)}
+              >
+                {blog.title}
+              </div>{' '}
+              <span
+                className='archives-item-tag'
+                onClick={() => handleClickType(blog.type.id)}
+              >
+                {blog.type.name}
+              </span>
             </div>
             <div className='archives-item-timestamp'>
               {moment(blog.createTime).format('YYYY-MM-DD HH:mm:ss')}

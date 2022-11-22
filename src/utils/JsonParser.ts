@@ -1,7 +1,6 @@
 import { Type } from '../typings/index';
 
 export function parseType(json: string): Type {
-  console.log(json);
   const type: Type = { id: 1, name: '' };
   json = json.substring(1, json.length - 1);
   json.split(',').forEach((item: any) => {
