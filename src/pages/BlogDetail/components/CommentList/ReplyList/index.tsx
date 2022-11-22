@@ -2,11 +2,11 @@ import moment from 'moment';
 import { Comment } from '../../../../../typings/index';
 
 interface IProps {
-  comment: Comment[];
+  replyList?: Comment[];
 }
 
-const ReplyList: React.FC<IProps> = ({ comment }) => {
-  const replyList = comment?.map((reply: Comment) => {
+const ReplyList: React.FC<IProps> = ({ replyList }) => {
+  const list = replyList?.map((reply: Comment) => {
     return (
       <div className='comment-body' key={reply.id}>
         <a className='comment-avatar'>
@@ -16,10 +16,12 @@ const ReplyList: React.FC<IProps> = ({ comment }) => {
           <a className='comment-author'>
             <span>{reply.nickname}</span>
             {reply.isAdminComment && <div className=''></div>}
-            <span className='comment-replyer'>
-              {' '}
-              回复 @{reply.parentComment.nickname}
-            </span>
+            {reply.parentComment && (
+              <span className='comment-replyer'>
+                {' '}
+                回复 @{reply.parentComment.nickname}
+              </span>
+            )}
           </a>
           <div className='comment-date'>
             {moment(reply.createTime).format('YYYY-MM-DD HH:mm:ss')}
@@ -37,11 +39,11 @@ const ReplyList: React.FC<IProps> = ({ comment }) => {
             </div>
           </div>
         </div>
-        <ReplyList comment={reply?.replyComment}></ReplyList>
+        <ReplyList replyList={reply?.replyComment}></ReplyList>
       </div>
     );
   });
-  return <>{replyList}</>;
+  return <>{list}</>;
 };
 
 export default ReplyList;

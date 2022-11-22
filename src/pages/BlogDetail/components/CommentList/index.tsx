@@ -1,5 +1,4 @@
 import { UserOutlined, MailOutlined, EditOutlined } from '@ant-design/icons';
-import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { Comment } from '../../../../typings/index';
 import ReplyList from './ReplyList';
@@ -20,35 +19,6 @@ const CommentList: React.FC<IProps> = ({ bid, list }) => {
     list && buildCommentTree(list);
   }, [list]);
 
-  const commentList = parentComment?.map((comment: Comment) => {
-    return (
-      <div className='comment-body' key={comment.id}>
-        <a className='comment-avatar'>
-          <img src={comment.avatar} />
-        </a>
-        <div className='comment-content'>
-          <a className='comment-author'>
-            <span>{comment.nickname}</span>
-            {comment.isAdminComment && <div className=''></div>}
-          </a>
-          <div className='comment-date'>
-            {moment(comment.createTime).format('YYYY-MM-DD HH:mm:ss')}
-          </div>
-          <div className='comment-text'>{comment.content}</div>
-          <div
-            className='comment-action'
-            onClick={() => {
-              console.log('//insertComment()');
-            }}
-          >
-            回复
-          </div>
-        </div>
-        <ReplyList comment={comment?.replyComment}></ReplyList>
-      </div>
-    );
-  });
-
   const buildCommentTree = (list: Comment[]) => {
     const [...deepClone] = list; //深拷贝
     const parentList: Comment[] = [];
@@ -61,7 +31,6 @@ const CommentList: React.FC<IProps> = ({ bid, list }) => {
       }
     });
     setParentComment(parentList);
-    console.log(parentList);
   };
 
   const buildSubTree = (parent: Comment, list: Comment[]) => {
@@ -109,7 +78,7 @@ const CommentList: React.FC<IProps> = ({ bid, list }) => {
         评论
       </h3>
       <div className='comment-list'></div>
-      {commentList}
+      <ReplyList replyList={parentComment}></ReplyList>
       <div className='comment-input'>
         <textarea
           className='comment-input-textarea'
