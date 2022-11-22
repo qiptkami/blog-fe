@@ -1,22 +1,37 @@
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
+import { getCommentInfo } from '../../services/blogPage';
 import { getBlogInfo } from '../../services/homePage';
-import { Blog, User } from '../../typings/index';
+import { Blog, User, Comment } from '../../typings/index';
+import Comments from './components/CommentList';
 import MarkDown2Html from './components/MarkDown2Html';
 import './index.less';
 
 const BlogDetail: React.FC = () => {
-  const [bid, setBid] = useState<number>(1);
+  const [bid, setBid] = useState<number>(2);
   const [blog, setBlog] = useState<Blog>();
+  const [commentList, setCommentList] = useState<Comment[]>();
 
   useEffect(() => {
-    getBlogInfo(bid).then((res: any) => {
+    getBlog(bid);
+    getComments(bid);
+  }, [bid]);
+
+  const getBlog = (id: number) => {
+    getBlogInfo(id).then((res: any) => {
       if (res.data.status) {
         setBlog(res.data.data);
       }
-      console.log(res.data);
     });
-  }, []);
+  };
+
+  const getComments = (id: number) => {
+    getCommentInfo(id).then((res: any) => {
+      if (res.data.status) {
+        setCommentList(res.data.data);
+      }
+    });
+  };
 
   return (
     <div className='blog-container'>
@@ -100,6 +115,7 @@ const BlogDetail: React.FC = () => {
             </ul>
           </div>
         )}
+        <Comments bid={bid} list={commentList}></Comments>
       </div>
     </div>
   );
