@@ -24,8 +24,7 @@ const BlogItem: React.FC<Props> = ({ blog }) => {
           className='blog-item-title'
           onClick={() => handleClickBlog(blog.id)}
         >
-          {' '}
-          {blog.title}{' '}
+          {blog.title}
         </span>
         <div className='blog-item-info'>
           <span className='blog-item-time'>
@@ -46,8 +45,7 @@ const BlogItem: React.FC<Props> = ({ blog }) => {
           className='blog-item-desc'
           onClick={() => handleClickBlog(blog.id)}
         >
-          {' '}
-          {blog.description}{' '}
+          {blog.description}
         </div>
       </div>
       <img className='blog-item-img' src={blog.firstPicture} alt='' />
