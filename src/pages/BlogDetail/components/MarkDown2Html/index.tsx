@@ -3,6 +3,7 @@ import { marked } from 'marked';
 import hljs from 'highlight.js';
 import 'github-markdown-css';
 import 'highlight.js/styles/atom-one-dark.css'; //css 详见https://highlightjs.org/static/demo
+import './index.less';
 
 interface Props {
   content?: string;
@@ -28,8 +29,7 @@ const MarkDown2Html: React.FC<Props> = ({ content }) => {
   });
 
   useEffect(() => {
-    const html =
-      content && marked(content).replace(/<pre>/g, "<pre class='hljs-code'>");
+    const html = content && marked(content);
     html && setMarkdownContent(html);
   }, [content]);
 

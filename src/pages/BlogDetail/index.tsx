@@ -42,12 +42,12 @@ const BlogDetail: React.FC = () => {
       <div className='blog-header'>
         <div className='blog-header-title'>{blog?.title}</div>
         <div className='blog-header-info'>
-          <div className='blog-header-views'>{blog?.views}</div>
-          <div className='blog-header-time'>
+          <div className='blog-header-info-views'>{blog?.views}</div>
+          <div className='blog-header-info-time'>
             {moment(blog?.createTime).format('YYYY-MM-DD HH:mm:ss')}
           </div>
-          <div className='blog-header-flag'>{blog?.flag}</div>
-          <div className='blog-header-reader'>
+          <div className='blog-header-info-flag'>{blog?.flag}</div>
+          <div className='blog-header-info-reader'>
             本文章共 1055 字 / 预计阅读时间 3 分钟
           </div>
         </div>

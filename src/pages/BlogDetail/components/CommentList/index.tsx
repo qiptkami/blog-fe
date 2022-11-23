@@ -81,39 +81,45 @@ const CommentList: React.FC<IProps> = ({ bid, list }) => {
       <div className='comment-list'></div>
       <ReplyList replyList={parentComment}></ReplyList>
       <div className='comment-input'>
-        <textarea
-          className='comment-input-textarea'
-          name='content'
-          placeholder='请输入评论信息...'
-        ></textarea>
-        <div className='comment-input-name'>
-          <UserOutlined />
-          <input
-            type='text'
-            name='nickname'
-            placeholder='昵称'
-            value={nickname}
-            onChange={(e) => handleNameChange(e)}
-          />
+        <div className='comment-input-textarea'>
+          <textarea
+            className='comment-input-textarea-content'
+            name='content'
+            placeholder='请输入评论信息...'
+          ></textarea>
         </div>
-        <div className='comment-input-email'>
-          <MailOutlined />
-          <input
-            type='text'
-            name='email'
-            placeholder='邮箱'
-            value={email}
-            onChange={(e) => handleEmailChange(e)}
-          />
+        <div className='comment-input-info'>
+          <div className='comment-input-name'>
+            <UserOutlined />
+            <input
+              className='comment-input-name-content'
+              type='text'
+              name='nickname'
+              placeholder='昵称'
+              value={nickname}
+              onChange={(e) => handleNameChange(e)}
+            />
+          </div>
+          <div className='comment-input-email'>
+            <MailOutlined />
+            <input
+              className='comment-input-email-content'
+              type='text'
+              name='email'
+              placeholder='邮箱'
+              value={email}
+              onChange={(e) => handleEmailChange(e)}
+            />
+          </div>
+          <button
+            type='button'
+            className='comment-post-btn'
+            onClick={handleSubmit}
+          >
+            <EditOutlined />
+            发布
+          </button>
         </div>
-        <button
-          type='button'
-          className='comment-post-btn'
-          onClick={handleSubmit}
-        >
-          <EditOutlined />
-          发布
-        </button>
       </div>
     </div>
   );
