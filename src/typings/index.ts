@@ -37,7 +37,6 @@ interface User {
 }
 
 interface Comment {
-  item: never[];
   id: number;
   nickname: string; //昵称
   content: string; //内容

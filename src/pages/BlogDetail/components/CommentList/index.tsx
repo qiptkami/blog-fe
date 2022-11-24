@@ -1,8 +1,8 @@
-import { UserOutlined, MailOutlined, EditOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import { Comment } from '../../../../typings/index';
 import ReplyList from './ReplyList';
 import './index.less';
+import CommentInput from './CommentInput';
 
 interface IProps {
   bid: number;
@@ -10,13 +10,12 @@ interface IProps {
 }
 
 const CommentList: React.FC<IProps> = ({ bid, list }) => {
-  const [parentComment, setParentComment] = useState<Comment[]>();
-  const [nickname, setNickname] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  const [commentPid, setCommentPid] = useState<number>(-1);
-
+  const [parentCommentList, setParentCommentList] = useState<Comment[]>();
+  const [replyParent, setReplyParent] = useState<Comment>();
+  const [adminName, setAdminName] = useState<string>();
+  const [adminEmail, setAdminEmail] = useState<string>();
   useEffect(() => {
-    //session.getUser ? setNickName(nickname) & setEmail(email) : setNickName('') & setEmail('');
+    //session.getUser ? setAdminName(nickname) & setAdminEmail(email) : setAdminName('') & setAdminEmail('');
     list && buildCommentTree(list);
   }, [list]);
 
@@ -31,7 +30,7 @@ const CommentList: React.FC<IProps> = ({ bid, list }) => {
         buildSubTree(item, deepClone);
       }
     });
-    setParentComment(parentList);
+    setParentCommentList(parentList);
   };
 
   const buildSubTree = (parent: Comment, list: Comment[]) => {
@@ -48,79 +47,30 @@ const CommentList: React.FC<IProps> = ({ bid, list }) => {
     });
   };
 
-  const replyComment = () => {
-    //回复哪条评论？
-    //
-  };
-
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNickname(e.target.value);
-  };
-
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-
-  const handleSubmit = () => {
-    const comment = {
-      nickname: '',
-      content: '',
-      email: '',
-      blog: { id: bid },
-      parentComment: { id: commentPid },
-    };
-    //insertComment(comment);
-    //getCommentList(bid);
+  const getReplyParent = (pid: number) => {
+    const parent = list?.find((item: Comment) => item.id === pid);
+    setReplyParent(parent);
   };
 
   return (
     <div className='comment-container'>
-      <div className='comment-header' style={{ maxWidth: '100%' }}>
+      <div className='comment-title' style={{ maxWidth: '100%' }}>
         评论
       </div>
       <div className='comment-list'></div>
-      <ReplyList replyList={parentComment}></ReplyList>
-      <div className='comment-input'>
-        <div className='comment-input-textarea'>
-          <textarea
-            className='comment-input-textarea-content'
-            name='content'
-            placeholder='请输入评论信息...'
-          ></textarea>
-        </div>
-        <div className='comment-input-info'>
-          <div className='comment-input-name'>
-            <UserOutlined />
-            <input
-              className='comment-input-name-content'
-              type='text'
-              name='nickname'
-              placeholder='昵称'
-              value={nickname}
-              onChange={(e) => handleNameChange(e)}
-            />
-          </div>
-          <div className='comment-input-email'>
-            <MailOutlined />
-            <input
-              className='comment-input-email-content'
-              type='text'
-              name='email'
-              placeholder='邮箱'
-              value={email}
-              onChange={(e) => handleEmailChange(e)}
-            />
-          </div>
-          <button
-            type='button'
-            className='comment-post-btn'
-            onClick={handleSubmit}
-          >
-            <EditOutlined />
-            发布
-          </button>
-        </div>
-      </div>
+      <CommentInput
+        parent={replyParent}
+        bid={bid}
+        uname={adminName}
+        uEmail={adminEmail}
+      ></CommentInput>
+      <ReplyList
+        bid={bid}
+        replyList={parentCommentList}
+        getReplyParent={getReplyParent}
+        uname={adminName}
+        uEmail={adminEmail}
+      ></ReplyList>
     </div>
   );
 };

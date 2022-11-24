@@ -1,0 +1,95 @@
+.comment-input {
+  .comment-input-textarea {
+    border: 1px solid #c2c8d1;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    transition: width 0.2s;
+    height: 100px;
+    width: 100%;
+    &-content {
+      height: calc(100% - 20px);
+      width: calc(100% - 20px);
+      border: none;
+      outline: none;
+      resize: none;
+      box-shadow: none;
+    }
+  }
+  .comment-input-info {
+    display: flex;
+    padding-top: 10px;
+    .comment-input-name {
+      border: 1px solid #c2c8d1;
+      padding-right: 20px;
+      margin-right: 20px;
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      border-radius: 4px;
+      height: 1.834rem;
+      width: 10rem;
+      transition: width 0.2s;
+      .anticon-user {
+        opacity: 0.5;
+        padding-right: 4px;
+      }
+      &-content {
+        border: none;
+        box-shadow: none;
+        outline: none;
+        font-size: 1.1rem;
+        color: #8a919f;
+        background-color: transparent;
+      }
+    }
+
+    .comment-input-email {
+      border: 1px solid #c2c8d1;
+      padding-right: 20px;
+      margin-right: 20px;
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      border-radius: 4px;
+      height: 1.834rem;
+      width: 10rem;
+      transition: width 0.2s;
+      .anticon-mail {
+        opacity: 0.5;
+        padding-right: 4px;
+      }
+      &-content {
+        border: none;
+        box-shadow: none;
+        outline: none;
+        font-size: 1.1rem;
+        color: #8a919f;
+        background-color: transparent;
+      }
+    }
+    .comment-post-btn {
+      width: 5rem;
+      background-color: #00b5ad;
+      color: #fff;
+      text-shadow: none;
+      background-image: none;
+      cursor: pointer;
+      display: inline-block;
+      min-height: 1em;
+      outline: 0;
+      border: none;
+      vertical-align: baseline;
+      font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+      text-transform: none;
+      text-shadow: none;
+      font-weight: 700;
+      line-height: 1em;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 0.28571429rem;
+    }
+  }
+}
