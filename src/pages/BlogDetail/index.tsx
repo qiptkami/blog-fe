@@ -2,7 +2,7 @@ import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { getCommentInfo } from '../../services/blogPage';
 import { getBlogInfo } from '../../services/homePage';
-import { Blog, User, Comment } from '../../typings/index';
+import { Blog, Comment } from '../../typings/index';
 import Comments from './components/CommentList';
 import MarkDown2Html from './components/MarkDown2Html';
 import { useParams } from 'react-router-dom';
@@ -51,7 +51,7 @@ const BlogDetail: React.FC = () => {
             本文章共 1055 字 / 预计阅读时间 3 分钟
           </div>
         </div>
-        <div className='blog-header-type'>{blog?.type.name}</div>
+        <div className='blog-header-type'>{blog?.type?.name}</div>
         {/*
           <img
             className='blog-picture'

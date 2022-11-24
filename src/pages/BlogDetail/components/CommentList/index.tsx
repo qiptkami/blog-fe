@@ -3,6 +3,7 @@ import { Comment } from '../../../../typings/index';
 import ReplyList from './ReplyList';
 import './index.less';
 import CommentInput from './CommentInput';
+import { deepCloneArr } from '../../../../utils/deepClone';
 
 interface IProps {
   bid: number;
@@ -20,28 +21,26 @@ const CommentList: React.FC<IProps> = ({ bid, list }) => {
   }, [list]);
 
   const buildCommentTree = (list: Comment[]) => {
-    const [...deepClone] = list; //深拷贝
     const parentList: Comment[] = [];
+    // console.log(deepClone); //延时打印
     //找出所有parent为null的
-    deepClone.forEach((item: Comment, index: number) => {
+    list.forEach((item: Comment) => {
       if (!item.parentComment) {
-        deepClone.splice(index, 1);
         parentList.push(item);
-        buildSubTree(item, deepClone);
+        buildSubTree(item, list);
       }
     });
     setParentCommentList(parentList);
   };
 
   const buildSubTree = (parent: Comment, list: Comment[]) => {
-    list.forEach((item: Comment, index: number) => {
-      if (item.parentComment.id === parent.id) {
+    list.forEach((item: Comment) => {
+      if (item?.parentComment?.id === parent.id) {
         if (!parent.replyComment) {
           parent.replyComment = [];
         }
         parent.replyComment.push(item);
         item.parentComment = parent;
-        list.splice(index, 1);
         buildSubTree(item, list);
       }
     });

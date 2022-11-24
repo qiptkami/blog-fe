@@ -61,9 +61,9 @@ const Archives: React.FC = () => {
               </div>
               <span
                 className='archives-item-tag'
-                onClick={() => handleClickType(blog.type.id)}
+                onClick={() => handleClickType(blog?.type?.id ?? 0)}
               >
-                {blog.type.name}
+                {blog?.type?.name}
               </span>
             </div>
             <div className='archives-item-timestamp'>

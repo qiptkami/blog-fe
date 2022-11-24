@@ -36,9 +36,9 @@ const BlogItem: React.FC<Props> = ({ blog }) => {
           </span>
           <div
             className='blog-item-types'
-            onClick={() => handleClickType(blog.type.id)}
+            onClick={() => handleClickType(blog?.type?.id ?? 0)}
           >
-            <span className='blog-item-types-info'>{blog.type.name}</span>
+            <span className='blog-item-types-info'>{blog?.type?.name}</span>
           </div>
         </div>
         <div

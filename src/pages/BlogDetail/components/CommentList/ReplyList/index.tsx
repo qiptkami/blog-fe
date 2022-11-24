@@ -66,7 +66,7 @@ const ReplyList: React.FC<IProps> = ({
               className='comment-action-reply'
               onClick={() => {
                 console.log(reply);
-                getReplyParent(reply.id);
+                getReplyParent(reply?.id ?? 0);
                 setIsReply((prev) => !prev);
               }}
             >

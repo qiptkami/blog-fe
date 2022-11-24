@@ -1,5 +1,9 @@
 import { UserOutlined, MailOutlined, EditOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
+import {
+  getCommentInfo,
+  insertComment,
+} from '../../../../../services/blogPage';
 import { Comment } from '../../../../../typings/index';
 import './index.less';
 
@@ -15,7 +19,7 @@ const CommentInput: React.FC<IProps> = ({ parent, bid, uname, uEmail }) => {
     //不为空说明为管理员评论
     uname && setNickname(uname);
     uEmail && setEmail(uEmail);
-  }, []);
+  }, [uname, uEmail]);
 
   // const [replyPid, setReplyPid] = useState<number>();
   const [content, setContent] = useState<string>('');
@@ -35,20 +39,15 @@ const CommentInput: React.FC<IProps> = ({ parent, bid, uname, uEmail }) => {
   };
 
   const handleSubmit = () => {
-    console.log('nickname', nickname);
-    console.log('email', email);
-    console.log('pid', parent?.id);
-    console.log('bid', bid);
-    console.log('content', content);
-    const comment = {
+    const comment: Comment = {
       nickname: nickname,
       content: content,
       email: email,
-      blog: { id: bid },
-      parentComment: { id: parent?.id },
+      blog: { id: bid ?? 0 },
+      parentComment: { id: parent?.id ?? 0 },
     };
-    //insertComment(comment);
-    //getCommentList(bid);
+    insertComment(comment);
+    getCommentInfo(bid ?? 0);
   };
   return (
     <div className='comment-input'>
