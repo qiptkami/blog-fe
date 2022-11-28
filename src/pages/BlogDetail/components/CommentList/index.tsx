@@ -57,13 +57,14 @@ const CommentList: React.FC<IProps> = ({ bid, list }) => {
         评论
       </div>
       <div className='comment-list'></div>
-      <CommentInput
+      {/* <CommentInput
         parent={replyParent}
         bid={bid}
         uname={adminName}
         uEmail={adminEmail}
-      ></CommentInput>
+      ></CommentInput> */}
       <ReplyList
+        replyId={replyParent?.id}
         bid={bid}
         replyList={parentCommentList}
         getReplyParent={getReplyParent}

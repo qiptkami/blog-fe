@@ -12,9 +12,20 @@ interface IProps {
   bid?: number;
   uname?: string;
   uEmail?: string;
+  handleSubmit: (
+    nickname: string,
+    content: string,
+    email: string,
+    parentCommentId: number
+  ) => void;
 }
 
-const CommentInput: React.FC<IProps> = ({ parent, bid, uname, uEmail }) => {
+const CommentInput: React.FC<IProps> = ({
+  parent,
+  uname,
+  uEmail,
+  handleSubmit,
+}) => {
   useEffect(() => {
     //不为空说明为管理员评论
     uname && setNickname(uname);
@@ -38,17 +49,6 @@ const CommentInput: React.FC<IProps> = ({ parent, bid, uname, uEmail }) => {
     setEmail(e.target.value);
   };
 
-  const handleSubmit = () => {
-    const comment: Comment = {
-      nickname: nickname,
-      content: content,
-      email: email,
-      blog: { id: bid ?? 0 },
-      parentComment: { id: parent?.id ?? 0 },
-    };
-    insertComment(comment);
-    getCommentInfo(bid ?? 0);
-  };
   return (
     <div className='comment-input'>
       <div className='comment-input-textarea'>
@@ -88,7 +88,9 @@ const CommentInput: React.FC<IProps> = ({ parent, bid, uname, uEmail }) => {
         <button
           type='button'
           className='comment-post-btn'
-          onClick={handleSubmit}
+          onClick={() =>
+            handleSubmit(nickname, content, email, parent?.id ?? 0)
+          }
         >
           <EditOutlined />
           发布
