@@ -21,6 +21,12 @@ interface IProps {
   getReplyParent: (pid: number) => void;
   uname?: string;
   uEmail?: string;
+  handleSubmit?: (
+    nickname: string,
+    content: string,
+    email: string,
+    parentId: number
+  ) => void;
 }
 
 const ReplyList: React.FC<IProps> = ({
@@ -118,10 +124,19 @@ const ReplyList: React.FC<IProps> = ({
           </div>
           {isReplySubmit && isReply && rid === reply?.id ? (
             <CommentInput
+              isReply
               parent={reply}
               uname={uname}
               uEmail={uEmail}
-              handleSubmit={handleSubmit}
+              handleSubmit={(
+                nickname: string,
+                content: string,
+                email: string,
+                parentId: number
+              ) => {
+                handleSubmit(nickname, content, email, parentId);
+                setIsReplySubmit(false);
+              }}
             ></CommentInput>
           ) : null}
         </div>

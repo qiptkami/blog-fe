@@ -1,13 +1,10 @@
 import { UserOutlined, MailOutlined, EditOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
-import {
-  getCommentInfo,
-  insertComment,
-} from '../../../../../services/blogPage';
 import { Comment } from '../../../../../typings/index';
 import './index.less';
 
 interface IProps {
+  isReply: boolean;
   parent?: Comment;
   bid?: number;
   uname?: string;
@@ -21,6 +18,7 @@ interface IProps {
 }
 
 const CommentInput: React.FC<IProps> = ({
+  isReply,
   parent,
   uname,
   uEmail,
@@ -57,7 +55,7 @@ const CommentInput: React.FC<IProps> = ({
           name='content'
           value={content}
           placeholder={
-            parent ? `回复@${parent?.nickname}：` : '请输入评论信息...'
+            isReply ? `回复@${parent?.nickname}：` : '请输入评论信息...'
           }
           onChange={(e) => handleContentChange(e)}
         ></textarea>

@@ -3,7 +3,7 @@ import { Comment } from '../../../../typings/index';
 import ReplyList from './ReplyList';
 import './index.less';
 import CommentInput from './CommentInput';
-import { deepCloneArr } from '../../../../utils/deepClone';
+import { getCommentInfo, insertComment } from '../../../../services/blogPage';
 
 interface IProps {
   bid: number;
@@ -51,18 +51,44 @@ const CommentList: React.FC<IProps> = ({ bid, list }) => {
     setReplyParent(parent);
   };
 
+  const handleSubmit = (
+    nickname: string,
+    content: string,
+    email: string,
+    parentId: number
+  ) => {
+    const comment: Comment = {
+      nickname: nickname,
+      content: content,
+      email: email,
+      blog: { id: bid ?? 0 },
+      parentComment: { id: parentId ?? 0 },
+    };
+    insertComment(comment);
+    getCommentInfo(bid ?? 0);
+  };
+
   return (
     <div className='comment-container'>
       <div className='comment-title' style={{ maxWidth: '100%' }}>
         评论
       </div>
       <div className='comment-list'></div>
-      {/* <CommentInput
+      <CommentInput
+        isReply={false}
         parent={replyParent}
         bid={bid}
         uname={adminName}
         uEmail={adminEmail}
-      ></CommentInput> */}
+        handleSubmit={(
+          nickname: string,
+          content: string,
+          email: string,
+          parentId: number
+        ) => {
+          handleSubmit(nickname, content, email, parentId);
+        }}
+      ></CommentInput>
       <ReplyList
         replyId={replyParent?.id}
         bid={bid}
@@ -70,6 +96,7 @@ const CommentList: React.FC<IProps> = ({ bid, list }) => {
         getReplyParent={getReplyParent}
         uname={adminName}
         uEmail={adminEmail}
+        handleSubmit={handleSubmit}
       ></ReplyList>
     </div>
   );
