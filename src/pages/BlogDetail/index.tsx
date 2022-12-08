@@ -111,9 +111,7 @@ const BlogDetail: React.FC = () => {
               <li>
                 发表时间：<span>blog.updateTime, 'yyyy-MM-dd HH:mm</span>
               </li>
-              <li>
-                版权声明：自由转载-非商用-非衍生-保持署名（创意共享3.0许可证）
-              </li>
+              <li>版权声明：自由转载-非商用-非衍生-保持署名</li>
             </ul>
           </div>
         )}

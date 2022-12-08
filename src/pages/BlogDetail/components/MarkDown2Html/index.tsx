@@ -5,13 +5,19 @@ import 'github-markdown-css';
 import 'highlight.js/styles/atom-one-dark.css'; //css 详见https://highlightjs.org/static/demo
 import './index.less';
 
-interface Props {
+interface TreeNode {
+  hash: string;
+  tag: string;
+}
+
+interface IProps {
   content?: string;
 }
 
-const MarkDown2Html: React.FC<Props> = ({ content }) => {
+const MarkDown2Html: React.FC<IProps> = ({ content }) => {
   const [markdownContent, setMarkdownContent] =
     useState<string>('加载中。。。请稍后'); //html内容
+  const [tocNodes, setTocNodes] = useState<TreeNode[]>([]);
 
   marked.setOptions({
     renderer: new marked.Renderer(),
@@ -30,12 +36,48 @@ const MarkDown2Html: React.FC<Props> = ({ content }) => {
 
   useEffect(() => {
     const html = content && marked(content);
-    html && setMarkdownContent(html);
+    const nodes: TreeNode[] = [];
+    html &&
+      setMarkdownContent(
+        html?.replace(/<(h\d.*?)>.*?<\/h\d>/g, (match, tag) => {
+          const hash: string = match.replace(/<.*?>/g, '');
+          nodes.push({ hash, tag });
+          console.log(nodes);
+          return `<a class="blog-content-anchor" href="#${hash}" id="${hash}">${match}</a>`;
+        })
+      );
+    setTocNodes(nodes);
   }, [content]);
+
+  const Toc = tocNodes?.map(({ hash, tag }, index) => {
+    return (
+      <div key={index} className='blog-table-item'>
+        <a
+          className={'blog-table-item-' + tag.substring(0, 2)}
+          href={'#' + hash}
+          onClick={(e) => handleScroll(e, hash)}
+        >
+          {hash}
+        </a>
+      </div>
+    );
+  });
+
+  const handleScroll = (e: any, hash: any) => {
+    console.log(e, hash);
+  };
 
   return (
     <div v-html='content' className='markdown-body'>
-      <div dangerouslySetInnerHTML={{ __html: markdownContent }}></div>
+      {/* {content1} */}
+      <div
+        className='markdown-content'
+        dangerouslySetInnerHTML={{ __html: markdownContent }}
+      ></div>
+      <div className='blog-toc'>
+        <h4>目录</h4>
+        {Toc}
+      </div>
     </div>
   );
 };
