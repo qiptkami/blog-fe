@@ -74,10 +74,10 @@ const MarkDown2Html: React.FC<IProps> = ({ content }) => {
   });
 
   useEffect(() => {
-    const height = window.innerHeight > 280 ? window.innerHeight : 280;
+    const height = window.innerHeight;
     const option = {
       root: null, //根元素必须是目标元素的祖先包含块
-      rootMargin: `-80px 0px -${height - 80 - 120}px 0px`,
+      rootMargin: `0px 0px -${height - 15}px 0px`,
       threshold: 0,
     };
     console.log(option.root);
