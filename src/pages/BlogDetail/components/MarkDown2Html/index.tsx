@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { marked } from 'marked';
 import hljs from 'highlight.js';
 import 'github-markdown-css';
@@ -8,6 +8,7 @@ import './index.less';
 interface TreeNode {
   hash: string;
   tag: string;
+  suffix: string;
 }
 
 interface IProps {
@@ -18,6 +19,7 @@ const MarkDown2Html: React.FC<IProps> = ({ content }) => {
   const [markdownContent, setMarkdownContent] =
     useState<string>('加载中。。。请稍后'); //html内容
   const [tocNodes, setTocNodes] = useState<TreeNode[]>([]);
+  const blogBody = useRef<any>();
 
   marked.setOptions({
     renderer: new marked.Renderer(),
@@ -41,21 +43,29 @@ const MarkDown2Html: React.FC<IProps> = ({ content }) => {
       setMarkdownContent(
         html?.replace(/<(h\d.*?)>.*?<\/h\d>/g, (match, tag) => {
           const hash: string = match.replace(/<.*?>/g, '');
-          nodes.push({ hash, tag });
-          console.log(nodes);
-          return `<a class="blog-content-anchor" href="#${hash}" id="${hash}">${match}</a>`;
+          const suffix = Math.random().toString(36).slice(-6);
+          nodes.push({ hash, tag, suffix });
+          return `<a class="blog-content-anchor-${suffix}" href="#${hash}" id="${hash}">${match}</a>`;
         })
       );
     setTocNodes(nodes);
   }, [content]);
 
+  const handleObserver = useCallback((entries: any) => {
+    const target = entries[0];
+    if (target.isIntersecting) {
+      console.log('123', entries[0].target);
+    }
+  }, []);
+
   const Toc = tocNodes?.map(({ hash, tag }, index) => {
     return (
       <div key={index} className='blog-table-item'>
         <a
+          key={index}
           className={'blog-table-item-' + tag.substring(0, 2)}
           href={'#' + hash}
-          onClick={(e) => handleScroll(e, hash)}
+          // onClick={(e) => handleScroll(e, hash)}
         >
           {hash}
         </a>
@@ -63,22 +73,45 @@ const MarkDown2Html: React.FC<IProps> = ({ content }) => {
     );
   });
 
+  useEffect(() => {
+    const height = window.innerHeight > 280 ? window.innerHeight : 280;
+    const option = {
+      root: null, //根元素必须是目标元素的祖先包含块
+      rootMargin: `-80px 0px -${height - 80 - 120}px 0px`,
+      threshold: 0,
+    };
+    console.log(option.root);
+
+    const observer = new IntersectionObserver(handleObserver, option);
+    tocNodes.forEach((node: any) => {
+      observer.observe(
+        blogBody.current.querySelector(`.blog-content-anchor-${node.suffix}`)
+      );
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [handleObserver, tocNodes]);
+
   const handleScroll = (e: any, hash: any) => {
     console.log(e, hash);
   };
 
   return (
-    <div v-html='content' className='markdown-body'>
-      {/* {content1} */}
-      <div
-        className='markdown-content'
-        dangerouslySetInnerHTML={{ __html: markdownContent }}
-      ></div>
-      <div className='blog-toc'>
-        <h4>目录</h4>
-        {Toc}
+    <>
+      <div v-html='content' className='markdown-body'>
+        <div
+          className='markdown-content'
+          ref={blogBody}
+          dangerouslySetInnerHTML={{ __html: markdownContent }}
+        ></div>
+        <div className='blog-toc'>
+          <h4>目录</h4>
+          {Toc}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -154,7 +154,9 @@
     ]
   },
   "devDependencies": {
+    "@types/base-64": "^1.0.0",
     "@types/marked": "^4.0.7",
-    "@types/react-router": "^3.0.19"
+    "@types/react-router": "^3.0.19",
+    "base-64": "^1.0.0"
   }
 }
