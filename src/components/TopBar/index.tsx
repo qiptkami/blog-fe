@@ -5,15 +5,18 @@ import {
   InfoOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import classnames from 'classnames';
 import React, { useState } from 'react';
 import './index.less';
 
 const TopBar: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const [activeUrl, setActiveUrl] = useState<string>('/');
+  const [activeUrl, setActiveUrl] = useState<string>(
+    `/${location.pathname.split('/')[1]}`
+  );
   const [query, setQuery] = useState<string>('');
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);

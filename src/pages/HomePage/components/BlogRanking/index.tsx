@@ -1,14 +1,16 @@
-import classnames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { getRankingInfo } from '../../../../services/homePage';
 import { Type } from '../../../../typings/index';
 import { parseType } from '../../../../utils/JsonParser';
+import { useNavigate } from 'react-router-dom';
 import './index.less';
 
 const BlogRanking: React.FC = () => {
+  const navigate = useNavigate();
   const [rankingData, setRankingData] = useState<any>({});
+
   const handleClick = (id: number) => {
-    console.log(id);
+    navigate(`/types/${id}`);
   };
   useEffect(() => {
     getRanking();

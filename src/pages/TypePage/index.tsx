@@ -32,7 +32,6 @@ const TypePage: React.FC = () => {
 
   const getAllType = () => {
     getTypes().then((res) => {
-      console.log(res?.data?.data);
       const temp: IType[] = [];
       Object.keys(res?.data?.data).map((item: any) => {
         temp.push({ type: parseType(item), num: res?.data?.data[item] });
@@ -55,7 +54,6 @@ const TypePage: React.FC = () => {
     });
   };
   const typeList = types.map((type) => {
-    console.log(type);
     return (
       <div
         className='type-item'
