@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import classnames from 'classnames';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './index.less';
 
 const TopBar: React.FC = () => {
@@ -18,13 +18,22 @@ const TopBar: React.FC = () => {
     `/${location.pathname.split('/')[1]}`
   );
   const [query, setQuery] = useState<string>('');
+  useEffect(() => {
+    if (!location.state) setQuery('');
+  }, [location]);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
-  const handleSubmit = (e: any) => {
+
+  const handleSubmit = (
+    e:
+      | React.MouseEvent<HTMLSpanElement, MouseEvent>
+      | React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
-    alert(query);
+    navigate('/', { state: { query: query } });
   };
+
   return (
     <div className='header-container'>
       <div className='header-menu'>
@@ -111,6 +120,7 @@ const TopBar: React.FC = () => {
           name='query'
           placeholder='Search...'
           value={query}
+          autoComplete='off'
           onChange={(e) => {
             handleChange(e);
           }}
