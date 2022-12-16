@@ -23,10 +23,6 @@ const BlogList: React.FC = () => {
     } else {
       getData();
     }
-    return () => {
-      //清除location
-      // location.state('');
-    };
   }, [location]);
 
   const getData = (param?: { page: number; size: number }) => {

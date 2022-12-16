@@ -19,7 +19,6 @@ const BlogRanking: React.FC = () => {
   const getRanking = () => {
     getRankingInfo().then((res) => {
       if (res?.data?.status) {
-        console.log(res?.data?.msg);
         setRankingData(res?.data?.data);
       }
     });
