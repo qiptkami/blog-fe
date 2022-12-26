@@ -41,7 +41,7 @@ const BlogList: React.FC = () => {
       return <BlogItem key={item.id} blog={item}></BlogItem>;
     })
   ) : (
-    <div> 什么都找不到...... </div>
+    <div className='home-animation'> 什么都找不到...... </div>
   );
 
   return (

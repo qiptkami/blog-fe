@@ -24,25 +24,35 @@ const BlogRanking: React.FC = () => {
     });
   };
 
-  const ranking = Object.keys(rankingData).map((key) => {
-    const type: Type = parseType(key);
-    return (
-      <div key={type.id} onClick={() => handleClick(type.id)}>
-        <i className='blog-ranking-item-icon'></i>
-        <span className='blog-ranking-item-name'>{type.name}</span>
-        <span className='blog-ranking-item-num'> {rankingData[key]}</span>
-      </div>
-    );
-  });
+  const ranking =
+    JSON.stringify(rankingData) === '{}'
+      ? null
+      : Object.keys(rankingData).map((key) => {
+          const type: Type = parseType(key);
+          return (
+            <div key={type.id} onClick={() => handleClick(type.id)}>
+              <i className='blog-ranking-item-icon'></i>
+              <span className='blog-ranking-item-name'>{type.name}</span>
+              <span className='blog-ranking-item-num'> {rankingData[key]}</span>
+            </div>
+          );
+        });
+
   return (
-    <div className='blog-ranking'>
-      <div className='blog-ranking-header'>分类</div>
-      <div className='blog-ranking-body'>
-        <div className='blog-ranking-item'>
-          <div>{ranking}</div>
+    <>
+      {ranking ? (
+        <div className='blog-ranking'>
+          <div className='blog-ranking-header'>分类</div>
+          <div className='blog-ranking-body'>
+            <div className='blog-ranking-item'>
+              <div>{ranking}</div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      ) : (
+        <></>
+      )}
+    </>
   );
 };
 

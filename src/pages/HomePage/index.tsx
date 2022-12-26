@@ -11,12 +11,8 @@ const HomePage: React.FC = () => {
         <BlogList />
       </div>
       <div className='home-page-info'>
-        <div className='home-page-user-info'>
-          <UserInfo></UserInfo>
-        </div>
-        <div className='home-page-ranking-info'>
-          <BlogRanking></BlogRanking>
-        </div>
+        <UserInfo></UserInfo>
+        <BlogRanking></BlogRanking>
       </div>
     </div>
   );

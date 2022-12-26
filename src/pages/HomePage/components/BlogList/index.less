@@ -1,3 +1,21 @@
 .blog-list-container {
   max-width: 800px;
 }
+
+.home-animation {
+  width: 100px;
+  height: 100px;
+  border: 10px solid aqua;
+  border-radius: 0 0 30px 0;
+  animation: 5s loading linear infinite; //  animation: 绑定选择器  2s完成动画 linear(匀速) infinite(循环)
+}
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+    background: aqua;
+  }
+  100% {
+    transform: rotate(360deg);
+    background: aqua;
+  }
+}

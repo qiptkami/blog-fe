@@ -26,6 +26,12 @@ const BlogItem: React.FC<Props> = ({ blog }) => {
         >
           {blog.title}
         </span>
+        <div
+          className='blog-item-desc'
+          onClick={() => handleClickBlog(blog.id)}
+        >
+          {blog.description}
+        </div>
         <div className='blog-item-info'>
           <span className='blog-item-time'>
             {moment(blog.createTime).format('YYYY-MM-DD HH:mm:ss')}
@@ -40,12 +46,6 @@ const BlogItem: React.FC<Props> = ({ blog }) => {
           >
             <span className='blog-item-types-info'>{blog?.type?.name}</span>
           </div>
-        </div>
-        <div
-          className='blog-item-desc'
-          onClick={() => handleClickBlog(blog.id)}
-        >
-          {blog.description}
         </div>
       </div>
       <img className='blog-item-img' src={blog.firstPicture} alt='' />

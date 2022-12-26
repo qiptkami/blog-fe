@@ -1,20 +1,39 @@
 .user-info {
   display: flex;
   flex-direction: column;
+  border: solid 2px #fff;
+  border-radius: 8px;
+  background: #fff;
   .user-info-avatar {
+    padding-top: 10px;
     flex: 1;
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70px;
+    width: 70px;
+    &-img {
+      border-radius: 80px;
+    }
   }
   .user-info-username {
+    align-self: center;
+    padding: 5px 0;
   }
-  .user-info-sign {
-  }
+
   .user-info-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 10px 50px;
     .user-info-item-title {
+      text-align: center;
     }
     .user-info-item-num {
+      text-align: center;
     }
+  }
+  .user-info-sign {
   }
 }
