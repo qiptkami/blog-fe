@@ -67,17 +67,17 @@ const TopBar: React.FC = () => {
         </div>
         <div
           className={
-            activeUrl === '/types'
+            activeUrl === '/tags'
               ? classnames(
-                  'header-menu-types',
+                  'header-menu-tags',
                   'header-menu-item',
                   'header-active'
                 )
-              : classnames('header-menu-types', 'header-menu-item')
+              : classnames('header-menu-tags', 'header-menu-item')
           }
           onClick={() => {
-            navigate('/types');
-            setActiveUrl('/types');
+            navigate('/tags');
+            setActiveUrl('/tags');
           }}
         >
           <span>分类</span>

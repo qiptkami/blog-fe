@@ -13,12 +13,12 @@ interface Blog {
   createTime?: Date; //创建时间
   updateTime?: Date; //更新时间
   description?: String; //描述
-  type?: Type; //对一
+  tag?: Tag; //对一
   user?: User; //对一
   comments?: Comment[]; //对多
 }
 
-interface Type {
+interface Tag {
   id: number;
   name: string;
   blogs?: Blog[]; //对多
@@ -30,7 +30,7 @@ interface User {
   password: string;
   email: string;
   avatar: string; //头像
-  type: string; //类型
+  tag: string; //类型
   createTime: Date;
   updateTime: Date;
   blogs: Blog[]; //对多
@@ -49,4 +49,4 @@ interface Comment {
   parentComment?: Comment; //父回复
 }
 
-export type { Blog, Type, User, Comment };
+export type { Blog, Tag, User, Comment };

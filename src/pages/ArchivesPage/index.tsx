@@ -16,8 +16,8 @@ const Archives: React.FC = () => {
     navigate(`/blog/${id}`);
   };
 
-  const handleClickType = (id: number) => {
-    navigate(`/types`);
+  const handleClickTag = (id: number) => {
+    navigate(`/Tags`);
   };
 
   const getData = (page: number) => {
@@ -60,9 +60,9 @@ const Archives: React.FC = () => {
               </div>
               <span
                 className='archives-item-tag'
-                onClick={() => handleClickType(blog?.type?.id ?? 0)}
+                onClick={() => handleClickTag(blog?.tag?.id ?? 0)}
               >
-                {blog?.type?.name}
+                {blog?.tag?.name}
               </span>
             </div>
             <div className='archives-item-timestamp'>

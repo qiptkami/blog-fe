@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getRankingInfo } from '../../../../services/homePage';
-import { Type } from '../../../../typings/index';
-import { parseType } from '../../../../utils/JsonParser';
+import { Tag } from '../../../../typings/index';
+import { parseTag } from '../../../../utils/JsonParser';
 import { useNavigate } from 'react-router-dom';
 import './index.less';
 
@@ -10,7 +10,7 @@ const BlogRanking: React.FC = () => {
   const [rankingData, setRankingData] = useState<any>({});
 
   const handleClick = (id: number) => {
-    navigate(`/types`);
+    navigate(`/tags`);
   };
   useEffect(() => {
     getRanking();
@@ -28,11 +28,11 @@ const BlogRanking: React.FC = () => {
     JSON.stringify(rankingData) === '{}'
       ? null
       : Object.keys(rankingData).map((key) => {
-          const type: Type = parseType(key);
+          const tag: Tag = parseTag(key);
           return (
-            <div key={type.id} onClick={() => handleClick(type.id)}>
+            <div key={tag.id} onClick={() => handleClick(tag.id)}>
               <i className='blog-ranking-item-icon'></i>
-              <span className='blog-ranking-item-name'>{type.name}</span>
+              <span className='blog-ranking-item-name'>{tag.name}</span>
               <span className='blog-ranking-item-num'> {rankingData[key]}</span>
             </div>
           );

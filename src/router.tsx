@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRoutes } from 'react-router-dom';
-import TypePage from './pages/TypePage';
+import TagPage from './pages/TagPage';
 import HomePage from './pages/HomePage';
 import Archives from './pages/ArchivesPage';
 import BlogDetail from './pages/BlogDetail';
@@ -18,8 +18,8 @@ const AppRouters: React.FC = () => {
       ],
     },
     {
-      path: 'types',
-      element: <TypePage />,
+      path: 'Tags',
+      element: <TagPage />,
     },
     {
       path: 'archives',

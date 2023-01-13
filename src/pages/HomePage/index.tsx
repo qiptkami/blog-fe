@@ -1,31 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import { getTypes } from '../../services/typePage';
-import { Type } from '../../typings/index';
-import { parseType } from '../../utils/JsonParser';
+import { getTags } from '../../services/tagPage';
+import { Tag } from '../../typings/index';
+import { parseTag } from '../../utils/JsonParser';
 import BlogList from './components/BlogList';
 import BlogRanking from './components/BlogRanking';
-import TypeList from '../../components/TypeList';
+import TagList from '../../components/TagList';
 import UserInfo from './components/UserInfo';
 import './index.less';
 
 const HomePage: React.FC = () => {
-  const [typeListData, setTypeListData] = useState<Type[]>([]);
+  const [tagListData, settagListData] = useState<Tag[]>([]);
 
   useEffect(() => {
     getData();
   });
 
   const getData = (params?: { id?: number; page: number; size: number }) => {
-    getAllType();
+    getAllTag();
   };
 
-  const getAllType = () => {
-    getTypes().then((res) => {
-      const temp: Type[] = [];
+  const getAllTag = () => {
+    getTags().then((res) => {
+      const temp: Tag[] = [];
       Object.keys(res?.data?.data).map((item: any) => {
-        temp.push(parseType(item));
+        temp.push(parseTag(item));
       });
-      setTypeListData(temp);
+      settagListData(temp);
     });
   };
 
@@ -36,7 +36,7 @@ const HomePage: React.FC = () => {
       </div>
       <div className='home-page-info'>
         <UserInfo></UserInfo>
-        <TypeList data={typeListData}></TypeList>
+        <TagList data={tagListData}></TagList>
         {/* <BlogRanking></BlogRanking> */}
       </div>
     </div>

@@ -51,7 +51,7 @@ const BlogDetail: React.FC = () => {
             本文章共 1055 字 / 预计阅读时间 3 分钟
           </div>
         </div>
-        <div className='blog-header-type'>{blog?.type?.name}</div>
+        <div className='blog-header-tag'>{blog?.tag?.name}</div>
         {/*
           <img
             className='blog-picture'
