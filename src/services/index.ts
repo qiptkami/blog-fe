@@ -7,6 +7,16 @@ export const api = axios.create({
   timeout: 8000,
 });
 
+//添加请求拦截器
+// api.interceptors.request.use(
+//   (config) => {
+//     return config;
+//   },
+//   (err) => {
+//     return Promise.resolve(err);
+//   }
+// );
+
 export const post = async (url: string, data: Record<string | number, any>) => {
   return axios.post(`${baseURL}${url}`, data, {
     headers: { withCredentials: true },

@@ -10,7 +10,7 @@ const BlogRanking: React.FC = () => {
   const [rankingData, setRankingData] = useState<any>({});
 
   const handleClick = (id: number) => {
-    navigate(`/types/${id}`);
+    navigate(`/types`);
   };
   useEffect(() => {
     getRanking();

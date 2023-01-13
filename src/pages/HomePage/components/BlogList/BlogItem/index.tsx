@@ -1,6 +1,6 @@
 import { ClockCircleFilled, EyeFilled } from '@ant-design/icons';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { Blog } from '../../../../../typings/index';
 import moment from 'moment';
 import './index.less';
@@ -15,7 +15,7 @@ const BlogItem: React.FC<Props> = ({ blog }) => {
     navigate(`/blog/${id}`);
   };
   const handleClickType = (id: number) => {
-    navigate(`/types/${id}`);
+    navigate(`/types`);
   };
   return (
     <div className='blog-item'>

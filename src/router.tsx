@@ -22,10 +22,6 @@ const AppRouters: React.FC = () => {
       element: <TypePage />,
     },
     {
-      path: 'types/:id',
-      element: <TypePage />,
-    },
-    {
       path: 'archives',
       element: <Archives />,
     },

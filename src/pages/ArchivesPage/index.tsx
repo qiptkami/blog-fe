@@ -1,6 +1,5 @@
-import classnames from 'classnames';
 import moment from 'moment';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { getArchivesPaginationInfo } from '../../services/archivesPage';
 import { Blog } from '../../typings/index';
@@ -18,7 +17,7 @@ const Archives: React.FC = () => {
   };
 
   const handleClickType = (id: number) => {
-    navigate(`/types/${id}`);
+    navigate(`/types`);
   };
 
   const getData = (page: number) => {

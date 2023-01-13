@@ -1,93 +1,70 @@
 import { useEffect, useState } from 'react';
-import { getPaginationInfoByType, getTypes } from '../../services/typePage';
+import { getTypesAndBlogs } from '../../services/typePage';
+import TypeList from '../../components/TypeList';
 import { useNavigate } from 'react-router-dom';
 import { Type, Blog } from '../../typings/index';
-import { parseType } from '../../utils/JsonParser';
-import BlogItem from '../HomePage/components/BlogList/BlogItem';
-import MyPagination from '../../components/MyPagination';
-import './index.less';
+import { TagFilled } from '@ant-design/icons';
 
-interface IType {
-  type: Type;
-  num: number; //type下有num个blog
-}
+import './index.less';
 
 const TypePage: React.FC = () => {
   const navigate = useNavigate();
-  const [total, setTotal] = useState<number>(0); //数据总量
-  const [page, setPage] = useState<number>(1); //当前页数
-  const [size, setSize] = useState<number>(0); //页面大小
-  const [types, setTypes] = useState<IType[]>([]);
-  const [blogs, setBlogs] = useState<Blog[]>([]);
-  const [typeId, setTypeId] = useState<number>(-1);
-
+  const [types, setTypes] = useState<Type[]>([]);
   useEffect(() => {
     getData();
   }, []);
 
-  const getData = (params?: { id?: number; page: number; size: number }) => {
+  const getData = () => {
     getAllType();
-    getBlogByType(params);
   };
 
   const getAllType = () => {
-    getTypes().then((res) => {
-      const temp: IType[] = [];
-      Object.keys(res?.data?.data).map((item: any) => {
-        temp.push({ type: parseType(item), num: res?.data?.data[item] });
-      });
-      setTypes(temp);
+    getTypesAndBlogs().then((res) => {
+      if (res?.data?.status) {
+        setTypes(res?.data?.data);
+      }
     });
   };
-
-  const getBlogByType = (params?: {
-    id?: number;
-    page: number;
-    size: number;
-  }) => {
-    getPaginationInfoByType(params).then((res) => {
-      setTotal(res?.data?.data?.total);
-      setPage(res?.data?.data?.pageNum);
-      setSize(res?.data?.data?.pageSize);
-      setBlogs(res?.data?.data?.list);
-      setTypeId(params?.id ?? -1);
+  const blogList = (blogs?: Blog[]) => {
+    return blogs?.map((blog: Blog) => {
+      return (
+        <div
+          className='type-list-blog'
+          key={blog.id}
+          onClick={() => {
+            navigate(`/blog/${blog.id}`);
+          }}
+        >
+          <div className='type-list-blog-title'>{blog.title}</div>
+          <div className='type-list-blog-desc'> {blog.description}</div>
+        </div>
+      );
     });
   };
-  const typeList = types.map((type) => {
+  const list = types.map((type) => {
     return (
-      <div
-        className='type-item'
-        key={type.type.id}
-        onClick={() => {
-          getBlogByType({ id: type.type.id, page: page, size: size });
-          navigate(`/types/${type.type.id}`);
-        }}
-      >
-        <div className='type-item-content'>{type.type.name}</div>
-        <div className='type-item-line'>|</div>
-        <div className='type-item-num'>{type.num}</div>
+      //点击锚点跳转要加id
+      <div className='type-item' key={type.id} id={type.name}>
+        <a className='type-item-title' href={`#${type.name}`}>
+          <TagFilled style={{ color: '#0085a1' }} />
+          <span className='type-item-title-name'>{type.name}</span>
+        </a>
+        <div className='type-item-list'>
+          <>{blogList(type?.blogs)}</>
+        </div>
       </div>
     );
   });
-  const blogList = blogs.map((blog) => {
-    return <BlogItem key={blog.id} blog={blog}></BlogItem>;
-  });
+
   return (
     <div className='type-container'>
-      <div className='type-info'>
-        <div className='type-info-header'>
-          <span>分类</span>
-          <span>共 {types.length} 类</span>
+      <div className='type-info-header'></div>
+      <div className='type-info-body'>
+        <div className='type-info-wrap'>
+          <TypeList data={types} />
+          <div className='type-info-list'>{list}</div>
         </div>
-        <div className='type-list'>{typeList}</div>
       </div>
-      <div className='type-content'>{blogList}</div>
-      <MyPagination
-        total={total}
-        page={page}
-        size={size}
-        getData={getPaginationInfoByType}
-      ></MyPagination>
     </div>
   );
 };
