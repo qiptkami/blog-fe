@@ -1,18 +1,24 @@
 import { useEffect, useState } from 'react';
 import { getAllTag } from '../../services/tagPage';
 import TagList from '../../components/TagList';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Tag, Blog } from '../../typings/index';
 import { TagFilled } from '@ant-design/icons';
 
 import './index.less';
+import { scrollToAnchor } from '../../utils/scrollToAnchor';
 
 const TagPage: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [tags, setTags] = useState<Tag[]>([]);
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(() => {
+    scrollToAnchor(location.pathname, '/tags', location.state, navigate);
+  }, [tags]); //因为dom tags来渲染的，所以需要监听tags
 
   const getData = () => {
     getTags();
@@ -44,12 +50,17 @@ const TagPage: React.FC = () => {
   };
   const list = tags.map((tag) => {
     return (
-      //点击锚点跳转要加id
-      <div className='tag-item' key={tag.id} id={tag.name}>
-        <a className='tag-item-title' href={`#${tag.name}`}>
+      <div className='tag-item' key={tag.id}>
+        <div
+          id={tag.name}
+          className='tag-item-title'
+          onClick={() => {
+            scrollToAnchor(location.pathname, '/tags', tag?.name, navigate);
+          }}
+        >
           <TagFilled style={{ color: '#0085a1' }} />
           <span className='tag-item-title-name'>{tag.name}</span>
-        </a>
+        </div>
         <div className='tag-item-list'>
           <>{blogList(tag?.blogs)}</>
         </div>

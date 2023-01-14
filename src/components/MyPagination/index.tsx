@@ -58,19 +58,25 @@ const MyPagination: React.FC<Props> = ({ total, page, size, getData }) => {
     setPageList(list);
   };
   return (
-    <div className={total ? 'pagination-container' : 'pagination-hidden'}>
-      <LeftOutlined
-        className={currentPage === 1 ? 'pagination-disabled' : ''}
-        style={{ fontSize: '12px', fontWeight: '700' }}
-        onClick={prePage}
-      />
-      <ul className='pagination-ul'>{pageList}</ul>
-      <RightOutlined
-        className={currentPage === pageNum ? 'pagination-disabled' : ''}
-        style={{ fontSize: '12px', fontWeight: '700' }}
-        onClick={nextPage}
-      />
-    </div>
+    <>
+      {pageNum === 1 ? (
+        <div className='pagination-only-msg'>我也是有底线的...</div>
+      ) : (
+        <div className={total ? 'pagination-container' : 'pagination-hidden'}>
+          <LeftOutlined
+            className={currentPage === 1 ? 'pagination-disabled' : ''}
+            style={{ fontSize: '12px', fontWeight: '700' }}
+            onClick={prePage}
+          />
+          <ul className='pagination-ul'>{pageList}</ul>
+          <RightOutlined
+            className={currentPage === pageNum ? 'pagination-disabled' : ''}
+            style={{ fontSize: '12px', fontWeight: '700' }}
+            onClick={nextPage}
+          />
+        </div>
+      )}
+    </>
   );
 };
 

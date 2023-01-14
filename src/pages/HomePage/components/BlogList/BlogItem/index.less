@@ -1,6 +1,5 @@
 .blog-item {
   display: flex;
-  height: 150px;
   border-radius: 8px;
   background: #fff;
   margin-bottom: 20px;
@@ -13,7 +12,7 @@
     .blog-item-header {
       display: flex;
       .blog-item-title {
-        padding-right: 10px;
+        margin: 10px 0;
         color: #2a2935;
         font-size: 24px;
       }
@@ -21,31 +20,36 @@
         cursor: pointer;
         border-bottom: 2px solid #2a2935;
       }
-      .blog-item-tags {
-        cursor: pointer;
-        background: none #fff;
-        color: #00b5ad;
-        border: 1px solid #00b5ad;
-        border-radius: 5px;
-        box-shadow: none;
-        display: flex;
-        align-items: center;
-        .blog-item-tags-info {
-          padding: 0 5px;
-        }
-      }
     }
     .blog-item-info {
-      padding: 5px 0;
+      color: #757575;
+      display: flex;
+      .icon-calendar {
+        font-size: 16px;
+        margin-right: 2px;
+      }
       .blog-item-time {
-        color: rgba(0, 0, 0, 0.4);
+        font-size: 10px;
       }
     }
     .blog-item-desc {
       padding: 10px 0;
     }
-    .blog-item-preview {
-      flex: 1;
+    .blog-item-tags {
+      display: flex;
+      color: #757575;
+      font-size: 10px;
+      .icon-tags {
+        font-size: 16px;
+        margin-right: 2px;
+      }
+      .blog-item-tag {
+        cursor: pointer;
+        color: #757575;
+        text-decoration: underline;
+        text-underline-position: under;
+        margin-left: 4px;
+      }
     }
   }
   .blog-item-img {

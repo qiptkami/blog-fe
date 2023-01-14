@@ -114,7 +114,7 @@ const TopBar: React.FC = () => {
             setActiveUrl('/about');
           }}
         >
-          <span>生活</span>
+          <span>about</span>
         </div>
         <div className={classnames('header-menu-github', 'header-menu-item')}>
           <a

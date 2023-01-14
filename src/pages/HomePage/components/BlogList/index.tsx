@@ -36,13 +36,12 @@ const BlogList: React.FC = () => {
     });
   };
 
-  const blogs = data.length ? (
-    data.map((item: any) => {
-      return <BlogItem key={item.id} blog={item}></BlogItem>;
-    })
-  ) : (
-    <div className='home-animation'> 什么都找不到...... </div>
-  );
+  const blogs = data.length
+    ? data.map((item: any) => {
+        return <BlogItem key={item.id} blog={item}></BlogItem>;
+      })
+    : // <div className='home-animation'>  </div>
+      null;
 
   return (
     <div className='blog-list-container'>

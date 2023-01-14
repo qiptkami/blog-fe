@@ -16,7 +16,7 @@ const Archives: React.FC = () => {
   };
 
   const handleClickTag = (id: number) => {
-    navigate(`/Tags`);
+    navigate(`/tags`);
   };
 
   const getData = (page: number) => {
