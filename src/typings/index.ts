@@ -4,16 +4,10 @@ interface Blog {
   content?: string; //内容
   firstPicture?: string; //首图
   flag?: string; //原创 转载 ...
-  views?: number; //浏览次数
-  appreciation?: boolean; //赞赏开启
-  shareStatement?: boolean; //转载开启
-  commentAble?: boolean; //评论开启
-  published?: boolean; //是否发布
-  recommend?: boolean; //是否推荐
   createTime?: Date; //创建时间
   updateTime?: Date; //更新时间
   description?: String; //描述
-  tag?: Tag; //对一
+  tags?: Tag[]; //对多
   user?: User; //对一
   comments?: Comment[]; //对多
 }

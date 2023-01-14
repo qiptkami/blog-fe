@@ -13,16 +13,23 @@ const TagPage: React.FC<IProps> = ({ data }) => {
     setTags(data);
   }, [data]);
 
-  const TagList = Tags.map((Tag) => {
+  const TagList = Tags.map((tag: Tag) => {
     return (
-      <a className='Tag-list-item' key={Tag.id} href={`Tags#${Tag.name}`}>
-        <span className='Tag-list-item-content'>{Tag.name}</span>
+      <a
+        className='tag-list-item'
+        key={tag.id}
+        href={`/Tags#${tag.name}`}
+        onClick={() => {
+          console.log(tag);
+        }}
+      >
+        <span className='tag-list-item-content'>{tag.name}</span>
       </a>
     );
   });
   return (
-    <div className='Tag-list-container'>
-      <div className='Tag-list-info'>{TagList}</div>
+    <div className='tag-list-container'>
+      <div className='tag-list-info'>{TagList}</div>
     </div>
   );
 };

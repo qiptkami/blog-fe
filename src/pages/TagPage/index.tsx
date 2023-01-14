@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getTagsAndBlogs } from '../../services/tagPage';
+import { getAllTag } from '../../services/tagPage';
 import TagList from '../../components/TagList';
 import { useNavigate } from 'react-router-dom';
 import { Tag, Blog } from '../../typings/index';
@@ -15,16 +15,17 @@ const TagPage: React.FC = () => {
   }, []);
 
   const getData = () => {
-    getAllTag();
+    getTags();
   };
 
-  const getAllTag = () => {
-    getTagsAndBlogs().then((res) => {
+  const getTags = () => {
+    getAllTag().then((res) => {
       if (res?.data?.status) {
         setTags(res?.data?.data);
       }
     });
   };
+
   const blogList = (blogs?: Blog[]) => {
     return blogs?.map((blog: Blog) => {
       return (

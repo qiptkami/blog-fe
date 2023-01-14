@@ -7,9 +7,7 @@ export const getBlogsPaginationInfo = (param?: {
   size: number;
 }) => get(baseUrl + '/pagination', param);
 
-export const getRankingInfo = () => get(baseUrl + '/ranking');
-
-export const getBlogInfo = (id: number) => get(baseUrl + `/blog/${id}`);
+export const getBlogInfo = (id: number) => get(baseUrl + `/${id}`);
 
 export const queryBlog = (param?: {
   query: string;

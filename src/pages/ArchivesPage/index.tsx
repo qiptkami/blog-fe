@@ -1,7 +1,6 @@
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { getArchivesPaginationInfo } from '../../services/archivesPage';
 import { Blog } from '../../typings/index';
 import InfiniteScroll from '../../components/InfiniteScroll';
 import './index.less';
@@ -21,15 +20,15 @@ const Archives: React.FC = () => {
   };
 
   const getData = (page: number) => {
-    getArchivesPaginationInfo({ page: page, size: 5 }).then((res: any) => {
-      if (res?.data?.status) {
-        setTotal(res?.data?.data?.total);
-        setList((prev: any) => [...prev, ...res?.data?.data?.list]);
-      }
-      if (!res?.data?.data?.list?.length) {
-        setMsg('我也是有底线的...');
-      }
-    });
+    // getArchivesPaginationInfo({ page: page, size: 5 }).then((res: any) => {
+    //   if (res?.data?.status) {
+    //     setTotal(res?.data?.data?.total);
+    //     setList((prev: any) => [...prev, ...res?.data?.data?.list]);
+    //   }
+    //   if (!res?.data?.data?.list?.length) {
+    //     setMsg('我也是有底线的...');
+    //   }
+    // });
   };
 
   const archives = () => (
@@ -60,9 +59,9 @@ const Archives: React.FC = () => {
               </div>
               <span
                 className='archives-item-tag'
-                onClick={() => handleClickTag(blog?.tag?.id ?? 0)}
+                // onClick={() => handleClickTag(blog?.tag?.id ?? 0)}
               >
-                {blog?.tag?.name}
+                {/* {blog?.tag?.name} */}
               </span>
             </div>
             <div className='archives-item-timestamp'>

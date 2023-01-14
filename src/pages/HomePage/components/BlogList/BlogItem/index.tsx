@@ -11,6 +11,17 @@ interface Props {
 
 const BlogItem: React.FC<Props> = ({ blog }) => {
   const navigate = useNavigate();
+
+  const tags = (tags?: Tag[]) => {
+    return tags?.map((tag: Tag) => {
+      return (
+        <a className='blog-item-tags' key={tag.id} href={`/tags/#${tag?.name}`}>
+          <span className='blog-item-tags-info'>{tag?.name}</span>
+        </a>
+      );
+    });
+  };
+
   const handleClickBlog = (id: number) => {
     navigate(`/blog/${id}`);
   };
@@ -25,9 +36,6 @@ const BlogItem: React.FC<Props> = ({ blog }) => {
           >
             {blog.title}
           </span>
-          <a className='blog-item-tags' href={`/tags/#${blog.tag?.name}`}>
-            <span className='blog-item-tags-info'>{blog?.tag?.name}</span>
-          </a>
         </div>
         <div className='blog-item-info'>
           <span className='blog-item-time'>
@@ -36,16 +44,15 @@ const BlogItem: React.FC<Props> = ({ blog }) => {
         </div>
         <div
           className='blog-item-desc'
-          onClick={() => handleClickBlog(blog.id)}
         >
           {blog.description}
         </div>
         <div
           className='blog-item-preview'
-          onClick={() => handleClickBlog(blog.id)}
         >
           {blog.content?.substring(0, 40)}
         </div>
+        {tags(blog?.tags)}
       </div>
       <img className='blog-item-img' src={blog.firstPicture} alt='' />
     </div>
