@@ -8,7 +8,6 @@ import './index.less';
 interface TreeNode {
   hash: string;
   tag: string;
-  suffix: string;
 }
 
 interface IProps {
@@ -20,7 +19,7 @@ const MarkDown2Html: React.FC<IProps> = ({ content }) => {
     useState<string>('加载中。。。请稍后'); //html内容
   const [tocNodes, setTocNodes] = useState<TreeNode[]>([]);
   const blogBody = useRef<any>();
-  const [checkedTitle, setCheckedTitle] = useState<string>();
+  const [checkedTitle, setCheckedTitle] = useState<string>('');
 
   marked.setOptions({
     renderer: new marked.Renderer(),
@@ -46,25 +45,22 @@ const MarkDown2Html: React.FC<IProps> = ({ content }) => {
         html?.replace(/<(h\d.*?)>.*?<\/h\d>/g, (match, tag) => {
           i++;
           const hash: string = match.replace(/<.*?>/g, '');
-          const suffix = Math.random().toString(36).slice(-6);
-          nodes.push({ hash, tag, suffix });
+          nodes.push({ hash, tag });
           if (i === 1) {
-            setCheckedTitle(suffix);
+            setCheckedTitle(hash);
           }
-          return `<a class="blog-content-anchor-${suffix}" href="#${hash}" id="${hash}">${match}</a>`;
+          return `<a class="blog-content-anchor" id="${hash}" href="#${hash}">${match}</a>`;
         })
       );
 
     setTocNodes(nodes);
   }, [content]);
 
-  useEffect(() => {}, [checkedTitle]);
-
   const handleObserver = useCallback((entries: any) => {
     const target = entries[0];
     if (target.isIntersecting) {
-      const suffix = entries[0].target.className.slice(-6);
-      setCheckedTitle(suffix);
+      const hash = entries[0].target.id;
+      setCheckedTitle(hash);
     }
   }, []);
 
@@ -77,9 +73,7 @@ const MarkDown2Html: React.FC<IProps> = ({ content }) => {
     };
     const observer = new IntersectionObserver(handleObserver, option);
     tocNodes.forEach((node: any) => {
-      observer.observe(
-        blogBody.current.querySelector(`.blog-content-anchor-${node.suffix}`)
-      );
+      observer.observe(document.getElementById(node.hash) as Element);
     });
 
     return () => {
@@ -87,18 +81,18 @@ const MarkDown2Html: React.FC<IProps> = ({ content }) => {
     };
   }, [handleObserver, tocNodes]);
 
-  const Toc = tocNodes?.map(({ hash, tag, suffix }, index) => {
+  const Toc = tocNodes?.map(({ hash, tag }, index) => {
     return (
       <div key={index} className='blog-table-item'>
         <a
           key={index}
           className={`blog-table-item-${tag.substring(0, 2)}`}
           href={'#' + hash}
-          onClick={(e) => handleScroll(e, hash, suffix)}
+          onClick={(e) => handleScroll(hash)}
         >
           <span
             className={
-              checkedTitle === suffix
+              checkedTitle === hash
                 ? `blog-table-item-${tag.substring(0, 2)}-checked`
                 : ''
             }
@@ -110,12 +104,8 @@ const MarkDown2Html: React.FC<IProps> = ({ content }) => {
     );
   });
 
-  const handleScroll = (
-    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
-    hash: string,
-    suffix: string
-  ) => {
-    setCheckedTitle(suffix);
+  const handleScroll = (hash: string) => {
+    setCheckedTitle(hash);
   };
 
   return (
