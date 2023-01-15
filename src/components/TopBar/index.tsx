@@ -82,40 +82,6 @@ const TopBar: React.FC = () => {
         >
           <span>分类</span>
         </div>
-        <div
-          className={
-            activeUrl === '/archives'
-              ? classnames(
-                  'header-menu-archives',
-                  'header-menu-item',
-                  'header-active'
-                )
-              : classnames('header-menu-archives', 'header-menu-item')
-          }
-          onClick={() => {
-            navigate('/archives');
-            setActiveUrl('/archives');
-          }}
-        >
-          <span>归档</span>
-        </div>
-        <div
-          className={
-            activeUrl === '/about'
-              ? classnames(
-                  'header-menu-about',
-                  'header-menu-item',
-                  'header-active'
-                )
-              : classnames('header-menu-about', 'header-menu-item')
-          }
-          onClick={() => {
-            navigate('/about');
-            setActiveUrl('/about');
-          }}
-        >
-          <span>about</span>
-        </div>
         <div className={classnames('header-menu-github', 'header-menu-item')}>
           <a
             href='https://github.com/qiptkami'
