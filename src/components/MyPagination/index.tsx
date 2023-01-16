@@ -1,4 +1,3 @@
-import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import './index.less';
@@ -63,17 +62,27 @@ const MyPagination: React.FC<Props> = ({ total, page, size, getData }) => {
         <div className='pagination-only-msg'>我也是有底线的...</div>
       ) : (
         <div className={total ? 'pagination-container' : 'pagination-hidden'}>
-          <LeftOutlined
-            className={currentPage === 1 ? 'pagination-disabled' : ''}
-            style={{ fontSize: '12px', fontWeight: '700' }}
+          <i
+            className={classNames(
+              currentPage === 1 ? 'pagination-disabled' : '',
+              'iconfont',
+              'icon-left'
+            )}
             onClick={prePage}
-          />
+          >
+            &#xe7ec;
+          </i>
           <ul className='pagination-ul'>{pageList}</ul>
-          <RightOutlined
-            className={currentPage === pageNum ? 'pagination-disabled' : ''}
-            style={{ fontSize: '12px', fontWeight: '700' }}
+          <i
+            className={classNames(
+              currentPage === pageNum ? 'pagination-disabled' : '',
+              'iconfont',
+              'icon-left'
+            )}
             onClick={nextPage}
-          />
+          >
+            &#xe7eb;
+          </i>
         </div>
       )}
     </>

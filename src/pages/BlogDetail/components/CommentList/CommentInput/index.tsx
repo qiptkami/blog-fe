@@ -1,6 +1,6 @@
-import { UserOutlined, MailOutlined, EditOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import { Comment } from '../../../../../typings/index';
+import classNames from 'classnames';
 import './index.less';
 
 interface IProps {
@@ -48,21 +48,26 @@ const CommentInput: React.FC<IProps> = ({
   };
 
   return (
-    <div className='comment-input'>
+    <div
+      className={classNames(
+        'comment-input',
+        isReply ? 'comment-input-reply' : ''
+      )}
+    >
       <div className='comment-input-textarea'>
         <textarea
           className='comment-input-textarea-content'
           name='content'
           value={content}
           placeholder={
-            isReply ? `回复@${parent?.nickname}：` : '请输入评论信息...'
+            isReply ? `回复@${parent?.nickname}：` : '写下你的评论...'
           }
           onChange={(e) => handleContentChange(e)}
         ></textarea>
       </div>
       <div className='comment-input-info'>
         <div className='comment-input-name'>
-          <UserOutlined />
+          <i className={classNames('iconfont', 'icon-user')}>&#xe7ae;</i>
           <input
             className='comment-input-name-content'
             type='text'
@@ -73,7 +78,7 @@ const CommentInput: React.FC<IProps> = ({
           />
         </div>
         <div className='comment-input-email'>
-          <MailOutlined />
+          <i className={classNames('iconfont', 'icon-email')}>&#xe66f;</i>
           <input
             className='comment-input-email-content'
             type='text'
@@ -90,8 +95,8 @@ const CommentInput: React.FC<IProps> = ({
             handleSubmit(nickname, content, email, parent?.id ?? 0)
           }
         >
-          <EditOutlined />
-          发布
+          <i className={classNames('iconfont', 'icon-post')}>&#xe711;</i>
+          <span className='comment-post-btn-info'>发布</span>
         </button>
       </div>
     </div>

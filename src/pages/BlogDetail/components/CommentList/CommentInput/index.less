@@ -2,6 +2,7 @@
   .comment-input-textarea {
     border: 1px solid #c2c8d1;
     background-color: #fff;
+    font-size: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,6 +13,7 @@
     &-content {
       height: calc(100% - 20px);
       width: calc(100% - 20px);
+      font-size: 15px;
       border: none;
       outline: none;
       resize: none;
@@ -22,6 +24,7 @@
     display: flex;
     padding-top: 10px;
     .comment-input-name {
+      font-size: 15px;
       border: 1px solid #c2c8d1;
       padding-right: 20px;
       margin-right: 20px;
@@ -32,21 +35,23 @@
       height: 1.834rem;
       width: 10rem;
       transition: width 0.2s;
-      .anticon-user {
+      .icon-user {
         opacity: 0.5;
-        padding-right: 4px;
+        padding: 0 4px;
+        font-size: 15px;
       }
       &-content {
+        font-size: 15px;
         border: none;
         box-shadow: none;
         outline: none;
-        font-size: 1.1rem;
         color: #8a919f;
         background-color: transparent;
       }
     }
 
     .comment-input-email {
+      font-size: 15px;
       border: 1px solid #c2c8d1;
       padding-right: 20px;
       margin-right: 20px;
@@ -57,20 +62,24 @@
       height: 1.834rem;
       width: 10rem;
       transition: width 0.2s;
-      .anticon-mail {
+      .icon-email {
+        font-size: 15px;
         opacity: 0.5;
-        padding-right: 4px;
+        padding: 0 4px;
       }
       &-content {
+        font-size: 15px;
         border: none;
         box-shadow: none;
         outline: none;
-        font-size: 1.1rem;
         color: #8a919f;
         background-color: transparent;
       }
     }
     .comment-post-btn {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
       min-width: 70px;
       width: 5rem;
       background-color: #00b5ad;
@@ -78,7 +87,7 @@
       text-shadow: none;
       background-image: none;
       cursor: pointer;
-      display: inline-block;
+
       min-height: 1em;
       outline: 0;
       border: none;
@@ -91,6 +100,15 @@
       text-align: center;
       text-decoration: none;
       border-radius: 0.28571429rem;
+      .icon-post {
+        font-size: 15px;
+      }
+      &-info {
+        font-size: 15px;
+      }
     }
   }
+}
+.comment-input-reply {
+  margin-left: 60px;
 }

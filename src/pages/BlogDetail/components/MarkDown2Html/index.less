@@ -3,48 +3,61 @@
   height: 100%;
   display: flex;
   .blog-toc {
-    top: 0;
+    top: 15px;
+    font-size: 13px;
     position: sticky;
     position: -webkit-sticky;
     transition: all 0.5s;
     align-self: flex-start;
     margin-left: 100px;
+    padding-left: 12px;
+    border-left: 3px solid #eee;
+    a {
+      color: #555;
+    }
     .blog-table-item {
       width: 500px;
+      color: #23292f;
       &-h1 {
         padding-left: 0px;
         &-checked {
-          border-bottom: 1px solid #0969da;
+          color: #0085a1;
+          border-bottom: 1px solid #0085a1;
         }
       }
       &-h2 {
         padding-left: 20px;
         &-checked {
-          border-bottom: 1px solid #0969da;
+          color: #0085a1;
+          border-bottom: 1px solid #0085a1;
         }
       }
       &-h3 {
         padding-left: 40px;
         &-checked {
-          border-bottom: 1px solid #0969da;
+          color: #0085a1;
+          border-bottom: 1px solid #0085a1;
         }
       }
       &-h4 {
         padding-left: 60px;
         &-checked {
-          border-bottom: 1px solid #0969da;
+          color: #0085a1;
+          border-bottom: 1px solid #0085a1;
         }
       }
       &-h5 {
         padding-left: 80px;
         &-checked {
-          border-bottom: 1px solid #0969da;
+          color: #0085a1;
+          border-bottom: 1px solid #0085a1;
         }
       }
       &-h6 {
         padding-left: 100px;
         &-checked {
-          border-bottom: 1px solid #0969da;
+          color: #0085a1;
+          border-bottom: 1px solid #0085a1;
         }
       }
     }
@@ -52,8 +65,8 @@
   .markdown-content {
     width: 80%;
     .blog-content-anchor {
+      color: #23292f;
       cursor: pointer;
-      color: #0969da;
     }
     .blog-content-anchor:hover {
       text-decoration: underline;

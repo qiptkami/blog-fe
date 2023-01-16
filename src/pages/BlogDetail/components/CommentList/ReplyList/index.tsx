@@ -1,18 +1,13 @@
-import moment from 'moment';
-import {
-  ClockCircleFilled,
-  LikeOutlined,
-  MessageOutlined,
-} from '@ant-design/icons';
 import { Comment } from '../../../../../typings/index';
-import './index.less';
-import classnames from 'classnames';
 import { useEffect, useState } from 'react';
 import CommentInput from '../CommentInput';
 import {
   getCommentInfo,
   insertComment,
 } from '../../../../../services/blogPage';
+import moment from 'moment';
+import classNames from 'classnames';
+import './index.less';
 
 interface IProps {
   bid: number;
@@ -73,73 +68,71 @@ const ReplyList: React.FC<IProps> = ({
         <div
           className={
             reply.parentComment
-              ? classnames('comment-content', 'comment-content-reply')
+              ? classNames('comment-content', 'comment-content-reply')
               : 'comment-content'
           }
         >
+          <img className='comment-avatar' alt='' src={reply.avatar} />
           <div className='comment-header'>
             <div className='comment-user'>
-              <div className='comment-avatar'>
-                {/* <img src={reply.avatar} /> */}
+              <div className='comment-user-meta'>
+                <span className='comment-nickname'>{reply.nickname}</span>
+                {reply.isAdminComment && (
+                  <div className='comment-author'>(作者)</div>
+                )}
+                {reply.parentComment && (
+                  <span className='comment-replier'>
+                    {' '}
+                    回复 @{reply.parentComment.nickname}
+                  </span>
+                )}
               </div>
-              <span className='comment-nickname'>{reply.nickname}</span>
-              {reply.isAdminComment && (
-                <div className='comment-author'>(作者)</div>
-              )}
-              {reply.parentComment && (
-                <span className='comment-replier'>
-                  回复 @{reply.parentComment.nickname}
-                </span>
-              )}
+              <div className='comment-action'>
+                <i className={classNames('iconfont', 'icon-comment')}>
+                  &#xe689;
+                </i>
+                <div
+                  className='comment-action-reply'
+                  onClick={() => {
+                    getReplyParent(reply?.id ?? 0);
+                    if (rid === reply?.id) {
+                      setRid(-1);
+                      setIsReply((prev) => !prev);
+                    } else {
+                      setRid(reply?.id);
+                      if (!isReply) {
+                        setIsReply(true);
+                      }
+                    }
+                  }}
+                >
+                  回复
+                </div>
+              </div>
             </div>
             <div className='comment-date'>
-              <ClockCircleFilled />
               {moment(reply.createTime).format('YYYY-MM-DD HH:mm:ss')}
             </div>
+            <div className='comment-text'>{reply.content}</div>
           </div>
-          <div className='comment-text'>{reply.content}</div>
-          <div className='comment-action'>
-            <div className='comment-action-like'>
-              <LikeOutlined />
-              点赞
-            </div>
-            <div
-              className='comment-action-reply'
-              onClick={() => {
-                getReplyParent(reply?.id ?? 0);
-                if (rid === reply?.id) {
-                  setRid(-1);
-                  setIsReply((prev) => !prev);
-                } else {
-                  setRid(reply?.id);
-                  if (!isReply) {
-                    setIsReply(true);
-                  }
-                }
-              }}
-            >
-              <MessageOutlined />
-              回复
-            </div>
-          </div>
-          {isReplySubmit && isReply && rid === reply?.id ? (
-            <CommentInput
-              isReply
-              parent={reply}
-              uname={uname}
-              uEmail={uEmail}
-              handleSubmit={(
-                nickname: string,
-                content: string,
-                email: string,
-                parentId: number
-              ) => {
-                handleSubmit(nickname, content, email, parentId);
-                setIsReplySubmit(false);
-              }}
-            ></CommentInput>
-          ) : null}
         </div>
+        {isReplySubmit && isReply && rid === reply?.id ? (
+          <CommentInput
+            isReply
+            parent={reply}
+            uname={uname}
+            uEmail={uEmail}
+            handleSubmit={(
+              nickname: string,
+              content: string,
+              email: string,
+              parentId: number
+            ) => {
+              handleSubmit(nickname, content, email, parentId);
+              setIsReplySubmit(false);
+            }}
+          ></CommentInput>
+        ) : null}
         <ReplyList
           bid={bid}
           replyId={rid}

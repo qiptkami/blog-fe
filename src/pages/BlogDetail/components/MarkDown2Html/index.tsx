@@ -87,8 +87,8 @@ const MarkDown2Html: React.FC<IProps> = ({ content }) => {
         <a
           key={index}
           className={`blog-table-item-${tag.substring(0, 2)}`}
-          href={'#' + hash}
-          onClick={(e) => handleScroll(hash)}
+          href={`#${hash}`}
+          onClick={() => handleScroll(hash)}
         >
           <span
             className={
@@ -116,10 +116,7 @@ const MarkDown2Html: React.FC<IProps> = ({ content }) => {
           ref={blogBody}
           dangerouslySetInnerHTML={{ __html: markdownContent }}
         ></div>
-        <div className='blog-toc'>
-          <h4>目录</h4>
-          {Toc}
-        </div>
+        <div className='blog-toc'>{Toc}</div>
       </div>
     </>
   );

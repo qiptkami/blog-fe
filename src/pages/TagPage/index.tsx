@@ -3,7 +3,7 @@ import { getAllTag } from '../../services/tagPage';
 import TagList from '../../components/TagList';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Tag, Blog } from '../../typings/index';
-import { TagFilled } from '@ant-design/icons';
+import classNames from 'classnames';
 
 import './index.less';
 import { scrollToAnchor } from '../../utils/scrollToAnchor';
@@ -12,17 +12,14 @@ const TagPage: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [tags, setTags] = useState<Tag[]>([]);
+
   useEffect(() => {
-    getData();
+    getTags();
   }, []);
 
   useEffect(() => {
     scrollToAnchor(location.pathname, '/tags', location.state, navigate);
-  }, [tags]); //因为dom tags来渲染的，所以需要监听tags
-
-  const getData = () => {
-    getTags();
-  };
+  }, [location, tags, navigate]); //因为dom tags来渲染的，所以需要监听tags
 
   const getTags = () => {
     getAllTag().then((res) => {
@@ -58,7 +55,7 @@ const TagPage: React.FC = () => {
             scrollToAnchor(location.pathname, '/tags', tag?.name, navigate);
           }}
         >
-          <TagFilled style={{ color: '#0085a1' }} />
+          <i className={classNames('iconfont', 'icon-tag-item')}>&#xe887;</i>
           <span className='tag-item-title-name'>{tag.name}</span>
         </div>
         <div className='tag-item-list'>
