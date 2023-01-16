@@ -4,6 +4,7 @@ import ReplyList from './ReplyList';
 import './index.less';
 import CommentInput from './CommentInput';
 import { getCommentInfo, insertComment } from '../../../../services/blogPage';
+import classNames from 'classnames';
 
 interface IProps {
   bid: number;
@@ -70,7 +71,8 @@ const CommentList: React.FC<IProps> = ({ bid, list }) => {
 
   return (
     <div className='comment-container'>
-      <div className='comment-title' style={{ maxWidth: '100%' }}>
+      <div className='comment-title'>
+        <i className={classNames('iconfont', 'icon-comments')}>&#xe8e8;</i>
         评论
       </div>
       <div className='comment-list'></div>

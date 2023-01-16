@@ -35,6 +35,7 @@ const ReplyList: React.FC<IProps> = ({
   const [rid, setRid] = useState<number>();
   const [isReply, setIsReply] = useState<boolean>(false);
   const [isReplySubmit, setIsReplySubmit] = useState<boolean>(true);
+  const [isHover, setIsHover] = useState<boolean>(false);
   /*
   1.如果回复评论发布，就要关闭对应的评论input（v）
   2.如果点开了一个input，再去点当前这个回复，就会关闭对应input （v）
@@ -66,6 +67,8 @@ const ReplyList: React.FC<IProps> = ({
     return (
       <div className='comment-body' key={reply.id}>
         <div
+          onMouseEnter={() => setIsHover(true)}
+          onMouseLeave={() => setIsHover(false)}
           className={
             reply.parentComment
               ? classNames('comment-content', 'comment-content-reply')
@@ -87,12 +90,9 @@ const ReplyList: React.FC<IProps> = ({
                   </span>
                 )}
               </div>
-              <div className='comment-action'>
-                <i className={classNames('iconfont', 'icon-comment')}>
-                  &#xe689;
-                </i>
+              {isHover && (
                 <div
-                  className='comment-action-reply'
+                  className='comment-action'
                   onClick={() => {
                     getReplyParent(reply?.id ?? 0);
                     if (rid === reply?.id) {
@@ -106,9 +106,12 @@ const ReplyList: React.FC<IProps> = ({
                     }
                   }}
                 >
-                  回复
+                  <i className={classNames('iconfont', 'icon-comment')}>
+                    &#xe689;
+                  </i>
+                  <div className='comment-action-reply'>回复</div>
                 </div>
-              </div>
+              )}
             </div>
             <div className='comment-date'>
               {moment(reply.createTime).format('YYYY-MM-DD HH:mm:ss')}
