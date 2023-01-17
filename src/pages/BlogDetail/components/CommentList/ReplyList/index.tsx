@@ -106,10 +106,11 @@ const ReplyList: React.FC<IProps> = ({
                     }
                   }}
                 >
-                  <i className={classNames('iconfont', 'icon-comment')}>
-                    &#xe689;
-                  </i>
-                  <div className='comment-action-reply'>回复</div>
+                  <div className='comment-action-reply'>
+                    {isReplySubmit && isReply && rid === reply?.id
+                      ? '取消回复'
+                      : '回复'}
+                  </div>
                 </div>
               )}
             </div>
