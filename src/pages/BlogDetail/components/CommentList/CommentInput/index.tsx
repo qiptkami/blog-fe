@@ -24,16 +24,17 @@ const CommentInput: React.FC<IProps> = ({
   uEmail,
   handleSubmit,
 }) => {
+  // const [replyPid, setReplyPid] = useState<number>();
+  const [content, setContent] = useState<string>('');
+  const [nickname, setNickname] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [isWarning, setIsWarning] = useState<boolean>(false);
+
   useEffect(() => {
     //不为空说明为管理员评论
     uname && setNickname(uname);
     uEmail && setEmail(uEmail);
   }, [uname, uEmail]);
-
-  // const [replyPid, setReplyPid] = useState<number>();
-  const [content, setContent] = useState<string>('');
-  const [nickname, setNickname] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
@@ -91,14 +92,30 @@ const CommentInput: React.FC<IProps> = ({
         <button
           type='button'
           className='comment-post-btn'
-          onClick={() =>
-            handleSubmit(nickname, content, email, parent?.id ?? 0)
-          }
+          onClick={() => {
+            if (nickname === '' || content === '') {
+              setIsWarning(true);
+              return;
+            }
+            setIsWarning(false);
+            handleSubmit(nickname, content, email, parent?.id ?? 0);
+          }}
         >
           <i className={classNames('iconfont', 'icon-post')}>&#xe711;</i>
           <span className='comment-post-btn-info'>发布</span>
         </button>
       </div>
+      {isWarning && (
+        <div className='comment-alert-warning'>
+          昵称或评论信息不能为空
+          <i
+            className={classNames('iconfont', 'icon-close')}
+            onClick={() => setIsWarning(false)}
+          >
+            &#xe723;
+          </i>
+        </div>
+      )}
     </div>
   );
 };

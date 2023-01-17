@@ -1,10 +1,7 @@
 import { Comment } from '../../../../../typings/index';
 import { useEffect, useState } from 'react';
 import CommentInput from '../CommentInput';
-import {
-  getCommentInfo,
-  insertComment,
-} from '../../../../../services/blogPage';
+
 import moment from 'moment';
 import classNames from 'classnames';
 import './index.less';
@@ -16,7 +13,7 @@ interface IProps {
   getReplyParent: (pid: number) => void;
   uname?: string;
   uEmail?: string;
-  handleSubmit?: (
+  handleSubmit: (
     nickname: string,
     content: string,
     email: string,
@@ -31,6 +28,7 @@ const ReplyList: React.FC<IProps> = ({
   bid,
   uname,
   uEmail,
+  handleSubmit,
 }) => {
   const [rid, setRid] = useState<number>();
   const [isReply, setIsReply] = useState<boolean>(false);
@@ -44,24 +42,6 @@ const ReplyList: React.FC<IProps> = ({
   useEffect(() => {
     setRid(replyId);
   }, [replyId, rid]);
-
-  const handleSubmit = (
-    nickname: string,
-    content: string,
-    email: string,
-    parentId: number
-  ) => {
-    const comment: Comment = {
-      nickname: nickname,
-      content: content,
-      email: email,
-      blog: { id: bid ?? 0 },
-      parentComment: { id: parentId ?? 0 },
-    };
-    setIsReplySubmit(false);
-    insertComment(comment);
-    getCommentInfo(bid ?? 0);
-  };
 
   const list = replyList?.map((reply: Comment) => {
     return (
@@ -144,6 +124,7 @@ const ReplyList: React.FC<IProps> = ({
           getReplyParent={getReplyParent}
           uname={uname}
           uEmail={uEmail}
+          handleSubmit={handleSubmit}
         ></ReplyList>
       </div>
     );

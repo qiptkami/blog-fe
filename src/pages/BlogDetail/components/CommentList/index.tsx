@@ -3,15 +3,20 @@ import { Comment } from '../../../../typings/index';
 import ReplyList from './ReplyList';
 import './index.less';
 import CommentInput from './CommentInput';
-import { getCommentInfo, insertComment } from '../../../../services/blogPage';
 import classNames from 'classnames';
 
 interface IProps {
   bid: number;
   list?: Comment[];
+  handleSubmit: (
+    nickname: string,
+    content: string,
+    email: string,
+    parentCommentId: number
+  ) => void;
 }
 
-const CommentList: React.FC<IProps> = ({ bid, list }) => {
+const CommentList: React.FC<IProps> = ({ bid, list, handleSubmit }) => {
   const [parentCommentList, setParentCommentList] = useState<Comment[]>();
   const [replyParent, setReplyParent] = useState<Comment>();
   const [adminName, setAdminName] = useState<string>();
@@ -50,23 +55,6 @@ const CommentList: React.FC<IProps> = ({ bid, list }) => {
   const getReplyParent = (pid: number) => {
     const parent = list?.find((item: Comment) => item.id === pid);
     setReplyParent(parent);
-  };
-
-  const handleSubmit = (
-    nickname: string,
-    content: string,
-    email: string,
-    parentId: number
-  ) => {
-    const comment: Comment = {
-      nickname: nickname,
-      content: content,
-      email: email,
-      blog: { id: bid ?? 0 },
-      parentComment: { id: parentId ?? 0 },
-    };
-    insertComment(comment);
-    getCommentInfo(bid ?? 0);
   };
 
   return (

@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { getCommentInfo } from '../../services/blogPage';
+import { getCommentInfo, insertComment } from '../../services/blogPage';
 import { getBlogInfo } from '../../services/homePage';
 import { Blog, Comment, Tag } from '../../typings/index';
 import Comments from './components/CommentList';
@@ -39,6 +39,26 @@ const BlogDetail: React.FC = () => {
     getCommentInfo(id).then((res: any) => {
       if (res.data.status) {
         setCommentList(res.data.data);
+      }
+    });
+  };
+
+  const handleSubmit = (
+    nickname: string,
+    content: string,
+    email: string,
+    parentId: number
+  ) => {
+    const comment: Comment = {
+      nickname: nickname,
+      content: content,
+      email: email,
+      blog: { id: bid ?? 0 },
+      parentComment: { id: parentId ?? 0 },
+    };
+    insertComment(comment).then((res: any) => {
+      if (res?.data?.status) {
+        getComments(bid);
       }
     });
   };
@@ -86,7 +106,11 @@ const BlogDetail: React.FC = () => {
           </ul>
         </div>
 
-        <Comments bid={bid} list={commentList}></Comments>
+        <Comments
+          bid={bid}
+          list={commentList}
+          handleSubmit={handleSubmit}
+        ></Comments>
       </div>
     </div>
   );
