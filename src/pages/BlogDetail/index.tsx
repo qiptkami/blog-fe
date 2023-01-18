@@ -1,15 +1,19 @@
-import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { getCommentInfo, insertComment } from '../../services/blogPage';
 import { getBlogInfo } from '../../services/homePage';
 import { Blog, Comment, Tag } from '../../typings/index';
 import Comments from './components/CommentList';
 import MarkDown2Html from './components/MarkDown2Html';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import moment from 'moment';
+import { scrollToAnchor } from '../../utils/scrollToAnchor';
+import classNames from 'classnames';
 import './index.less';
 
 const BlogDetail: React.FC = () => {
   const { id } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [bid, setBid] = useState<number>(0);
   const [blog, setBlog] = useState<Blog>();
   const [commentList, setCommentList] = useState<Comment[]>();
@@ -23,7 +27,17 @@ const BlogDetail: React.FC = () => {
 
   const tags = (tags?: Tag[]) => {
     return tags?.map((tag: Tag) => {
-      return <div key={tag.id}>{tag.name}</div>;
+      return (
+        <div
+          className='blog-header-tags-item'
+          key={tag.id}
+          onClick={() => {
+            scrollToAnchor(location.pathname, '/tags', tag?.name, navigate);
+          }}
+        >
+          <span className='blog-header-tags-item-info'>{tag?.name + ' '}</span>
+        </div>
+      );
     });
   };
 
@@ -69,21 +83,22 @@ const BlogDetail: React.FC = () => {
         <div className='blog-header-title'>{blog?.title}</div>
         <div className='blog-header-info'>
           <div className='blog-header-info-time'>
+            <i className={classNames('iconfont', 'icon-clock')}>&#xe62a;</i>
             {moment(blog?.createTime).format('YYYY-MM-DD HH:mm:ss')}
           </div>
-          <div className='blog-header-info-flag'>{blog?.flag}</div>
+          <div className='blog-header-info-tags'>
+            <i className={classNames('iconfont', 'icon-tags')}>&#xe87c;</i>
+            {tags(blog?.tags)}
+          </div>
           <div className='blog-header-info-reader'>
-            本文章共 1055 字 / 预计阅读时间 3 分钟
+            <i className={classNames('iconfont', 'icon-pen')}>&#xe795;</i>
+            本文章共 1055 字
+            <i className={classNames('iconfont', 'icon-hourglass')}>&#xe62e;</i>
+            预计阅读时间 3 分钟
           </div>
         </div>
-        <div className='blog-header-tag'>{tags(blog?.tags)}</div>
-        {/*
-          <img
-            className='blog-picture'
-            src='${blog?.firstPicture}'
-            alt=''
-          />
-        */}
+
+        <img className='blog-picture' src={blog?.firstPicture} alt='' />
       </div>
       <div className='blog-main'>
         <MarkDown2Html content={blog?.content}></MarkDown2Html>

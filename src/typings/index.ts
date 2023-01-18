@@ -3,7 +3,6 @@ interface Blog {
   title?: string; //标题
   content?: string; //内容
   firstPicture?: string; //首图
-  flag?: string; //原创 转载 ...
   createTime?: Date; //创建时间
   updateTime?: Date; //更新时间
   description?: String; //描述
@@ -24,7 +23,6 @@ interface User {
   password: string;
   email: string;
   avatar: string; //头像
-  tag: string; //类型
   createTime: Date;
   updateTime: Date;
   blogs: Blog[]; //对多
