@@ -29,13 +29,13 @@ const BlogDetail: React.FC = () => {
     return tags?.map((tag: Tag) => {
       return (
         <div
-          className='blog-header-tags-item'
+          className='blog-footer-tags-item'
           key={tag.id}
           onClick={() => {
             scrollToAnchor(location.pathname, '/tags', tag?.name, navigate);
           }}
         >
-          <span className='blog-header-tags-item-info'>{tag?.name + ' '}</span>
+          <span className='blog-footer-tags-item-info'>{tag?.name + ' '}</span>
         </div>
       );
     });
@@ -86,9 +86,9 @@ const BlogDetail: React.FC = () => {
             <i className={classNames('iconfont', 'icon-clock')}>&#xe62a;</i>
             {moment(blog?.createTime).format('YYYY-MM-DD HH:mm:ss')}
           </div>
-          <div className='blog-header-info-tags'>
-            <i className={classNames('iconfont', 'icon-tags')}>&#xe87c;</i>
-            {tags(blog?.tags)}
+          <div className='blog-header-info-comment'>
+            <i className={classNames('iconfont', 'icon-comment')}>&#xe689;</i>
+            {commentList?.length}
           </div>
           <div className='blog-header-info-reader'>
             <i className={classNames('iconfont', 'icon-pen')}>&#xe795;</i>
@@ -98,29 +98,16 @@ const BlogDetail: React.FC = () => {
           </div>
         </div>
 
-        <img className='blog-picture' src={blog?.firstPicture} alt='' />
+        {/* <img className='blog-picture' src={blog?.firstPicture} alt='' /> */}
       </div>
       <div className='blog-main'>
         <MarkDown2Html content={blog?.content}></MarkDown2Html>
       </div>
       <div className='blog-footer'>
-        <div className='ui right aligned basic segment'></div>
-
-        <div className='ui middle aligned grid'>
-          <ul className='list'>
-            <li>
-              作者：<span>blog.user.username</span>
-              <a href='@{/about}' target='_blank'>
-                （联系作者）
-              </a>
-            </li>
-            <li>
-              发表时间：<span>blog.updateTime, 'yyyy-MM-dd HH:mm</span>
-            </li>
-            <li>版权声明：自由转载-非商用-非衍生-保持署名</li>
-          </ul>
+        <div className='blog-footer-tags'>
+          <i className={classNames('iconfont', 'icon-tags')}>&#xe87c;</i>
+          {tags(blog?.tags)}
         </div>
-
         <Comments
           bid={bid}
           list={commentList}
