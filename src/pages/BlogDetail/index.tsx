@@ -9,6 +9,7 @@ import moment from 'moment';
 import { scrollToAnchor } from '../../utils/scrollToAnchor';
 import classNames from 'classnames';
 import './index.less';
+import LoadingAnimation from '../../components/LoadingAnimation';
 
 const BlogDetail: React.FC = () => {
   const { id } = useParams();
@@ -17,6 +18,7 @@ const BlogDetail: React.FC = () => {
   const [bid, setBid] = useState<number>(0);
   const [blog, setBlog] = useState<Blog>();
   const [commentList, setCommentList] = useState<Comment[]>();
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const blogId = (id && parseInt(id)) || 0;
@@ -24,6 +26,10 @@ const BlogDetail: React.FC = () => {
     getBlog(blogId);
     getComments(blogId);
   }, [id]);
+
+  useEffect(() => {
+    blog && commentList && setLoading(true);
+  }, [blog]);
 
   const tags = (tags?: Tag[]) => {
     return tags?.map((tag: Tag) => {
@@ -78,43 +84,53 @@ const BlogDetail: React.FC = () => {
   };
 
   return (
-    <div className='blog-container'>
-      <div className='blog-header'>
-        <div className='blog-header-title'>{blog?.title}</div>
-        <div className='blog-header-info'>
-          <div className='blog-header-info-time'>
-            <i className={classNames('iconfont', 'icon-clock')}>&#xe62a;</i>
-            {moment(blog?.createTime).format('YYYY-MM-DD HH:mm:ss')}
-          </div>
-          <div className='blog-header-info-comment'>
-            <i className={classNames('iconfont', 'icon-comment')}>&#xe689;</i>
-            {commentList?.length}
-          </div>
-          <div className='blog-header-info-reader'>
-            <i className={classNames('iconfont', 'icon-pen')}>&#xe795;</i>
-            本文章共 1055 字
-            <i className={classNames('iconfont', 'icon-hourglass')}>&#xe62e;</i>
-            预计阅读时间 3 分钟
-          </div>
-        </div>
+    <>
+      {loading ? (
+        <LoadingAnimation />
+      ) : (
+        <div className='blog-container'>
+          <div className='blog-header'>
+            <div className='blog-header-title'>{blog?.title}</div>
+            <div className='blog-header-info'>
+              <div className='blog-header-info-time'>
+                <i className={classNames('iconfont', 'icon-clock')}>&#xe62a;</i>
+                {moment(blog?.createTime).format('YYYY-MM-DD HH:mm:ss')}
+              </div>
+              <div className='blog-header-info-comment'>
+                <i className={classNames('iconfont', 'icon-comment')}>
+                  &#xe689;
+                </i>
+                {commentList?.length}
+              </div>
+              <div className='blog-header-info-reader'>
+                <i className={classNames('iconfont', 'icon-pen')}>&#xe795;</i>
+                本文章共 1055 字
+                <i className={classNames('iconfont', 'icon-hourglass')}>
+                  &#xe62e;
+                </i>
+                预计阅读时间 3 分钟
+              </div>
+            </div>
 
-        {/* <img className='blog-picture' src={blog?.firstPicture} alt='' /> */}
-      </div>
-      <div className='blog-main'>
-        <MarkDown2Html content={blog?.content}></MarkDown2Html>
-      </div>
-      <div className='blog-footer'>
-        <div className='blog-footer-tags'>
-          <i className={classNames('iconfont', 'icon-tags')}>&#xe87c;</i>
-          {tags(blog?.tags)}
+            {/* <img className='blog-picture' src={blog?.firstPicture} alt='' /> */}
+          </div>
+          <div className='blog-main'>
+            <MarkDown2Html content={blog?.content}></MarkDown2Html>
+          </div>
+          <div className='blog-footer'>
+            <div className='blog-footer-tags'>
+              <i className={classNames('iconfont', 'icon-tags')}>&#xe87c;</i>
+              {tags(blog?.tags)}
+            </div>
+            <Comments
+              bid={bid}
+              list={commentList}
+              handleSubmit={handleSubmit}
+            ></Comments>
+          </div>
         </div>
-        <Comments
-          bid={bid}
-          list={commentList}
-          handleSubmit={handleSubmit}
-        ></Comments>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

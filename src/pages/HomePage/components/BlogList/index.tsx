@@ -40,7 +40,7 @@ const BlogList: React.FC = () => {
     ? data.map((item: any) => {
         return <BlogItem key={item.id} blog={item}></BlogItem>;
       })
-    : // <div className='home-animation'>  </div>
+    : // <div className='loading-animation'>  </div>
       null;
 
   return (
