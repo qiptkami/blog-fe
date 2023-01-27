@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import classnames from 'classnames';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './index.less';
 
 const TopBar: React.FC = () => {
@@ -10,6 +10,14 @@ const TopBar: React.FC = () => {
   const [activeUrl, setActiveUrl] = useState<string>(
     `/${location.pathname.split('/')[1]}`
   );
+
+  useEffect(() => {
+    setActiveUrl(`/${location.pathname.split('/')[1]}`);
+  }, [location]);
+
+  useEffect(() => {
+    console.log(activeUrl);
+  }, [activeUrl]);
 
   return (
     <div className='header-container'>
