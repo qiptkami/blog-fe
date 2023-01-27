@@ -28,7 +28,7 @@ const BlogDetail: React.FC = () => {
   }, [id]);
 
   useEffect(() => {
-    blog && commentList && setLoading(true);
+    blog && commentList && setLoading(false);
   }, [blog]);
 
   const tags = (tags?: Tag[]) => {

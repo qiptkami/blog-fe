@@ -3,7 +3,7 @@ import './index.less';
 
 const LoadingAnimation: React.FC = () => {
   return (
-    <>
+    <div className='redirecting-animation'>
       <div className='body'>
         <span>
           <span></span>
@@ -23,7 +23,7 @@ const LoadingAnimation: React.FC = () => {
         <span></span>
       </div>
       <h1>Redirecting</h1>
-    </>
+    </div>
   );
 };
 
