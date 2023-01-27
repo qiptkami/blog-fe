@@ -13,14 +13,13 @@ const App: React.FC = () => {
 
   return (
     <>
-        <div className='app-container'>
-          <TopBar></TopBar>
-          <div className='app-body'>
-            <AppRouters></AppRouters>
-          </div>
-          <FooterBar></FooterBar>
+      <div className='app-container'>
+        <TopBar></TopBar>
+        <div className='app-body'>
+          <AppRouters></AppRouters>
         </div>
-    
+        <FooterBar></FooterBar>
+      </div>
     </>
   );
 };

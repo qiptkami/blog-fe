@@ -15,9 +15,7 @@ const TopBar: React.FC = () => {
     setActiveUrl(`/${location.pathname.split('/')[1]}`);
   }, [location]);
 
-  useEffect(() => {
-    console.log(activeUrl);
-  }, [activeUrl]);
+  useEffect(() => {}, [activeUrl]);
 
   return (
     <div className='header-container'>
