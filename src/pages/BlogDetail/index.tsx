@@ -19,6 +19,7 @@ const BlogDetail: React.FC = () => {
   const [blog, setBlog] = useState<Blog>();
   const [commentList, setCommentList] = useState<Comment[]>();
   const [loading, setLoading] = useState<boolean>(true);
+  const [commentLoading, setCommentLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const blogId = (id && parseInt(id)) || 0;
@@ -28,7 +29,7 @@ const BlogDetail: React.FC = () => {
   }, [id]);
 
   useEffect(() => {
-    blog && commentList && setLoading(false);
+    blog && !commentLoading && setLoading(false);
   }, [blog]);
 
   const tags = (tags?: Tag[]) => {
@@ -53,6 +54,7 @@ const BlogDetail: React.FC = () => {
         setBlog(res.data.data);
       }
     });
+    setCommentLoading(false);
   };
 
   const getComments = (id: number) => {
