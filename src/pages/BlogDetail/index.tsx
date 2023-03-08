@@ -99,9 +99,7 @@ const BlogDetail: React.FC = () => {
                 {moment(blog?.createTime).format('YYYY-MM-DD HH:mm:ss')}
               </div>
               <div className='blog-header-info-comment'>
-                <i className={classNames('iconfont', 'icon-comment')}>
-                  &#xe689;
-                </i>
+                <i className={classNames('', 'icon-comment')}>&#xe689;</i>
                 {commentList?.length}
               </div>
               <div className='blog-header-info-reader'>

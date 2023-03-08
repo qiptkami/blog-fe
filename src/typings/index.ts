@@ -18,14 +18,14 @@ interface Tag {
 }
 
 interface User {
-  id: number;
+  id?: number;
   username: string;
   password: string;
-  email: string;
-  avatar: string; //头像
-  createTime: Date;
-  updateTime: Date;
-  blogs: Blog[]; //对多
+  email?: string;
+  avatar?: string; //头像
+  createTime?: Date;
+  updateTime?: Date;
+  blogs?: Blog[]; //对多
 }
 
 interface Comment {

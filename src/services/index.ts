@@ -19,7 +19,9 @@ export const api = axios.create({
 
 export const post = async (url: string, data: Record<string | number, any>) => {
   return axios.post(`${baseURL}${url}`, data, {
-    headers: { withCredentials: true },
+    headers: {
+      withCredentials: true,
+    },
   });
 };
 

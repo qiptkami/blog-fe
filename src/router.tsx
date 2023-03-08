@@ -3,24 +3,53 @@ import { useRoutes } from 'react-router-dom';
 import TagPage from './pages/TagPage';
 import HomePage from './pages/HomePage';
 import BlogDetail from './pages/BlogDetail';
+import LoginPage from './pages/admin/LoginPage';
+import MainLayout from './pages/MainLayout';
+import AdminLayout from './pages/admin/AdminLayout';
 
 const AppRouters: React.FC = () => {
-  const routes = useRoutes([
+  const routes = [
     {
       path: '/',
+      element: (
+        <MainLayout>
+          <HomePage />
+        </MainLayout>
+      ),
+    },
+    {
+      path: 'blog/:id',
+      element: (
+        <MainLayout>
+          <BlogDetail />
+        </MainLayout>
+      ),
+    },
+    {
+      path: 'tags',
+      element: (
+        <MainLayout>
+          <TagPage />
+        </MainLayout>
+      ),
+    },
+  ];
+  const adminRoutes = [
+    {
+      path: '/admin',
       children: [
-        { path: '', element: <HomePage /> },
         {
-          path: 'blog/:id',
-          element: <BlogDetail />,
+          path: '',
+          element: <LoginPage />,
+        },
+        {
+          path: 'login',
+          element: <LoginPage />,
         },
       ],
     },
-    {
-      path: 'Tags',
-      element: <TagPage />,
-    },
-  ]);
-  return routes;
+  ];
+
+  return useRoutes([...routes, ...adminRoutes]);
 };
 export default AppRouters;
