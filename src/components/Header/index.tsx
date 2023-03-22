@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import './index.less';
 
-const TopBar: React.FC = () => {
+const Header: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -68,4 +68,4 @@ const TopBar: React.FC = () => {
   );
 };
 
-export default TopBar;
+export default Header;

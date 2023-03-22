@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import React, { useState } from 'react';
 import './index.less';
 
-const FooterBar: React.FC = () => {
+const Footer: React.FC = () => {
   return (
     <div className='footer-container'>
       <div className='seven wide column'>
@@ -15,4 +15,4 @@ const FooterBar: React.FC = () => {
   );
 };
 
-export default FooterBar;
+export default Footer;

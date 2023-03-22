@@ -1,6 +1,6 @@
 import React from 'react';
-import FooterBar from '../../components/FooterBar';
-import TopBar from '../../components/TopBar';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 import './index.less';
 
 interface IProps {
@@ -10,9 +10,9 @@ interface IProps {
 const MainLayout: React.FC<IProps> = ({ children }) => {
   return (
     <>
-      <TopBar></TopBar>
+      <Header></Header>
       <div className='body-container'>{children}</div>
-      <FooterBar></FooterBar>
+      <Footer></Footer>
     </>
   );
 };

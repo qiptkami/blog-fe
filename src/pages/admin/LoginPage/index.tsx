@@ -1,26 +1,48 @@
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { login } from '../../../services/admin/loginPage';
 import './index.less';
 
 const Login: React.FC = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [errMsg, setErrMsg] = useState<string>('');
 
   const handleUnameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
+    setErrMsg('');
   };
 
   const handlePwdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
+    setErrMsg('');
   };
 
   const handleLogin = () => {
     if (username === '' || password === '') {
       return;
     }
+
     login({ username: username, password: password }).then((res: any) => {
-      console.log(res);
+      if (res.data.status) {
+        const user = res.data.data;
+        const userInfo: any = {
+          uid: user.userInfo.id,
+          username: user.userInfo.username,
+          email: user.userInfo.email,
+          avatar: user.userInfo.avatar,
+        };
+        //存储token
+        localStorage.setItem('userInfo', JSON.stringify(userInfo));
+        localStorage.setItem('token', user.token);
+        //登录成功
+        navigate('/admin/home');
+      } else {
+        setErrMsg(res.data.msg);
+        console.log(res.data.msg);
+      }
     });
   };
 
@@ -72,6 +94,7 @@ const Login: React.FC = () => {
             </div>
           </div>
           <div className='login-forgot'>Forgot password?</div>
+          <div className='login-error-msg'>{errMsg}</div>
           <button className='login-button' onClick={handleLogin}>
             登 录
           </button>
