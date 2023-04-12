@@ -7,6 +7,7 @@ import LoginPage from './pages/admin/LoginPage';
 import MainLayout from './pages/MainLayout';
 import AdminLayout from './components/admin/AdminLayout';
 import AdminHome from './pages/admin/HomePage';
+import BlogAdmin from './pages/admin/BlogList';
 
 const AppRouters: React.FC = () => {
   const routes = [
@@ -52,6 +53,14 @@ const AppRouters: React.FC = () => {
           element: (
             <AdminLayout>
               <AdminHome />
+            </AdminLayout>
+          ),
+        },
+        {
+          path: 'blogs',
+          element: (
+            <AdminLayout>
+              <BlogAdmin />
             </AdminLayout>
           ),
         },

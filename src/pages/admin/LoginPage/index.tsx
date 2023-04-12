@@ -46,7 +46,9 @@ const Login: React.FC = () => {
     });
   };
 
-  const handleSignUp = () => {};
+  const handleSignUp = () => {
+    
+  };
 
   return (
     <div className='login-container'>
@@ -98,10 +100,10 @@ const Login: React.FC = () => {
           <button className='login-button' onClick={handleLogin}>
             登 录
           </button>
-          <div>Or Login Using</div>
+          {/* <div>Or Login Using</div>
           <div>
             <i className={classNames('qq-icon', 'iconfont')}>&#xe667;</i>
-          </div>
+          </div> */}
           <div className='signup-button' onClick={handleSignUp}>
             Sign Up
           </div>

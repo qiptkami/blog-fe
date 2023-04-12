@@ -3,8 +3,8 @@ interface Blog {
   title?: string; //标题
   content?: string; //内容
   firstPicture?: string; //首图
-  createTime?: Date; //创建时间
-  updateTime?: Date; //更新时间
+  createTime?: string; //创建时间
+  updateTime?: string; //更新时间
   description?: String; //描述
   tags?: Tag[]; //对多
   user?: User; //对一
@@ -23,8 +23,8 @@ interface User {
   password: string;
   email?: string;
   avatar?: string; //头像
-  createTime?: Date;
-  updateTime?: Date;
+  createTime?: string;
+  updateTime?: string;
   blogs?: Blog[]; //对多
 }
 
@@ -34,7 +34,7 @@ interface Comment {
   email?: string; //邮箱
   content?: string; //内容
   avatar?: string; //头像地址
-  createTime?: Date; //评论时间
+  createTime?: string; //评论时间
   isAdminComment?: boolean; //是否是管理员评论
   blog?: Blog; //对一
   replyComment?: Comment[]; //子回复

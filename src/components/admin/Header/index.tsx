@@ -8,7 +8,7 @@ const AdminHeader: React.FC = () => {
 
   const getData = (page: number) => {};
 
-  return <div className='admin-header'></div>;
+  return <div className='admin-header'>/blog/edit</div>;
 };
 
 export default AdminHeader;

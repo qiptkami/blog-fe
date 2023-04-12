@@ -12,7 +12,7 @@ const BlogList: React.FC = () => {
   const location = useLocation();
   const [total, setTotal] = useState<number>(0); //数据总量
   const [page, setPage] = useState<number>(1); //当前页数
-  const [size, setSize] = useState<number>(0); //页面大小
+  const [size, setSize] = useState<number>(5); //页面大小
   const [data, setData] = useState<any[]>([]);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const BlogList: React.FC = () => {
         setData(res.data.data.list);
       });
     } else {
-      getData();
+      getData({ page: page, size: size });
     }
   }, [location]);
 
