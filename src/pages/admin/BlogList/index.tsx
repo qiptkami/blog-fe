@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React, { useState } from 'react';
-import MyPagination from '../../../components/MyPagination';
+import MyTable from '../../../components/MyTable';
 import { getBlogsPaginationInfo } from '../../../services/homePage';
 import { Tag, Blog } from '../../../typings/index';
 import './index.less';
@@ -13,6 +13,43 @@ const BlogAdmin: React.FC<IProps> = () => {
   const [page, setPage] = useState<number>(1); //当前页数
   const [size, setSize] = useState<number>(5); //页面大小
 
+  const columns = [
+    {
+      title: 'title',
+      dataIndex: 'title',
+    },
+    {
+      title: 'description',
+      dataIndex: 'description',
+    },
+    {
+      title: 'tags',
+      dataIndex: 'tags',
+      render: (_: any) => {
+        return _.tags.map((tag: Tag) => {
+          return <div key={tag.id}>{tag.name}</div>;
+        });
+      },
+    },
+    {
+      title: 'createTime',
+      dataIndex: 'createTime',
+      render: (_: any) => (
+        <div>{moment(_.createTime).format('YYYY-MM-DD')}</div>
+      ),
+    },
+    {
+      title: 'options',
+      dataIndex: 'options',
+      render: (_: any) => (
+        <div>
+          <button>edit</button>
+          <button>del</button>
+        </div>
+      ),
+    },
+  ];
+
   const getData = (param?: { page: number; size: number }) => {
     getBlogsPaginationInfo(param).then((res: any) => {
       if (res?.data?.status) {
@@ -24,47 +61,18 @@ const BlogAdmin: React.FC<IProps> = () => {
     });
   };
 
-  const blogList = blogs.map((item: Blog) => {
-    return (
-      <tr>
-        <td>{item.id}</td>
-        <td>{item.title}</td>
-        <td className='description'>{item.description}</td>
-        <td>
-          {item.tags?.map((item: Tag) => {
-            return <>item</>;
-          })}
-        </td>
-        <td>{moment(item.createTime).format('YYYY-MM-dd')}</td>
-        <td>
-          <button>edit</button>
-          <button>del</button>
-        </td>
-      </tr>
-    );
-  });
-
   return (
     <div className='blog-admin-container'>
-      <table className='blog-table'>
-        <thead>
-          <tr>
-            <th>id</th>
-            <th>title</th>
-            <th>description</th>
-            <th>tags</th>
-            <th>createTime</th>
-            <th>options</th>
-          </tr>
-        </thead>
-        <tbody>{blogList}</tbody>
-      </table>
-      <MyPagination
-        total={total}
-        page={page}
-        size={size}
-        getData={getData}
-      ></MyPagination>
+      <div className='blog-table'>
+        <MyTable
+          total={total}
+          page={page}
+          size={size}
+          getData={getData}
+          dataSource={blogs}
+          columns={columns}
+        ></MyTable>
+      </div>
     </div>
   );
 };
