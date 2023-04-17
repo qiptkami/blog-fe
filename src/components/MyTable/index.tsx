@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import MyPagination from '../MyPagination';
 import './index.less';
 
@@ -10,6 +10,8 @@ interface IColumn {
   title: string;
   dataIndex: string;
   render?: (_: any) => JSX.Element;
+  width?: string;
+  ellipsis?: boolean;
 }
 
 interface IProps {
@@ -29,28 +31,51 @@ const MyTable: React.FC<IProps> = ({
   getData,
   columns,
 }) => {
+  const tableRef = useRef<any>(null);
+  const [tableWidth, setTableWidth] = useState<number>();
+  const [tableHegiht, setTableHeight] = useState<number>();
   useEffect(() => {
-    console.log(dataSource);
-  }, [dataSource]);
+    setTableWidth(tableRef.current.scrollWidth);
+    setTableHeight(tableRef.current.scrollHeight);
+  }, [tableRef, dataSource]);
   const tHead = columns.map((column: IColumn) => {
-    return <th>{column.title}</th>;
+    return <th key={column.dataIndex}>{column.title}</th>;
   });
 
-  const list = dataSource.map((item: any) => {
-    return (
-      <tr key={item.id}>
-        {columns.map((column: IColumn) => {
-          const render =
-            (column.render && column?.render(item)) || item[column.dataIndex];
-          return <td>{render}</td>;
-        })}
-      </tr>
-    );
-  });
+  const list = useMemo(
+    () =>
+      dataSource.map((item: any) => {
+        return (
+          <tr key={item.id}>
+            {columns.map((column: IColumn) => {
+              let width = 'auto';
+              if (column.width) {
+                width = column.width;
+              }
+              const render =
+                (column.render && column?.render(item)) ||
+                item[column.dataIndex];
+              console.log(render);
+
+              return (
+                <td
+                  key={column.dataIndex}
+                  style={{ width: width }}
+                  className={column.ellipsis ? 'ellipsis' : ''}
+                >
+                  {render}
+                </td>
+              );
+            })}
+          </tr>
+        );
+      }),
+    [dataSource, columns]
+  );
 
   return (
-    <div className='blog-admin-container'>
-      <table className='blog-table'>
+    <div className='container'>
+      <table id='table' className='table-container' ref={tableRef}>
         <thead>
           <tr>{tHead}</tr>
         </thead>

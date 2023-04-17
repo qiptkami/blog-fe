@@ -74,7 +74,7 @@ const MyPagination: React.FC<Props> = memo(
     return (
       <>
         {pageNum === 1 ? (
-          <div className='pagination-only-msg'>{singleMsg}</div>
+          singleMsg && <div className='pagination-only-msg'>{singleMsg}</div>
         ) : (
           <div className={total ? 'pagination-container' : 'pagination-hidden'}>
             <i
