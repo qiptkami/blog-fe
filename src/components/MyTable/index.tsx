@@ -34,52 +34,77 @@ const MyTable: React.FC<IProps> = ({
   const tableRef = useRef<any>(null);
   const [tableWidth, setTableWidth] = useState<number>();
   const [tableHegiht, setTableHeight] = useState<number>();
+
   useEffect(() => {
     setTableWidth(tableRef.current.scrollWidth);
     setTableHeight(tableRef.current.scrollHeight);
   }, [tableRef, dataSource]);
-  const tHead = columns.map((column: IColumn) => {
-    return <th key={column.dataIndex}>{column.title}</th>;
-  });
 
-  const list = useMemo(
-    () =>
-      dataSource.map((item: any) => {
+  const colGroup = (
+    <colgroup>
+      {columns.map((column: IColumn) => {
+        let width = 'auto';
+        if (column.width) {
+          width = column.width;
+        }
         return (
-          <tr key={item.id}>
-            {columns.map((column: IColumn) => {
-              let width = 'auto';
-              if (column.width) {
-                width = column.width;
-              }
-              const render =
-                (column.render && column?.render(item)) ||
-                item[column.dataIndex];
-              console.log(render);
-
-              return (
-                <td
-                  key={column.dataIndex}
-                  style={{ width: width }}
-                  className={column.ellipsis ? 'ellipsis' : ''}
-                >
-                  {render}
-                </td>
-              );
-            })}
-          </tr>
+          <col
+            key={column.dataIndex}
+            style={{ width: width, minWidth: width }}
+          />
         );
-      }),
-    [dataSource, columns]
+      })}
+    </colgroup>
+  );
+
+  const tHead = (
+    <thead>
+      <tr>
+        {columns.map((column: IColumn) => {
+          return (
+            <th key={column.dataIndex} title={column.title}>
+              {column.title}
+            </th>
+          );
+        })}
+      </tr>
+    </thead>
+  );
+
+  const tBody = (
+    <tbody>
+      {useMemo(
+        () =>
+          dataSource.map((item: any) => {
+            return (
+              <tr key={item.id}>
+                {columns.map((column: IColumn) => {
+                  const render =
+                    (column.render && column?.render(item)) ||
+                    item[column.dataIndex];
+                  return (
+                    <td
+                      key={column.dataIndex}
+                      className={column.ellipsis ? 'ellipsis' : ''}
+                    >
+                      {render}
+                    </td>
+                  );
+                })}
+              </tr>
+            );
+          }),
+        [dataSource, columns]
+      )}
+    </tbody>
   );
 
   return (
     <div className='container'>
       <table id='table' className='table-container' ref={tableRef}>
-        <thead>
-          <tr>{tHead}</tr>
-        </thead>
-        <tbody>{list}</tbody>
+        {colGroup}
+        {tHead}
+        {tBody}
       </table>
       <MyPagination
         total={total}

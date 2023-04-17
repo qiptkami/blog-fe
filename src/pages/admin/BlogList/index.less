@@ -1,19 +1,40 @@
 .blog-admin-container {
-  height: 100%;
   width: 100%;
+  height: 100%;
   .blog-table {
-    th {
-      text-align: center;
+    width: calc(100% - 100px);
+    height: 100%;
+    // margin: 10px 50px;
+    .tag {
+      display: inline-block;
+      margin: 5px 5px 0 0;
+      color: #fff;
+      background-color: #bbbbee;
+      border: 1px solid #bbbbee;
+      border-radius: 5px;
+      box-shadow: none;
+      padding: 2px 5px;
+      font-size: 10px;
+      cursor: pointer;
     }
-    td {
-      border-bottom: 1px solid red;
-      padding: 8px 40px;
-    }
-    .description {
-      max-width: 400px;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
+    .options {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .icon-edit {
+        cursor: pointer;
+        font-size: 20px;
+        color: #1b7afc;
+      }
+      .line {
+        padding: 0 5px;
+        color: #e5e5e5;
+      }
+      .icon-del {
+        cursor: pointer;
+        font-size: 20px;
+        color: #1b7afc;
+      }
     }
   }
 }

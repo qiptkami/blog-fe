@@ -1,6 +1,8 @@
+import classNames from 'classnames';
 import moment from 'moment';
 import React, { useState } from 'react';
 import MyTable from '../../../components/MyTable';
+import PopConfirm from '../../../components/Popconfirm';
 import { getBlogsPaginationInfo } from '../../../services/homePage';
 import { Tag, Blog } from '../../../typings/index';
 import './index.less';
@@ -13,6 +15,9 @@ const BlogAdmin: React.FC<IProps> = () => {
   const [page, setPage] = useState<number>(1); //当前页数
   const [size, setSize] = useState<number>(5); //页面大小
 
+  const handleOk = () => {};
+  const handelCancel = () => {};
+
   const columns = [
     {
       title: 'title',
@@ -21,13 +26,24 @@ const BlogAdmin: React.FC<IProps> = () => {
     {
       title: 'description',
       dataIndex: 'description',
+      render: (_: any) => (
+        <span className='description' title={_.description}>
+          {_.description}
+        </span>
+      ),
+      width: '60%',
+      ellipsis: true,
     },
     {
       title: 'tags',
       dataIndex: 'tags',
       render: (_: any) => {
         return _.tags.map((tag: Tag) => {
-          return <div key={tag.id}>{tag.name}</div>;
+          return (
+            <div key={tag.id} className='tag'>
+              {tag.name}
+            </div>
+          );
         });
       },
     },
@@ -35,16 +51,27 @@ const BlogAdmin: React.FC<IProps> = () => {
       title: 'createTime',
       dataIndex: 'createTime',
       render: (_: any) => (
-        <div>{moment(_.createTime).format('YYYY-MM-DD')}</div>
+        <span>{moment(_.createTime).format('YYYY-MM-DD')}</span>
       ),
     },
     {
       title: 'options',
       dataIndex: 'options',
       render: (_: any) => (
-        <div>
-          <button>edit</button>
-          <button>del</button>
+        <div className='options'>
+          <i className={classNames('iconfont', 'icon-edit')} title='编辑'>
+            &#xe66e;
+          </i>
+          <div className='line'> | </div>
+          <PopConfirm
+            description='确定要删除吗'
+            onOk={handleOk}
+            onCancel={handelCancel}
+          >
+            <i className={classNames('iconfont', 'icon-del')} title='删除'>
+              &#xe7c3;
+            </i>
+          </PopConfirm>
         </div>
       ),
     },
