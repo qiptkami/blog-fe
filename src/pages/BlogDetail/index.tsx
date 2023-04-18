@@ -30,7 +30,7 @@ const BlogDetail: React.FC = () => {
 
   useEffect(() => {
     blog && !commentLoading && setLoading(false);
-  }, [blog]);
+  }, [blog, loading, commentLoading]);
 
   const tags = (tags?: Tag[]) => {
     return tags?.map((tag: Tag) => {

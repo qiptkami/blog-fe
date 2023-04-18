@@ -3,6 +3,7 @@ import moment from 'moment';
 import React, { useState } from 'react';
 import MyTable from '../../../components/MyTable';
 import PopConfirm from '../../../components/Popconfirm';
+import { useNavigate } from 'react-router-dom';
 import { getBlogsPaginationInfo } from '../../../services/homePage';
 import { Tag, Blog } from '../../../typings/index';
 import './index.less';
@@ -10,6 +11,7 @@ import './index.less';
 interface IProps {}
 
 const BlogAdmin: React.FC<IProps> = () => {
+  const navigate = useNavigate();
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [total, setTotal] = useState<number>(0); //数据总量
   const [page, setPage] = useState<number>(1); //当前页数
@@ -31,7 +33,7 @@ const BlogAdmin: React.FC<IProps> = () => {
           {_.description}
         </span>
       ),
-      width: '60%',
+      width: '50%',
       ellipsis: true,
     },
     {
@@ -59,7 +61,13 @@ const BlogAdmin: React.FC<IProps> = () => {
       dataIndex: 'options',
       render: (_: any) => (
         <div className='options'>
-          <i className={classNames('iconfont', 'icon-edit')} title='编辑'>
+          <i
+            className={classNames('iconfont', 'icon-edit')}
+            title='编辑'
+            onClick={() => {
+              navigate(`/admin/blog/${_.id}`, { state: _.id });
+            }}
+          >
             &#xe66e;
           </i>
           <div className='line'> | </div>
