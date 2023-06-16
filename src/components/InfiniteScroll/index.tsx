@@ -23,7 +23,7 @@ const InfiniteScroll: React.FC<Props> = ({ getData, render, msg }) => {
     } catch (err) {
       setError(true);
     }
-  }, [page]);
+  }, [page, getData]);
 
   const handleObserver = useCallback((entries: any) => {
     const target = entries[0];
