@@ -1,18 +1,9 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import Input from '../Input';
 import MyPagination from '../MyPagination';
+import TableSearch from './components/TableSearch';
 import './index.less';
-
-interface Param {
-  page: number;
-  size: number;
-}
-interface IColumn {
-  title: string;
-  dataIndex: string;
-  render?: (_: any) => JSX.Element;
-  width?: string;
-  ellipsis?: boolean;
-}
+import { ESearchType, IColumn, Param } from './typing';
 
 interface IProps {
   page: number; //当前页数
@@ -21,6 +12,7 @@ interface IProps {
   dataSource: any[]; //
   getData: (param: Param) => void;
   columns: IColumn[];
+  onRow?: (record: IColumn) => void;
 }
 
 const MyTable: React.FC<IProps> = ({
@@ -30,15 +22,22 @@ const MyTable: React.FC<IProps> = ({
   dataSource,
   getData,
   columns,
+  onRow,
 }) => {
   const tableRef = useRef<any>(null);
   const [tableWidth, setTableWidth] = useState<number>();
   const [tableHegiht, setTableHeight] = useState<number>();
 
+  const [value, setValue] = useState<string | undefined>('');
+
   useEffect(() => {
     setTableWidth(tableRef.current.scrollWidth);
     setTableHeight(tableRef.current.scrollHeight);
   }, [tableRef, dataSource]);
+
+  useEffect(() => {
+    console.log(value);
+  }, [value]);
 
   const colGroup = (
     <colgroup>
@@ -86,6 +85,9 @@ const MyTable: React.FC<IProps> = ({
                     <td
                       key={column.dataIndex}
                       className={column.ellipsis ? 'ellipsis' : ''}
+                      onClick={() => {
+                        onRow?.(item);
+                      }}
                     >
                       {render}
                     </td>
@@ -94,13 +96,14 @@ const MyTable: React.FC<IProps> = ({
               </tr>
             );
           }),
-        [dataSource, columns]
+        [dataSource, columns, onRow]
       )}
     </tbody>
   );
 
   return (
     <div className='container'>
+      <TableSearch columns={columns} />
       <table id='table' className='table-container' ref={tableRef}>
         {colGroup}
         {tHead}

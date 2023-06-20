@@ -5,6 +5,7 @@ import MyTable from '../../../components/MyTable';
 import PopConfirm from '../../../components/Popconfirm';
 import { useNavigate } from 'react-router-dom';
 import { getBlogsPaginationInfo } from '../../../services/homePage';
+import { getAllTag } from '../../../services/tagPage';
 import { Tag, Blog } from '../../../typings/index';
 import './index.less';
 
@@ -16,6 +17,7 @@ const BlogAdmin: React.FC<IProps> = () => {
   const [total, setTotal] = useState<number>(0); //数据总量
   const [page, setPage] = useState<number>(1); //当前页数
   const [size, setSize] = useState<number>(5); //页面大小
+  const [tagEnum, setTagEnum] = useState<any[]>([]);
 
   const handleOk = () => {};
   const handelCancel = () => {};
@@ -24,10 +26,12 @@ const BlogAdmin: React.FC<IProps> = () => {
     {
       title: 'title',
       dataIndex: 'title',
+      valueType: 'text',
     },
     {
       title: 'description',
       dataIndex: 'description',
+      hideInSearch: true,
       render: (_: any) => (
         <span className='description' title={_.description}>
           {_.description}
@@ -39,6 +43,8 @@ const BlogAdmin: React.FC<IProps> = () => {
     {
       title: 'tags',
       dataIndex: 'tags',
+      valueType: 'select',
+      valueEnum: tagEnum,
       render: (_: any) => {
         return _.tags.map((tag: Tag) => {
           return (
@@ -52,6 +58,7 @@ const BlogAdmin: React.FC<IProps> = () => {
     {
       title: 'createTime',
       dataIndex: 'createTime',
+      hideInSearch: true,
       render: (_: any) => (
         <span>{moment(_.createTime).format('YYYY-MM-DD')}</span>
       ),
@@ -59,8 +66,15 @@ const BlogAdmin: React.FC<IProps> = () => {
     {
       title: 'options',
       dataIndex: 'options',
+      hideInSearch: true,
       render: (_: any) => (
-        <div className='options'>
+        <div
+          className='options'
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          }}
+        >
           <i
             className={classNames('iconfont', 'icon-edit')}
             title='编辑'
@@ -94,6 +108,20 @@ const BlogAdmin: React.FC<IProps> = () => {
         setSize(res?.data?.data?.pageSize);
       }
     });
+    // getAllTag().then((res: any) => {
+    // setTagEnum(
+    //   res?.data?.data.map((item: Tag) => {
+    //     return { value: item.id, label: item.name };
+    //   })
+    // );
+    // });
+    setTagEnum([
+      { value: 1, label: 'text' },
+      { value: 2, label: 'abc' },
+      { value: 3, label: 'cbs' },
+      { value: 4, label: 'wsx' },
+      { value: 5, label: 'fda' },
+    ]);
   };
 
   return (
@@ -106,7 +134,10 @@ const BlogAdmin: React.FC<IProps> = () => {
           getData={getData}
           dataSource={blogs}
           columns={columns}
-        ></MyTable>
+          onRow={(record) => {
+            console.log(record);
+          }}
+        />
       </div>
     </div>
   );
