@@ -10,9 +10,10 @@ interface IProps {
   size: number; //页面大小
   total: number; //
   dataSource: any[]; //
-  getData: (param: Param) => void;
+  onRequest: (params: any) => void;
   columns: IColumn[];
   onRow?: (record: IColumn) => void;
+  onSubmit?: (params: any) => void;
 }
 
 const MyTable: React.FC<IProps> = ({
@@ -20,9 +21,10 @@ const MyTable: React.FC<IProps> = ({
   size = 5,
   total,
   dataSource,
-  getData,
+  onRequest,
   columns,
   onRow,
+  onSubmit,
 }) => {
   const tableRef = useRef<any>(null);
   const [tableWidth, setTableWidth] = useState<number>();
@@ -103,7 +105,7 @@ const MyTable: React.FC<IProps> = ({
 
   return (
     <div className='container'>
-      <TableSearch columns={columns} />
+      <TableSearch columns={columns} onSubmit={onSubmit} />
       <table id='table' className='table-container' ref={tableRef}>
         {colGroup}
         {tHead}
@@ -113,7 +115,7 @@ const MyTable: React.FC<IProps> = ({
         total={total}
         page={page}
         size={size}
-        getData={getData}
+        onRequest={onRequest}
         singleMsg=''
       ></MyPagination>
     </div>

@@ -11,12 +11,12 @@ interface Props {
   total: number; //数据总量
   page: number; //当前页数
   size: number; //页面大小
-  getData: (param: Param) => void;
+  onRequest: (param: Param) => void;
   singleMsg?: string;
 }
 
 const MyPagination: React.FC<Props> = memo(
-  ({ total, page = 1, size = 5, getData, singleMsg = '我也是有底线的...' }) => {
+  ({ total, page = 1, size = 5, onRequest, singleMsg = '我也是有底线的...' }) => {
     const [pageNum, setPageNum] = useState<number>(1); //总页数
     const [pageList, setPageList] = useState<any>();
     const [currentPage, setCurrentPage] = useState<number>(1);
@@ -25,25 +25,25 @@ const MyPagination: React.FC<Props> = memo(
     }, [total, size]);
 
     useEffect(() => {
-      getData({ page: page, size: size });
+      onRequest({ page: page, size: size });
     }, []);
 
     const handleChange = useCallback(
       (i: number) => {
-        getData({ page: i, size: size });
+        onRequest({ page: i, size: size });
         setCurrentPage(i);
       },
-      [size, getData]
+      [size, onRequest]
     );
 
     const prePage = () => {
       if (currentPage <= 1) return;
-      getData({ page: currentPage - 1, size: size });
+      onRequest({ page: currentPage - 1, size: size });
       setCurrentPage(currentPage - 1);
     };
     const nextPage = () => {
       if (currentPage >= pageNum) return;
-      getData({ page: currentPage + 1, size: size });
+      onRequest({ page: currentPage + 1, size: size });
       setCurrentPage(currentPage + 1);
     };
 

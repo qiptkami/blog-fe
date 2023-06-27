@@ -16,7 +16,7 @@ interface IOptions {
 interface IProps {
   multiple?: boolean;
   defaultValue?: any;
-  onChange?: (e: string | undefined) => void;
+  onChange?: (value: string | undefined) => void;
   className?: string | undefined;
   options?: IOptions[];
 }
@@ -54,6 +54,7 @@ const InputSelect: React.FC<IProps> = ({
         onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
           e.preventDefault();
           e.stopPropagation();
+          onChange?.(option.value);
           setSelectValue(option.value);
           setShowDrop(false);
         }}
@@ -61,7 +62,7 @@ const InputSelect: React.FC<IProps> = ({
         {option.label}
       </div>
     ));
-  }, [options, selectValue]);
+  }, [options, selectValue, onChange]);
   return (
     <>
       <span
@@ -77,10 +78,12 @@ const InputSelect: React.FC<IProps> = ({
               ? options?.find((option) => option.value === selectValue)?.label
               : ''
           }
-          // onFocus={() => {}}
+          onBlur={() => {
+            setShowDrop(false);
+          }}
           readOnly
         />
-        {/* {
+        {selectValue && (
           <i
             className={classNames('iconfont', 'icon-clear')}
             onClick={(e: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -91,12 +94,14 @@ const InputSelect: React.FC<IProps> = ({
           >
             &#xe629;
           </i>
-        } */}
+        )}
         <div
-          className={classNames('select-dropdown', showDrop && 'dropdown-open')}
+          className={classNames(
+            'select-dropdown',
+            showDrop ? 'dropdown-open' : 'dropdown-close'
+          )}
           style={{
             maxHeight: getDropdownContentHeight(),
-            height: getDropdownContentHeight(),
           }}
           ref={dropdownContentRef}
         >

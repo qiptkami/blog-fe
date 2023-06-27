@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import {
-  getBlogsPaginationInfo,
-  queryBlog,
-} from '../../../../services/homePage';
+import { getBlogsList, queryBlog } from '../../../../services/homePage';
 import MyPagination from '../../../../components/MyPagination';
 import BlogItem from './BlogItem';
 import './index.less';
@@ -26,7 +23,7 @@ const BlogList: React.FC = () => {
   }, [location]);
 
   const getData = (param?: { page: number; size: number }) => {
-    getBlogsPaginationInfo(param).then((res) => {
+    getBlogsList(param).then((res) => {
       if (res?.data?.status) {
         setData(res?.data?.data?.list);
         setTotal(res?.data?.data?.total);
@@ -50,7 +47,7 @@ const BlogList: React.FC = () => {
         total={total}
         page={page}
         size={size}
-        getData={getData}
+        onRequest={getData}
       ></MyPagination>
     </div>
   );

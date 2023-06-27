@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import MyTable from '../../../components/MyTable';
 import PopConfirm from '../../../components/Popconfirm';
 import { useNavigate } from 'react-router-dom';
-import { getBlogsPaginationInfo } from '../../../services/homePage';
+import { getBlogsList } from '../../../services/homePage';
 import { getAllTag } from '../../../services/tagPage';
 import { Tag, Blog } from '../../../typings/index';
 import './index.less';
@@ -18,6 +18,7 @@ const BlogAdmin: React.FC<IProps> = () => {
   const [page, setPage] = useState<number>(1); //当前页数
   const [size, setSize] = useState<number>(5); //页面大小
   const [tagEnum, setTagEnum] = useState<any[]>([]);
+  const [params, setParams] = useState<any>({});
 
   const handleOk = () => {};
   const handelCancel = () => {};
@@ -100,7 +101,7 @@ const BlogAdmin: React.FC<IProps> = () => {
   ];
 
   const getData = (param?: { page: number; size: number }) => {
-    getBlogsPaginationInfo(param).then((res: any) => {
+    getBlogsList(param).then((res: any) => {
       if (res?.data?.status) {
         setBlogs(res?.data?.data?.list);
         setTotal(res?.data?.data?.total);
@@ -108,20 +109,13 @@ const BlogAdmin: React.FC<IProps> = () => {
         setSize(res?.data?.data?.pageSize);
       }
     });
-    // getAllTag().then((res: any) => {
-    // setTagEnum(
-    //   res?.data?.data.map((item: Tag) => {
-    //     return { value: item.id, label: item.name };
-    //   })
-    // );
-    // });
-    setTagEnum([
-      { value: 1, label: 'text' },
-      { value: 2, label: 'abc' },
-      { value: 3, label: 'cbs' },
-      { value: 4, label: 'wsx' },
-      { value: 5, label: 'fda' },
-    ]);
+    getAllTag().then((res: any) => {
+      setTagEnum(
+        res?.data?.data.map((item: Tag) => {
+          return { value: item.id, label: item.name };
+        })
+      );
+    });
   };
 
   return (
@@ -131,9 +125,19 @@ const BlogAdmin: React.FC<IProps> = () => {
           total={total}
           page={page}
           size={size}
-          getData={getData}
+          onRequest={getData}
           dataSource={blogs}
           columns={columns}
+          onSubmit={(params: any) => {
+            console.log(params);
+            setParams(params);
+            // getTableData({
+            //   ...options,
+            //   sorter: sorterOrder,
+            //   page: pageRef.current,
+            //   limit: pageSizeRef.current,
+            // });
+          }}
           onRow={(record) => {
             console.log(record);
           }}

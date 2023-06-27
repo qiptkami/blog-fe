@@ -2,9 +2,11 @@ import { get } from '../index';
 
 const baseUrl = '';
 
-export const getBlogsPaginationInfo = (param?: {
+export const getBlogsList = (param?: {
   page: number;
   size: number;
+  title?: string;
+  tagId?: number;
 }) => get(baseUrl + '/pagination', param);
 
 export const getBlogInfo = (id: number) => get(baseUrl + `/${id}`);
