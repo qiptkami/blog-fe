@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = 'http://localhost/blog';
+const baseURL = 'http://localhost:8001';
 
 export const api = axios.create({
   baseURL,
@@ -24,8 +24,8 @@ api.interceptors.request.use(
 );
 
 api.interceptors.response.use(
-  (config) => {
-    return config;
+  (response) => {
+    return response;
   },
   (error) => {
     if (error.response.status === 406) {

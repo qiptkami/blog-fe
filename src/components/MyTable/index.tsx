@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import Input from '../Input';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { isEqualArr } from '../../utils/deepClone';
 import MyPagination from '../MyPagination';
 import TableSearch from './components/TableSearch';
 import './index.less';
@@ -16,109 +16,111 @@ interface IProps {
   onSubmit?: (params: any) => void;
 }
 
-const MyTable: React.FC<IProps> = ({
-  page = 1,
-  size = 5,
-  total,
-  dataSource,
-  onRequest,
-  columns,
-  onRow,
-  onSubmit,
-}) => {
-  const tableRef = useRef<any>(null);
-  const [tableWidth, setTableWidth] = useState<number>();
-  const [tableHegiht, setTableHeight] = useState<number>();
+const MyTable: React.FC<IProps> = memo(
+  ({
+    page = 1,
+    size = 5,
+    total,
+    dataSource,
+    onRequest,
+    columns,
+    onRow,
+    onSubmit,
+  }) => {
+    const tableRef = useRef<any>(null);
+    // const [tableWidth, setTableWidth] = useState<number>();
+    // const [tableHegiht, setTableHeight] = useState<number>();
 
-  const [value, setValue] = useState<string | undefined>('');
+    // useEffect(() => {
+    //   setTableWidth(tableRef.current.scrollWidth);
+    //   setTableHeight(tableRef.current.scrollHeight);
+    // }, [tableRef, dataSource]);
+    const [baseColumns, setBaseColumns] = useState<IColumn[]>([]);
+    useEffect(() => {
+      if (!isEqualArr(baseColumns, columns)) {
+        setBaseColumns(columns);
+      }
+    }, [columns]);
 
-  useEffect(() => {
-    setTableWidth(tableRef.current.scrollWidth);
-    setTableHeight(tableRef.current.scrollHeight);
-  }, [tableRef, dataSource]);
-
-  useEffect(() => {
-    console.log(value);
-  }, [value]);
-
-  const colGroup = (
-    <colgroup>
-      {columns.map((column: IColumn) => {
-        let width = 'auto';
-        if (column.width) {
-          width = column.width;
-        }
-        return (
-          <col
-            key={column.dataIndex}
-            style={{ width: width, minWidth: width }}
-          />
-        );
-      })}
-    </colgroup>
-  );
-
-  const tHead = (
-    <thead>
-      <tr>
+    const colGroup = (
+      <colgroup>
         {columns.map((column: IColumn) => {
+          let width = 'auto';
+          if (column.width) {
+            width = column.width;
+          }
           return (
-            <th key={column.dataIndex} title={column.title}>
-              {column.title}
-            </th>
+            <col
+              key={column.dataIndex}
+              style={{ width: width, minWidth: width }}
+            />
           );
         })}
-      </tr>
-    </thead>
-  );
+      </colgroup>
+    );
 
-  const tBody = (
-    <tbody>
-      {useMemo(
-        () =>
-          dataSource.map((item: any) => {
+    const tHead = (
+      <thead>
+        <tr>
+          {columns.map((column: IColumn) => {
             return (
-              <tr key={item.id}>
-                {columns.map((column: IColumn) => {
-                  const render =
-                    (column.render && column?.render(item)) ||
-                    item[column.dataIndex];
-                  return (
-                    <td
-                      key={column.dataIndex}
-                      className={column.ellipsis ? 'ellipsis' : ''}
-                      onClick={() => {
-                        onRow?.(item);
-                      }}
-                    >
-                      {render}
-                    </td>
-                  );
-                })}
-              </tr>
+              <th key={column.dataIndex} title={column.title}>
+                {column.title}
+              </th>
             );
-          }),
-        [dataSource, columns, onRow]
-      )}
-    </tbody>
-  );
+          })}
+        </tr>
+      </thead>
+    );
 
-  return (
-    <div className='container'>
-      <TableSearch columns={columns} onSubmit={onSubmit} />
-      <table id='table' className='table-container' ref={tableRef}>
-        {colGroup}
-        {tHead}
-        {tBody}
-      </table>
-      <MyPagination
-        total={total}
-        page={page}
-        size={size}
-        onRequest={onRequest}
-        singleMsg=''
-      ></MyPagination>
-    </div>
-  );
-};
+    const tBody = (
+      <tbody>
+        {useMemo(
+          () =>
+            dataSource.map((item: any) => {
+              return (
+                <tr key={item.id}>
+                  {columns.map((column: IColumn) => {
+                    const render =
+                      (column.render && column?.render(item)) ||
+                      item[column.dataIndex];
+                    return (
+                      <td
+                        key={column.dataIndex}
+                        className={column.ellipsis ? 'ellipsis' : ''}
+                        onClick={() => {
+                          onRow?.(item);
+                        }}
+                      >
+                        {render}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            }),
+          [dataSource, columns, onRow]
+        )}
+      </tbody>
+    );
+
+    return (
+      <div className='container'>
+        <TableSearch columns={baseColumns} onSubmit={onSubmit} />
+        <table id='table' className='table-container' ref={tableRef}>
+          {colGroup}
+          {tHead}
+          {tBody}
+        </table>
+        <MyPagination
+          total={total}
+          page={page}
+          size={size}
+          onRequest={onRequest}
+          singleMsg=''
+        ></MyPagination>
+      </div>
+    );
+  }
+);
 export default MyTable;

@@ -19,7 +19,9 @@ const HomePage: React.FC = () => {
 
   const getTags = () => {
     getAllTag().then((res: any) => {
-      setTagListData(res?.data?.data);
+      if (res.status === 200) {
+        setTagListData(res.data.value);
+      }
     });
   };
 

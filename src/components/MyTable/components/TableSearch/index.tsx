@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import Input from '../../../Input';
 import InputSelect from '../../../Input/components/InputSelect';
 import { ESearchType, IColumn } from '../../typing';
@@ -9,17 +9,15 @@ interface IProps {
   onSubmit?: (params: any) => void;
 }
 
-const TableSearch: React.FC<IProps> = ({ columns, onSubmit }) => {
+const TableSearch: React.FC<IProps> = memo(({ columns, onSubmit }) => {
   const [searchMap, setSearchMap] = useState<IColumn[]>([]);
-  const [inputValues, setInputValues] = useState<
-    { name: string; value: any }[]
-  >([]);
+  const [inputValues, setInputValues] = useState<any>({});
   useEffect(() => {
     const filterMap = columns.filter((col: IColumn) => !col.hideInSearch);
     setSearchMap(filterMap);
-    const obj: { name: string; value: any }[] = [];
+    const obj: any = {};
     filterMap.forEach((col: IColumn) => {
-      obj.push({ name: col.dataIndex, value: '' });
+      obj[col.dataIndex] = '';
     });
     setInputValues(obj);
   }, [columns]);
@@ -30,14 +28,9 @@ const TableSearch: React.FC<IProps> = ({ columns, onSubmit }) => {
         <InputSelect
           options={column.valueEnum}
           onChange={(value: any) => {
-            setInputValues((prev) => {
-              return prev.map((item) => {
-                if (item.name === column.dataIndex) {
-                  return { ...item, value: value };
-                }
-                return item;
-              });
-            });
+            const newInputValues = { ...inputValues };
+            newInputValues[column.dataIndex] = value;
+            setInputValues(newInputValues);
           }}
         />
       );
@@ -45,15 +38,11 @@ const TableSearch: React.FC<IProps> = ({ columns, onSubmit }) => {
       return (
         <Input
           className='table-search-item-input'
+          value={inputValues[column.dataIndex]}
           onChange={(value: any) => {
-            setInputValues((prev) => {
-              return prev.map((item) => {
-                if (item.name === column.dataIndex) {
-                  return { ...item, value: value };
-                }
-                return item;
-              });
-            });
+            const newInputValues = { ...inputValues };
+            newInputValues[column.dataIndex] = value;
+            setInputValues(newInputValues);
           }}
         />
       );
@@ -75,10 +64,11 @@ const TableSearch: React.FC<IProps> = ({ columns, onSubmit }) => {
         onClick={() => {
           onSubmit?.(inputValues);
         }}
+        className='submit-btn'
       >
         提交
       </button>
     </div>
   );
-};
+});
 export default TableSearch;

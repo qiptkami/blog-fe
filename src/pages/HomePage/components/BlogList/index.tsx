@@ -12,23 +12,23 @@ const BlogList: React.FC = () => {
   const [size, setSize] = useState<number>(5); //页面大小
   const [data, setData] = useState<any[]>([]);
 
-  useEffect(() => {
-    if (location.state) {
-      queryBlog({ query: location.state.query }).then((res: any) => {
-        setData(res.data.data.list);
-      });
-    } else {
-      getData({ page: page, size: size });
-    }
-  }, [location]);
+  // useEffect(() => {
+  //   if (location.state) {
+  //     queryBlog({ query: location.state.query }).then((res: any) => {
+  //       setData(res.data.data.list);
+  //     });
+  //   } else {
+  //     getData({ page: page, size: size });
+  //   }
+  // }, [location]);
 
   const getData = (param?: { page: number; size: number }) => {
     getBlogsList(param).then((res) => {
-      if (res?.data?.status) {
-        setData(res?.data?.data?.list);
-        setTotal(res?.data?.data?.total);
-        setPage(res?.data?.data?.pageNum);
-        setSize(res?.data?.data?.pageSize);
+      if (res.status === 200) {
+        setData(res.data.value);
+        setTotal(res.data.total);
+        setPage(res.data.page);
+        setSize(res.data.size);
       }
     });
   };

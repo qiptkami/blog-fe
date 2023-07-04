@@ -50,8 +50,8 @@ const BlogDetail: React.FC = () => {
 
   const getBlog = (id: number) => {
     getBlogInfo(id).then((res: any) => {
-      if (res.data.status) {
-        setBlog(res.data.data);
+      if (res.status === 200) {
+        setBlog(res.data.value);
       }
     });
     setCommentLoading(false);
@@ -59,8 +59,8 @@ const BlogDetail: React.FC = () => {
 
   const getComments = (id: number) => {
     getCommentInfo(id).then((res: any) => {
-      if (res.data.status) {
-        setCommentList(res.data.data);
+      if (res.status === 200) {
+        setCommentList(res.data.value);
       }
     });
   };

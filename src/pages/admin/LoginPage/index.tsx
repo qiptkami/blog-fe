@@ -26,29 +26,22 @@ const Login: React.FC = () => {
     }
 
     login({ username: username, password: password }).then((res: any) => {
-      if (res.data.status) {
-        const user = res.data.data;
-        const userInfo: any = {
-          uid: user.userInfo.id,
-          username: user.userInfo.username,
-          email: user.userInfo.email,
-          avatar: user.userInfo.avatar,
-        };
+      if (res.status === 200) {
+        const user = res.data.value;
+        if (user === -1) {
+          setErrMsg(res.data.message);
+          return;
+        }
         //存储token
-        localStorage.setItem('userInfo', JSON.stringify(userInfo));
+        localStorage.setItem('userInfo', JSON.stringify(user));
         localStorage.setItem('token', user.token);
         //登录成功
         navigate('/admin/home');
-      } else {
-        setErrMsg(res.data.msg);
-        console.log(res.data.msg);
       }
     });
   };
 
-  const handleSignUp = () => {
-    
-  };
+  const handleSignUp = () => {};
 
   return (
     <div className='login-container'>

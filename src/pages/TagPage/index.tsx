@@ -23,8 +23,8 @@ const TagPage: React.FC = () => {
 
   const getTags = () => {
     getAllTag().then((res) => {
-      if (res?.data?.status) {
-        setTags(res?.data?.data);
+      if (res.status === 200) {
+        setTags(res.data.value);
       }
     });
   };

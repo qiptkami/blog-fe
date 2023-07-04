@@ -1,6 +1,6 @@
 import { get } from '../index';
 
-const baseUrl = '';
+const baseUrl = '/blog';
 
 export const getBlogsList = (param?: {
   page: number;

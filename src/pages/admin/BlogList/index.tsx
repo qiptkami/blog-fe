@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import moment from 'moment';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import MyTable from '../../../components/MyTable';
 import PopConfirm from '../../../components/Popconfirm';
 import { useNavigate } from 'react-router-dom';
@@ -18,7 +18,7 @@ const BlogAdmin: React.FC<IProps> = () => {
   const [page, setPage] = useState<number>(1); //当前页数
   const [size, setSize] = useState<number>(5); //页面大小
   const [tagEnum, setTagEnum] = useState<any[]>([]);
-  const [params, setParams] = useState<any>({});
+  const [params, setParams] = useState<any>([]);
 
   const handleOk = () => {};
   const handelCancel = () => {};
@@ -100,7 +100,13 @@ const BlogAdmin: React.FC<IProps> = () => {
     },
   ];
 
-  const getData = (param?: { page: number; size: number }) => {
+  const getData = (param?: {
+    page: number;
+    size: number;
+    title?: string;
+    tagId?: number;
+  }) => {
+    console.log(param);
     getBlogsList(param).then((res: any) => {
       if (res?.data?.status) {
         setBlogs(res?.data?.data?.list);
@@ -128,15 +134,16 @@ const BlogAdmin: React.FC<IProps> = () => {
           onRequest={getData}
           dataSource={blogs}
           columns={columns}
-          onSubmit={(params: any) => {
-            console.log(params);
-            setParams(params);
-            // getTableData({
-            //   ...options,
-            //   sorter: sorterOrder,
-            //   page: pageRef.current,
-            //   limit: pageSizeRef.current,
-            // });
+          onSubmit={(options: any) => {
+            setParams(options);
+            console.log(options);
+
+            getData({
+              page: 1,
+              size: size,
+              title: options.title,
+              tagId: options.tags,
+            });
           }}
           onRow={(record) => {
             console.log(record);
