@@ -17,6 +17,7 @@ const Editor: React.FC<IProps> = ({ content = '' }) => {
           id='input'
           contentEditable={true}
           className='input-container'
+          dangerouslySetInnerHTML={{ __html: content }}
         ></div>
         {/* <div id='toolbar' className='toolbar-container'></div> */}
       </div>

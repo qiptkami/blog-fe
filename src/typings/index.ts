@@ -5,7 +5,7 @@ interface Blog {
   firstPicture?: string; //首图
   createTime?: string; //创建时间
   updateTime?: string; //更新时间
-  description?: String; //描述
+  description?: string; //描述
   tags?: Tag[]; //对多
   user?: User; //对一
   comments?: Comment[]; //对多

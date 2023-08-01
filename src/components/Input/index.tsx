@@ -4,39 +4,31 @@ import classNames from 'classnames';
 import './index.less';
 
 interface IProps {
-  value?: string | undefined;
-  onChange?: (e: string | undefined) => void;
+  label?: string;
+  value?: string;
+  onChange?: (value: string) => void;
   className?: string | undefined;
 }
 
-const Input: React.FC<IProps> = ({ value, onChange, className }) => {
-  const [isFocus, setIsFocus] = useState<boolean>(false);
-
+const Input: React.FC<IProps> = ({ label, value, onChange, className }) => {
   return (
-    <span className={classNames('input-wrapper', className)}>
-      <input
-        type='text'
-        value={value}
-        onFocus={() => {
-          setIsFocus(true);
-        }}
-        onInput={(e: React.FormEvent<HTMLInputElement>) => {
-          onChange?.((e.target as HTMLInputElement).value);
-        }}
-      />
-      {isFocus && value && (
-        <i
-          className={classNames('iconfont', 'icon-clear')}
-          onClick={(e: React.MouseEvent<HTMLElement, MouseEvent>) => {
-            e.preventDefault();
-            e.stopPropagation();
-            onChange?.('');
-          }}
-        >
-          &#xe629;
-        </i>
+    <>
+      {label && (
+        <label htmlFor={label} className='input-label'>
+          {label}
+        </label>
       )}
-    </span>
+      <span className={classNames('input-wrapper', className)}>
+        <input
+          id={label}
+          type='text'
+          value={value || ''}
+          onInput={(e: React.FormEvent<HTMLInputElement>) => {
+            onChange?.((e.target as HTMLInputElement).value);
+          }}
+        />
+      </span>
+    </>
   );
 };
 

@@ -16,13 +16,23 @@ interface Props {
 }
 
 const MyPagination: React.FC<Props> = memo(
-  ({ total, page = 1, size = 5, onRequest, singleMsg = '我也是有底线的...' }) => {
+  ({
+    total,
+    page = 1,
+    size = 5,
+    onRequest,
+    singleMsg = '我也是有底线的...',
+  }) => {
     const [pageNum, setPageNum] = useState<number>(1); //总页数
     const [pageList, setPageList] = useState<any>();
     const [currentPage, setCurrentPage] = useState<number>(1);
     useEffect(() => {
       setPageNum(Math.ceil(total / size));
     }, [total, size]);
+
+    useEffect(() => {
+      setCurrentPage(page);
+    }, [page]);
 
     useEffect(() => {
       onRequest({ page: page, size: size });

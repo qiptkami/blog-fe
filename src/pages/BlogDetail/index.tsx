@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { getCommentInfo, insertComment } from '../../services/blogPage';
-import { getBlogInfo } from '../../services/homePage';
+import { getCommentInfo, insertComment } from '../../services/commentService';
+import { getBlogInfo } from '../../services/blogService';
 import { Blog, Comment, Tag } from '../../typings/index';
 import Comments from './components/CommentList';
 import MarkDown2Html from './components/MarkDown2Html';

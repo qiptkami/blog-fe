@@ -30,7 +30,9 @@ const PopConfirm: React.FC<IProps> = ({
           <button
             type='button'
             onClick={(e) => {
-              onOk?.();
+              e.preventDefault();
+              e.stopPropagation();
+              onCancel?.();
               setVisible(false);
             }}
             className='confirm-btn'
@@ -39,8 +41,10 @@ const PopConfirm: React.FC<IProps> = ({
           </button>
           <button
             type='button'
-            onClick={() => {
-              onCancel?.();
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onOk?.();
               setVisible(false);
             }}
             className={classNames('confirm-btn', 'primary')}

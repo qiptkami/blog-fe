@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getAllTag } from '../../services/tagPage';
+import { getAllTag } from '../../services/tagService';
 import { Tag } from '../../typings/index';
 import BlogList from './components/BlogList';
 import TagList from '../../components/TagList';

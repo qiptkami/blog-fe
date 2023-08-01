@@ -122,7 +122,6 @@ export const createEditor = () => {
   const viewRef = document.getElementById('preview');
   const inputRef = document.getElementById('input');
   const toolbarRef = document.getElementById('toolbar');
-  console.log(editorRef);
 
   function onClickOption() {
     //获取光标选中
@@ -179,7 +178,7 @@ export const createEditor = () => {
     toolbarRef.appendChild(toolbar);
     toolbarRef.style.display = 'none';
   }
-  createToolbar();
+  toolbarRef && createToolbar();
   // const options = {
   //   prefix: 'my-prefix-',
   // };

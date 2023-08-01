@@ -77,28 +77,36 @@ const MyTable: React.FC<IProps> = memo(
       <tbody>
         {useMemo(
           () =>
-            dataSource.map((item: any) => {
-              return (
-                <tr key={item.id}>
-                  {columns.map((column: IColumn) => {
-                    const render =
-                      (column.render && column?.render(item)) ||
-                      item[column.dataIndex];
-                    return (
-                      <td
-                        key={column.dataIndex}
-                        className={column.ellipsis ? 'ellipsis' : ''}
-                        onClick={() => {
-                          onRow?.(item);
-                        }}
-                      >
-                        {render}
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            }),
+            dataSource.length ? (
+              dataSource.map((item: any) => {
+                return (
+                  <tr key={item.id}>
+                    {columns.map((column: IColumn) => {
+                      const render =
+                        (column.render && column?.render(item)) ||
+                        item[column.dataIndex];
+                      return (
+                        <td
+                          key={column.dataIndex}
+                          className={column.ellipsis ? 'ellipsis' : ''}
+                          onClick={() => {
+                            onRow?.(item);
+                          }}
+                        >
+                          {render}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })
+            ) : (
+              <tr>
+                <td colSpan={columns.length}>
+                  <div className='table-empty'>暂无数据</div>
+                </td>
+              </tr>
+            ),
           [dataSource, columns, onRow]
         )}
       </tbody>

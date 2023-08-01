@@ -37,11 +37,14 @@ api.interceptors.response.use(
   }
 );
 
-export const post = async (url: string, data: Record<string | number, any>) => {
+export const _post = async (
+  url: string,
+  data: Record<string | number, any>
+) => {
   return api.post(`${baseURL}${url}`, data);
 };
 
-export const get = async (
+export const _get = async (
   url = '',
   data: Record<string | number, any> = {}
 ) => {
@@ -57,4 +60,12 @@ export const get = async (
     }
   });
   return api.get(realUrl);
+};
+
+export const _put = async (url: string, data: Record<string | number, any>) => {
+  return api.put(`${baseURL}${url}`, data);
+};
+
+export const _delete = async (url = '') => {
+  return api.delete(baseURL + url);
 };

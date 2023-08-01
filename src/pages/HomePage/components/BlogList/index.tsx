@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { getBlogsList, queryBlog } from '../../../../services/homePage';
+import { getBlogsList, queryBlog } from '../../../../services/blogService';
 import MyPagination from '../../../../components/MyPagination';
 import BlogItem from './BlogItem';
 import './index.less';

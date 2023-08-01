@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getAllTag } from '../../services/tagPage';
+import { getAllTag } from '../../services/tagService';
 import TagList from '../../components/TagList';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Tag, Blog } from '../../typings/index';

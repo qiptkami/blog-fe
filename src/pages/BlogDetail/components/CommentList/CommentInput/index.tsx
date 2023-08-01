@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Comment } from '../../../../../typings/index';
 import classNames from 'classnames';
 import './index.less';
+import TextArea from '../../../../../components/Input/components/TextArea';
 
 interface IProps {
   isReply: boolean;
@@ -36,8 +37,8 @@ const CommentInput: React.FC<IProps> = ({
     uEmail && setEmail(uEmail);
   }, [uname, uEmail]);
 
-  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(e.target.value);
+  const handleContentChange = (value: string) => {
+    setContent(value);
   };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,17 +56,11 @@ const CommentInput: React.FC<IProps> = ({
         isReply ? 'comment-input-reply' : ''
       )}
     >
-      <div className='comment-input-textarea'>
-        <textarea
-          className='comment-input-textarea-content'
-          name='content'
-          value={content}
-          placeholder={
-            isReply ? `回复@${parent?.nickname}：` : '写下你的评论...'
-          }
-          onChange={(e) => handleContentChange(e)}
-        ></textarea>
-      </div>
+      <TextArea
+        value={content}
+        placeholder={isReply ? `回复@${parent?.nickname}：` : '写下你的评论...'}
+        onChange={(e) => handleContentChange(e)}
+      />
       <div className='comment-input-info'>
         <div className='comment-input-name'>
           <i className={classNames('iconfont', 'icon-user')}>&#xe7ae;</i>

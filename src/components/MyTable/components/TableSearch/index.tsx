@@ -26,6 +26,7 @@ const TableSearch: React.FC<IProps> = memo(({ columns, onSubmit }) => {
     if (column.valueType === ESearchType.select) {
       return (
         <InputSelect
+          label={column.title}
           options={column.valueEnum}
           onChange={(value: any) => {
             const newInputValues = { ...inputValues };
@@ -37,6 +38,7 @@ const TableSearch: React.FC<IProps> = memo(({ columns, onSubmit }) => {
     } else if (column.valueType === ESearchType.text) {
       return (
         <Input
+          label={column.title}
           className='table-search-item-input'
           value={inputValues[column.dataIndex]}
           onChange={(value: any) => {
@@ -52,7 +54,6 @@ const TableSearch: React.FC<IProps> = memo(({ columns, onSubmit }) => {
   const searchDom = searchMap.map((item: IColumn) => {
     return (
       <div className='table-search-item' key={item.dataIndex}>
-        <span className='table-search-item-label'>{item.title}</span>
         {getInputType(item)}
       </div>
     );

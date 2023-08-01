@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../../../services/admin/loginPage';
+import { login } from '../../../services/loginService';
 import './index.less';
 
 const Login: React.FC = () => {

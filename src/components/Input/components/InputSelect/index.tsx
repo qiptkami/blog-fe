@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { useEffect, useRef, useState, forwardRef } from 'react';
 import classNames from 'classnames';
 
 import './index.less';
@@ -14,35 +8,50 @@ interface IOptions {
 }
 
 interface IProps {
+  label?: string;
   multiple?: boolean;
   defaultValue?: any;
-  onChange?: (value: string | undefined) => void;
+  onChange?: (value: string) => void;
   className?: string | undefined;
   options?: IOptions[];
 }
 
 const InputSelect: React.FC<IProps> = ({
+  label,
   multiple = false,
   defaultValue,
   onChange,
   className,
   options,
 }) => {
+  const wrapperRef = useRef<any>();
   const dropdownContentRef = useRef<any>();
   const [showDrop, setShowDrop] = useState<boolean>(false);
   const [selectValue, setSelectValue] = useState<any>('');
+
+  const handleClickOutside = (event: any) => {
+    if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+      setShowDrop(false);
+    }
+  };
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     setSelectValue(defaultValue);
   }, [defaultValue]);
 
-  const getDropdownContentHeight = useCallback(() => {
+  const getDropdownContentHeight = () => {
     return showDrop ? `${dropdownContentRef.current.scrollHeight}px` : '0px';
-  }, [showDrop]);
+  };
 
-  const dropDom = useMemo(() => {
+  const dropDom = () => {
     if (!options || !options.length) {
-      return <>暂无数据</>;
+      return <div className='select-dropdown-empty'>暂无数据</div>;
     }
     return options?.map((option: IOptions) => (
       <div
@@ -62,19 +71,26 @@ const InputSelect: React.FC<IProps> = ({
         {option.label}
       </div>
     ));
-  }, [options, selectValue, onChange]);
+  };
   return (
     <>
+      {label && (
+        <label htmlFor={label} className='input-label'>
+          {label}
+        </label>
+      )}
       <span
+        ref={wrapperRef}
         className={classNames('input-select-wrapper', className)}
         onClick={() => {
           setShowDrop(true);
         }}
       >
         <input
+          id={label}
           type='text'
-          value={
-            selectValue
+          defaultValue={
+            selectValue !== ''
               ? options?.find((option) => option.value === selectValue)?.label
               : ''
           }
@@ -83,18 +99,6 @@ const InputSelect: React.FC<IProps> = ({
           }}
           readOnly
         />
-        {selectValue && (
-          <i
-            className={classNames('iconfont', 'icon-clear')}
-            onClick={(e: React.MouseEvent<HTMLElement, MouseEvent>) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setSelectValue('');
-            }}
-          >
-            &#xe629;
-          </i>
-        )}
         <div
           className={classNames(
             'select-dropdown',
@@ -105,7 +109,7 @@ const InputSelect: React.FC<IProps> = ({
           }}
           ref={dropdownContentRef}
         >
-          {dropDom}
+          {dropDom()}
         </div>
       </span>
     </>

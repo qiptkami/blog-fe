@@ -1,11 +1,11 @@
 import classNames from 'classnames';
 import moment from 'moment';
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import MyTable from '../../../components/MyTable';
 import PopConfirm from '../../../components/Popconfirm';
 import { useNavigate } from 'react-router-dom';
-import { getBlogsList } from '../../../services/homePage';
-import { getAllTag } from '../../../services/tagPage';
+import { delBlog, getBlogsList } from '../../../services/blogService';
+import { getAllTag } from '../../../services/tagService';
 import { Tag, Blog } from '../../../typings/index';
 import './index.less';
 
@@ -18,9 +18,17 @@ const BlogAdmin: React.FC<IProps> = () => {
   const [page, setPage] = useState<number>(1); //当前页数
   const [size, setSize] = useState<number>(5); //页面大小
   const [tagEnum, setTagEnum] = useState<any[]>([]);
-  const [params, setParams] = useState<any>([]);
+  const [params, setParams] = useState<any>({});
 
-  const handleOk = () => {};
+  const handleOk = (id: number) => {
+    delBlog(id);
+    setPage(1);
+    setSize(5);
+    getData({
+      page: 1,
+      size: size,
+    });
+  };
   const handelCancel = () => {};
 
   const columns = [
@@ -88,7 +96,9 @@ const BlogAdmin: React.FC<IProps> = () => {
           <div className='line'> | </div>
           <PopConfirm
             description='确定要删除吗'
-            onOk={handleOk}
+            onOk={() => {
+              handleOk(_.id);
+            }}
             onCancel={handelCancel}
           >
             <i className={classNames('iconfont', 'icon-del')} title='删除'>
@@ -100,27 +110,34 @@ const BlogAdmin: React.FC<IProps> = () => {
     },
   ];
 
-  const getData = (param?: {
+  const getData = (param: {
     page: number;
     size: number;
     title?: string;
     tagId?: number;
   }) => {
-    console.log(param);
+    if (params.title) {
+      param.title = params.title;
+    }
+    if (params.tagId) {
+      param.title = params.tagId;
+    }
     getBlogsList(param).then((res: any) => {
-      if (res?.data?.status) {
-        setBlogs(res?.data?.data?.list);
-        setTotal(res?.data?.data?.total);
-        setPage(res?.data?.data?.pageNum);
-        setSize(res?.data?.data?.pageSize);
+      if (res.status === 200) {
+        setBlogs(res.data.value);
+        setTotal(res.data.total);
+        setPage(res.data.page);
+        setSize(res.data.size);
       }
     });
     getAllTag().then((res: any) => {
-      setTagEnum(
-        res?.data?.data.map((item: Tag) => {
-          return { value: item.id, label: item.name };
-        })
-      );
+      if (res.status === 200) {
+        setTagEnum(
+          res.data.value.map((item: Tag) => {
+            return { value: item.id, label: item.name };
+          })
+        );
+      }
     });
   };
 
@@ -136,8 +153,6 @@ const BlogAdmin: React.FC<IProps> = () => {
           columns={columns}
           onSubmit={(options: any) => {
             setParams(options);
-            console.log(options);
-
             getData({
               page: 1,
               size: size,
@@ -145,8 +160,8 @@ const BlogAdmin: React.FC<IProps> = () => {
               tagId: options.tags,
             });
           }}
-          onRow={(record) => {
-            console.log(record);
+          onRow={(record: any) => {
+            navigate(`/admin/blog/${record.id}`, { state: record.id });
           }}
         />
       </div>

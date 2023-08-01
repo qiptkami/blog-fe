@@ -1,25 +1,27 @@
+.input-label {
+  min-width: 50px;
+  display: inline-block;
+  padding-right: 4px;
+}
+
 .input-select-wrapper {
   position: relative;
   display: inline-flex;
+  align-items: center;
   padding: 5px 14px;
   border-radius: 0;
   border: 1px solid rgb(217, 217, 217);
   position: relative;
   font-size: 14px;
-  width: 150px;
+  min-width: 150px;
   input {
     width: 100%;
     outline: none;
     line-height: 0;
+    background-color: inherit;
     border: none;
   }
-  .icon-clear {
-    margin-left: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    color: #7d7d7d;
-    display: none;
-  }
+
   &:hover {
     .icon-clear {
       display: block;
@@ -47,6 +49,9 @@
     &-selected {
       background-color: #e7f4ff !important;
     }
+  }
+  &-empty {
+    padding: 10px;
   }
 }
 
