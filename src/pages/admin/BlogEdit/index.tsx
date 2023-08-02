@@ -103,22 +103,20 @@ const BlogAdmin: React.FC<IProps> = () => {
             options={tags}
             defaultValue={blog?.tags?.map((tag) => tag.id)}
             onChange={(value: any) => {
-              console.log('value: ', value);
               setBlog((prev: Blog | undefined) => {
                 if (!prev) return;
                 return {
                   ...prev,
-                  tags: value.map((item: any) =>
-                    tags.find((tag) => tag.label === item)
-                  ),
+                  tags: value.map((item: any) => {
+                    const find = tags.find((tag) => tag.value === item);
+                    return { id: find.value, name: find.label };
+                  }),
                 };
               });
             }}
           />
         </div>
-        {/*  <div className='form-item'>
-       <InputSelect label='first'></InputSelect>
-        </div> */}
+        {/* <FileUpload /> */}
         <button
           type='submit'
           onClick={(e) => {
@@ -129,8 +127,6 @@ const BlogAdmin: React.FC<IProps> = () => {
           onClick
         </button>
       </form>
-
-      {/* <FileUpload /> */}
 
       {/* <MarkDownEditor content={blog?.content} /> */}
     </div>

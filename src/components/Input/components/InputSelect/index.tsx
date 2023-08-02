@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 
 import './index.less';
@@ -9,55 +9,62 @@ interface IOptions {
 interface IProps {
   label?: string;
   multiple?: boolean;
-  // value?: any; //多选需要传value
   defaultValue?: string | number | string[] | number[];
-  onChange?: (value: (string | undefined)[], options: IOptions[]) => void;
+  onChange?: (
+    value: string | number | (string | undefined)[],
+    options: IOptions[]
+  ) => void;
   className?: string | undefined;
   options?: IOptions[];
 }
 
 const findLabel = (
   options: IOptions[] | undefined,
-  value: string | number | string[] | number[] | undefined
+  value: string | number | undefined
 ) => {
   if (!options || !options.length || !value) return undefined;
-  if (Array.isArray(value)) {
-    const res = value.map((item) => {
-      return options.find((option: IOptions) => option.value === item)?.label;
-    });
-    if (!res || !res.length) return undefined;
-    return res;
-  }
-  return [options.find((option: IOptions) => option.value === value)?.label];
+  return options.find((option: IOptions) => option.value === value)?.label;
 };
 
 const insertDom = (
   multiple: boolean,
   wrapperRef: any,
   inputRef: any,
-  value: Array<string | undefined> | undefined
+  options: IOptions[] | undefined,
+  value: string[] | number[] | string | number | undefined,
+  currentClick: string | number | undefined
 ) => {
-  if (!value || !value.length) return;
+  if (!value || !options) return;
   //考虑单选
   if (!multiple) {
     //删除原先的dom
+    const label = findLabel(options, value as string | number);
+    if (!label) return;
     if (wrapperRef.current.firstChild === inputRef.current) {
       //没有选中任何
       const newSpan = document.createElement('span');
       newSpan.className = 'input-select-wrapper-selected';
-      value[0] && (newSpan.textContent = value[0]);
+      label && (newSpan.textContent = label);
       wrapperRef.current.insertBefore(newSpan, inputRef.current);
     } else {
       //替换
-      wrapperRef.current.firstChild.textContent = value[0];
+      wrapperRef.current.firstChild.textContent = label;
     }
   } else {
-    value.forEach((item) => {
-      const newSpan = document.createElement('span');
-      newSpan.className = 'input-select-wrapper-selected';
-      newSpan.id = `input-selected-${item}`;
-      item && (newSpan.textContent = item);
-      wrapperRef.current.insertBefore(newSpan, inputRef.current);
+    (value as string[] | number[]).forEach((item: string | number) => {
+      const label = findLabel(options, item);
+      if (!label) return;
+      const dom = document.getElementById(`input-selected-${item}`);
+      const delDom = document.getElementById(`input-selected-${currentClick}`);
+      if (!dom) {
+        const newSpan = document.createElement('span');
+        newSpan.className = 'input-select-wrapper-selected';
+        newSpan.id = `input-selected-${item}`;
+        label && (newSpan.textContent = label);
+        wrapperRef.current.insertBefore(newSpan, inputRef.current);
+      } else if (delDom) {
+        delDom.remove();
+      }
     });
   }
 };
@@ -73,9 +80,14 @@ const InputSelect: React.FC<IProps> = ({
   const wrapperRef = useRef<any>();
   const dropdownContentRef = useRef<any>();
   const [showDrop, setShowDrop] = useState<boolean>(false);
+  const [currentClick, setCurrentClick] = useState<string | number | undefined>(
+    undefined
+  );
   const [selectValue, setSelectValue] = useState<
-    Array<string | undefined> | undefined
+    string[] | number[] | string | number | undefined
   >(undefined);
+
+  const [searchState, setSearchState] = useState<string>('');
 
   const handleClickOutside = (event: any) => {
     if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
@@ -92,37 +104,58 @@ const InputSelect: React.FC<IProps> = ({
 
   useEffect(() => {
     if (selectValue === undefined) {
-      console.log('defaultValue: ', defaultValue);
-      setSelectValue(findLabel(options, defaultValue));
-      multiple &&
-        insertDom(
-          multiple,
-          wrapperRef,
-          inputRef,
-          findLabel(options, defaultValue)
-        );
+      setSelectValue(defaultValue);
     }
   }, [defaultValue, selectValue, options, multiple]);
 
   useEffect(() => {
-    console.log('selectValue: ', selectValue);
-    !multiple && insertDom(multiple, wrapperRef, inputRef, selectValue);
-  }, [selectValue, multiple]);
+    insertDom(
+      multiple,
+      wrapperRef,
+      inputRef,
+      options,
+      selectValue,
+      currentClick
+    );
+  }, [selectValue, multiple, options, currentClick]);
 
   const getDropdownContentHeight = () => {
     return showDrop ? `${dropdownContentRef.current.scrollHeight}px` : '0px';
+  };
+
+  const getClassName = (
+    selected: string | number | string[] | number[] | undefined,
+    value: string | number
+  ) => {
+    let className = '';
+    if (!Array.isArray(selected)) {
+      selected === value && (className = 'select-dropdown-item-selected');
+    } else {
+      selected.findIndex((item) => item === value) !== -1 &&
+        (className = 'select-dropdown-item-selected');
+    }
+    return className;
   };
 
   const dropDom = () => {
     if (!options || !options.length) {
       return <div className='select-dropdown-empty'>暂无数据</div>;
     }
-    return options?.map((option: IOptions) => (
+    const searchOptions = options.filter((item) => {
+      // item.label
+      const mainLower = (item.label as string).toLowerCase();
+      const subLower = searchState.toLowerCase();
+      return mainLower.includes(subLower);
+    });
+    if (!searchOptions || !searchOptions.length) {
+      return <div className='select-dropdown-empty'>暂无数据</div>;
+    }
+
+    return searchOptions.map((option: IOptions) => (
       <div
         className={classNames(
           'select-dropdown-item',
-          selectValue?.includes(option.value.toString()) &&
-            'select-dropdown-item-selected'
+          getClassName(selectValue, option.value)
         )}
         key={option.value}
         onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -130,30 +163,21 @@ const InputSelect: React.FC<IProps> = ({
           e.stopPropagation();
           if (!multiple) {
             //如果单选
-            const find = findLabel(options, option.value);
-            if (!find) return;
-            setSelectValue(find);
-            onChange?.(find, options);
+            setSelectValue(option.value);
+            onChange?.(option.value, options);
             setShowDrop(false);
           } else {
-            const find = findLabel(options, option.value);
-            if (!find || !find[0] || !selectValue) return;
-            const newSelectValue = [...selectValue];
+            const value = option.value;
+            console.log('value: ', value);
+            const newSelectValue = [...(selectValue as any[])];
             const findIndex = newSelectValue.findIndex(
-              (item) => find[0] === item
+              (item) => value === item
             );
             if (findIndex !== -1) {
               newSelectValue.splice(findIndex, 1);
-              const dom = document.getElementById(`input-selected-${find[0]}`);
-              dom?.remove();
+              setCurrentClick(value);
             } else {
-              //不存在 直接添加dom
-              newSelectValue.push(...find);
-              const newSpan = document.createElement('span');
-              newSpan.className = 'input-select-wrapper-selected';
-              newSpan.id = `input-selected-${find[0]}`;
-              newSpan.textContent = find[0];
-              wrapperRef.current.insertBefore(newSpan, inputRef.current);
+              newSelectValue.push(value);
             }
             setSelectValue(newSelectValue);
             onChange?.(newSelectValue, options);
@@ -185,8 +209,11 @@ const InputSelect: React.FC<IProps> = ({
           type='search'
           style={{ opacity: multiple ? 1 : 0 }}
           autoComplete={'off'}
+          onChange={(e: any) => {
+            setSearchState(e.target.value);
+          }}
           onBlur={() => {
-            // setShowDrop(false);
+            setShowDrop(false);
           }}
         />
         <div
