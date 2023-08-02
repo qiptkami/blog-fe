@@ -101,13 +101,16 @@ const BlogAdmin: React.FC<IProps> = () => {
             multiple
             label='tags'
             options={tags}
-            defaultValue={blog?.tags?.[0]?.id ?? 0}
-            onChange={(value: string) => {
+            defaultValue={blog?.tags?.map((tag) => tag.id)}
+            onChange={(value: any) => {
+              console.log('value: ', value);
               setBlog((prev: Blog | undefined) => {
                 if (!prev) return;
                 return {
                   ...prev,
-                  tags: [tags.find((tag) => tag.value === value)],
+                  tags: value.map((item: any) =>
+                    tags.find((tag) => tag.label === item)
+                  ),
                 };
               });
             }}

@@ -28,9 +28,11 @@ const TableSearch: React.FC<IProps> = memo(({ columns, onSubmit }) => {
         <InputSelect
           label={column.title}
           options={column.valueEnum}
-          onChange={(value: any) => {
+          onChange={(value: any, options: any) => {
             const newInputValues = { ...inputValues };
-            newInputValues[column.dataIndex] = value;
+            newInputValues[column.dataIndex] = options.find(
+              (item: any) => item.label === value[0]
+            )?.value;
             setInputValues(newInputValues);
           }}
         />
