@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import classNames from 'classnames';
 
 import './index.less';
@@ -34,9 +40,10 @@ const insertDom = (
   value: string[] | number[] | string | number | undefined,
   currentClick: string | number | undefined
 ) => {
-  if (!value || !options) return;
+  if (!options) return;
   //考虑单选
   if (!multiple) {
+    if (!value) return;
     //删除原先的dom
     const label = findLabel(options, value as string | number);
     if (!label) return;
@@ -51,11 +58,16 @@ const insertDom = (
       wrapperRef.current.firstChild.textContent = label;
     }
   } else {
+    const delDom = document.getElementById(`input-selected-${currentClick}`);
+    if (!value || !(value as string[] | number[]).length) {
+      delDom && delDom.remove();
+      return;
+    }
     (value as string[] | number[]).forEach((item: string | number) => {
       const label = findLabel(options, item);
       if (!label) return;
       const dom = document.getElementById(`input-selected-${item}`);
-      const delDom = document.getElementById(`input-selected-${currentClick}`);
+      // const delDom = document.getElementById(`input-selected-${currentClick}`);
       if (!dom) {
         const newSpan = document.createElement('span');
         newSpan.className = 'input-select-wrapper-selected';
@@ -120,7 +132,7 @@ const InputSelect: React.FC<IProps> = ({
   }, [selectValue, multiple, options, currentClick]);
 
   const getDropdownContentHeight = () => {
-    return showDrop ? `${dropdownContentRef.current.scrollHeight}px` : '0px';
+    return showDrop ? '200px' : '0px';
   };
 
   const getClassName = (
@@ -142,7 +154,6 @@ const InputSelect: React.FC<IProps> = ({
       return <div className='select-dropdown-empty'>暂无数据</div>;
     }
     const searchOptions = options.filter((item) => {
-      // item.label
       const mainLower = (item.label as string).toLowerCase();
       const subLower = searchState.toLowerCase();
       return mainLower.includes(subLower);
@@ -167,8 +178,8 @@ const InputSelect: React.FC<IProps> = ({
             onChange?.(option.value, options);
             setShowDrop(false);
           } else {
+            setSearchState('');
             const value = option.value;
-            console.log('value: ', value);
             const newSelectValue = [...(selectValue as any[])];
             const findIndex = newSelectValue.findIndex(
               (item) => value === item
@@ -201,19 +212,34 @@ const InputSelect: React.FC<IProps> = ({
         className={classNames('input-select-wrapper', className)}
         onClick={() => {
           setShowDrop(true);
+          inputRef.current.focus();
         }}
       >
         <input
           id={label}
           ref={inputRef}
           type='search'
-          style={{ opacity: multiple ? 1 : 0 }}
+          value={searchState}
+          style={{
+            opacity: multiple ? 1 : 0,
+          }}
           autoComplete={'off'}
           onChange={(e: any) => {
             setSearchState(e.target.value);
+            if (!e.target.value) {
+              inputRef.current.style.width = '12px';
+              return;
+            }
+            const tempElement = document.createElement('span');
+            tempElement.textContent = e.target.value;
+            tempElement.style.visibility = 'hidden'; // 保证元素不可见
+            document.body.appendChild(tempElement);
+            const inputWidth = tempElement.offsetWidth;
+            document.body.removeChild(tempElement);
+            inputRef.current.style.width = `${inputWidth + 10}px`;
           }}
           onBlur={() => {
-            setShowDrop(false);
+            // setShowDrop(false);
           }}
         />
         <div
@@ -222,6 +248,9 @@ const InputSelect: React.FC<IProps> = ({
             showDrop ? 'dropdown-open' : 'dropdown-close'
           )}
           style={{
+            top: wrapperRef.current
+              ? `${wrapperRef.current.offsetHeight}px`
+              : '0px',
             maxHeight: getDropdownContentHeight(),
           }}
           ref={dropdownContentRef}

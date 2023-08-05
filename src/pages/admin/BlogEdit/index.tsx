@@ -5,6 +5,7 @@ import Input from '../../../components/Input';
 import InputSelect from '../../../components/Input/components/InputSelect';
 import TextArea from '../../../components/Input/components/TextArea';
 import MarkDownEditor from '../../../components/MarkDownEditor';
+import Message from '../../../components/Message/index.js';
 import { editBlog, getBlogInfo } from '../../../services/blogService';
 import { getAllTag } from '../../../services/tagService';
 import { Blog, Tag } from '../../../typings/index';
@@ -16,6 +17,10 @@ const BlogAdmin: React.FC<IProps> = () => {
   const { id } = useParams();
   const [blog, setBlog] = useState<Blog>();
   const [tags, setTags] = useState<any[]>([]);
+
+  useEffect(() => {
+    // Message.info('是丢哈对三度啊是是丢哈对三度啊是是丢哈对三度啊是', 4);
+  }, []);
 
   const getBlog = (id: number) => {
     getBlogInfo(id).then((res: any) => {
@@ -47,7 +52,9 @@ const BlogAdmin: React.FC<IProps> = () => {
   const edit = () => {
     if (!blog) return;
     editBlog(blog).then((res: any) => {
-      console.log(res);
+      if (res.status === 200) {
+        Message.success('编辑成功_嘻嘻', 2);
+      }
     });
   };
 
@@ -124,11 +131,19 @@ const BlogAdmin: React.FC<IProps> = () => {
             edit();
           }}
         >
-          onClick
+          <i className='iconfont'>&#xe6dd;</i> onClick
         </button>
       </form>
-
       {/* <MarkDownEditor content={blog?.content} /> */}
+      <button
+        type='submit'
+        onClick={(e) => {
+          e.preventDefault();
+          Message.info('sadasdxxx', 20);
+        }}
+      >
+        message
+      </button>
     </div>
   );
 };
