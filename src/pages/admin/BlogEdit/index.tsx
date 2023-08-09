@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import FileUpload from '../../../components/FileUpload';
 import Input from '../../../components/Input';
@@ -13,14 +13,10 @@ import './index.less';
 
 interface IProps {}
 
-const BlogAdmin: React.FC<IProps> = () => {
+const BlogEdit: React.FC<IProps> = () => {
   const { id } = useParams();
   const [blog, setBlog] = useState<Blog>();
   const [tags, setTags] = useState<any[]>([]);
-
-  useEffect(() => {
-    // Message.info('是丢哈对三度啊是是丢哈对三度啊是是丢哈对三度啊是', 4);
-  }, []);
 
   const getBlog = (id: number) => {
     getBlogInfo(id).then((res: any) => {
@@ -80,30 +76,6 @@ const BlogAdmin: React.FC<IProps> = () => {
           />
         </div>
         <div className='form-item'>
-          <TextArea
-            label={'description'}
-            value={blog?.description}
-            onChange={(value: string) => {
-              setBlog((prev: Blog | undefined) => {
-                if (!prev) return;
-                return { ...prev, description: value };
-              });
-            }}
-          />
-        </div>
-        {/*  <div className='form-item'>
-        <TextArea
-            className='form-item-content'
-            value={blog?.content}
-            onChange={(value: string) => {
-              setBlog((prev: Blog ) => {
-                if (!prev) return;
-                return { ...prev, content: value };
-              });
-            }}
-          /> 
-        </div>*/}
-        <div className='form-item'>
           <InputSelect
             multiple
             label='tags'
@@ -123,6 +95,30 @@ const BlogAdmin: React.FC<IProps> = () => {
             }}
           />
         </div>
+        <div className='form-item'>
+          <TextArea
+            label={'description'}
+            value={blog?.description}
+            onChange={(value: string) => {
+              setBlog((prev: Blog | undefined) => {
+                if (!prev) return;
+                return { ...prev, description: value };
+              });
+            }}
+          />
+        </div>
+        <div className='form-item'>
+          <label className='content-label'>content</label>
+          <MarkDownEditor
+            content={blog?.content}
+            onChange={(value: string | undefined) => {
+              setBlog((prev: Blog | undefined) => {
+                if (!prev) return;
+                return { ...prev, content: value };
+              });
+            }}
+          />
+        </div>
         {/* <FileUpload /> */}
         <button
           type='submit'
@@ -131,20 +127,10 @@ const BlogAdmin: React.FC<IProps> = () => {
             edit();
           }}
         >
-          <i className='iconfont'>&#xe6dd;</i> onClick
+          onClick
         </button>
       </form>
-      {/* <MarkDownEditor content={blog?.content} /> */}
-      <button
-        type='submit'
-        onClick={(e) => {
-          e.preventDefault();
-          Message.info('sadasdxxx', 20);
-        }}
-      >
-        message
-      </button>
     </div>
   );
 };
-export default BlogAdmin;
+export default BlogEdit;

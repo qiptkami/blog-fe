@@ -11,7 +11,7 @@ import './index.less';
 
 interface IProps {}
 
-const BlogAdmin: React.FC<IProps> = () => {
+const BlogList: React.FC<IProps> = () => {
   const navigate = useNavigate();
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [total, setTotal] = useState<number>(0); //数据总量
@@ -168,4 +168,4 @@ const BlogAdmin: React.FC<IProps> = () => {
     </div>
   );
 };
-export default BlogAdmin;
+export default BlogList;

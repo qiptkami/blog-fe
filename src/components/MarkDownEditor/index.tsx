@@ -1,29 +1,18 @@
-import { useEffect } from 'react';
-import { createEditor } from './config';
+import React, { useEffect } from 'react';
+import Editor from './components/Editor';
 import './index.less';
 
 interface IProps {
   content?: string;
+  onChange?: (value: string | undefined) => void;
 }
 
-const Editor: React.FC<IProps> = ({ content = '' }) => {
+const MarkDownEditor: React.FC<IProps> = ({ content, onChange }) => {
   useEffect(() => {
-    createEditor();
+    console.log(content);
   }, []);
-  return (
-    <div className='editor'>
-      <div id='editor' className='editor-container'>
-        <div
-          id='input'
-          contentEditable={true}
-          className='input-container'
-          dangerouslySetInnerHTML={{ __html: content }}
-        ></div>
-        {/* <div id='toolbar' className='toolbar-container'></div> */}
-      </div>
-      <div id='preview' className='preview-container'></div>
-    </div>
-  );
+
+  return content ? <Editor content={content} onChange={onChange} /> : null;
 };
 
-export default Editor;
+export default MarkDownEditor;

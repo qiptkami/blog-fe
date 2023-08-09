@@ -117,11 +117,16 @@ const toolBarConfig = [
   },
 ];
 
-export const createEditor = () => {
+export const createEditor = (content, callback) => {
   const editorRef = document.getElementById('editor');
   const viewRef = document.getElementById('preview');
   const inputRef = document.getElementById('input');
   const toolbarRef = document.getElementById('toolbar');
+
+  if (content) {
+    inputRef.innerText = content;
+    viewRef.innerHTML = marked.parse(content);
+  }
 
   function onClickOption() {
     //获取光标选中
@@ -179,14 +184,9 @@ export const createEditor = () => {
     toolbarRef.style.display = 'none';
   }
   toolbarRef && createToolbar();
-  // const options = {
-  //   prefix: 'my-prefix-',
-  // };
-  // marked.use(markedGfmHeadingId.gfmHeadingId(options));
-  // marked.use(markedMangle.mangle());
-
   inputRef.addEventListener('input', function (event) {
     const updatedContent = event.target.innerText;
+    callback && callback(event.target.innerText);
     viewRef.innerHTML = marked.parse(updatedContent);
     const suffix = updatedContent.slice(-2);
     const reg = /^\s$/; //字符是否是空格、制表符或换行符。
@@ -215,23 +215,6 @@ export const createEditor = () => {
     } else {
       toolbarRef.style.display = 'none';
     }
-  });
-
-  editorRef.addEventListener('click', function (event) {
-    setTimeout(() => {
-      /*
-       * createRange 创建一个新的范围对象，并使用 selectNodeContents 将范围设置为 contentEditable 元素的内容。然后，使用 collapse 将范围折叠到末尾位置。
-       * 接下来，我们使用 getSelection 获取当前选择的对象，然后通过 removeAllRanges 移除所有已选范围，并使用 addRange 将新的范围添加到选择对象中。
-       * 最后，我们使用 focus 方法将焦点重新设置到 contentEditable 元素，以确保光标出现在末尾位置。
-       */
-      const range = document.createRange();
-      const selection = window.getSelection();
-      range.selectNodeContents(inputRef);
-      range.collapse(false);
-      selection.removeAllRanges();
-      selection.addRange(range);
-      inputRef.focus();
-    }, 0);
   });
 
   let scrolling = '';
