@@ -119,7 +119,12 @@ const BlogEdit: React.FC<IProps> = () => {
             }}
           />
         </div>
-        {/* <FileUpload /> */}
+        <FileUpload
+          // url={blog?.firstPicture}
+          onChange={(url: string) => {
+            console.log(url);
+          }}
+        />
         <button
           type='submit'
           onClick={(e) => {

@@ -67,6 +67,7 @@
     "sass-loader": "^12.3.0",
     "semver": "^7.3.5",
     "source-map-loader": "^3.0.0",
+    "spark-md5": "^3.0.2",
     "style-loader": "^3.3.1",
     "tailwindcss": "^3.0.2",
     "terser-webpack-plugin": "^5.2.5",
@@ -158,6 +159,7 @@
     "@types/base-64": "^1.0.0",
     "@types/marked": "^4.0.7",
     "@types/react-router": "^3.0.19",
+    "@types/spark-md5": "^3.0.2",
     "base-64": "^1.0.0"
   }
 }

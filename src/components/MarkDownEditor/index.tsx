@@ -10,7 +10,7 @@ interface IProps {
 const MarkDownEditor: React.FC<IProps> = ({ content, onChange }) => {
   useEffect(() => {
     console.log(content);
-  }, []);
+  }, [content]);
 
   return content ? <Editor content={content} onChange={onChange} /> : null;
 };
