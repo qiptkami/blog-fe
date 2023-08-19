@@ -1,5 +1,5 @@
 import { Blog } from '../../typings/index';
-import { _get, _delete, _put } from '../index';
+import { _get, _delete, _put, _post } from '../index';
 
 const baseUrl = '/blog';
 
@@ -18,6 +18,8 @@ export const queryBlog = (param?: {
   size?: number;
 }) => _get(baseUrl + '/search', param);
 
-export const editBlog = (blog: Blog) => _put(baseUrl + '/edit', blog);
+export const editBlog = (blog: Blog) => _put(baseUrl, blog);
+
+export const addBlog = (blog: Blog) => _post(baseUrl, blog);
 
 export const delBlog = (id: number) => _delete(baseUrl + `/${id}`);

@@ -3,7 +3,7 @@ import { isEqualArr } from '../../utils/deepClone';
 import MyPagination from '../MyPagination';
 import TableSearch from './components/TableSearch';
 import './index.less';
-import { ESearchType, IColumn, Param } from './typing';
+import { IColumn } from './typing';
 
 interface IProps {
   page: number; //当前页数
@@ -14,6 +14,7 @@ interface IProps {
   columns: IColumn[];
   onRow?: (record: IColumn) => void;
   onSubmit?: (params: any) => void;
+  TopRender?: JSX.Element;
 }
 
 const MyTable: React.FC<IProps> = memo(
@@ -26,6 +27,7 @@ const MyTable: React.FC<IProps> = memo(
     columns,
     onRow,
     onSubmit,
+    TopRender,
   }) => {
     const tableRef = useRef<any>(null);
     // const [tableWidth, setTableWidth] = useState<number>();
@@ -115,6 +117,7 @@ const MyTable: React.FC<IProps> = memo(
     return (
       <div className='container'>
         <TableSearch columns={baseColumns} onSubmit={onSubmit} />
+        {TopRender}
         <table id='table' className='table-container' ref={tableRef}>
           {colGroup}
           {tHead}

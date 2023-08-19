@@ -160,6 +160,16 @@ const BlogList: React.FC<IProps> = () => {
               tagId: options.tags,
             });
           }}
+          TopRender={
+            <button
+              className='btn-new'
+              onClick={() => {
+                navigate('/admin/blog');
+              }}
+            >
+              new
+            </button>
+          }
           onRow={(record: any) => {
             navigate(`/admin/blog/${record.id}`, { state: record.id });
           }}

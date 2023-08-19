@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, { useEffect, useRef } from 'react';
 import { createEditor } from '../config';
 import './index.less';
@@ -5,9 +6,10 @@ import './index.less';
 interface IProps {
   content?: string;
   onChange?: (value: string | undefined) => void;
+  className?: string;
 }
 
-const Editor: React.FC<IProps> = ({ content, onChange }) => {
+const Editor: React.FC<IProps> = ({ content, onChange, className }) => {
   const inputRef = useRef<any>();
 
   useEffect(() => {
@@ -17,7 +19,7 @@ const Editor: React.FC<IProps> = ({ content, onChange }) => {
   }, []);
 
   return (
-    <div className='editor'>
+    <div className={classNames(className, 'editor')}>
       <div id='editor' className='editor-container'>
         <div
           ref={inputRef}

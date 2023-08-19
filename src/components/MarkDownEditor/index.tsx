@@ -8,11 +8,9 @@ interface IProps {
 }
 
 const MarkDownEditor: React.FC<IProps> = ({ content, onChange }) => {
-  useEffect(() => {
-    console.log(content);
-  }, [content]);
-
-  return content ? <Editor content={content} onChange={onChange} /> : null;
+  return content === '' || content ? (
+    <Editor className='markdown-editor' content={content} onChange={onChange} />
+  ) : null;
 };
 
 export default MarkDownEditor;

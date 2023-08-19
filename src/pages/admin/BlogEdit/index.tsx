@@ -6,7 +6,7 @@ import InputSelect from '../../../components/Input/components/InputSelect';
 import TextArea from '../../../components/Input/components/TextArea';
 import MarkDownEditor from '../../../components/MarkDownEditor';
 import Message from '../../../components/Message/index.js';
-import { editBlog, getBlogInfo } from '../../../services/blogService';
+import { addBlog, editBlog, getBlogInfo } from '../../../services/blogService';
 import { getAllTag } from '../../../services/tagService';
 import { Blog, Tag } from '../../../typings/index';
 import './index.less';
@@ -45,18 +45,49 @@ const BlogEdit: React.FC<IProps> = () => {
     });
   };
 
-  const edit = () => {
+  const submit = () => {
     if (!blog) return;
-    editBlog(blog).then((res: any) => {
-      if (res.status === 200) {
-        Message.success('编辑成功_嘻嘻', 2);
-      }
-    });
+    if (
+      !blog.title ||
+      !blog.tags?.length ||
+      !blog.content ||
+      !blog.description
+    ) {
+      Message.error('请先输入_嘻嘻', 2);
+      return;
+    }
+    if (blog.id === -1) {
+      addBlog(blog).then((res: any) => {
+        if (res.status === 200) {
+          Message.success('新增成功_嘻嘻', 2);
+        }
+      });
+    } else {
+      editBlog(blog).then((res: any) => {
+        if (res.status === 200) {
+          Message.success('编辑成功_嘻嘻', 2);
+        }
+      });
+    }
   };
 
   useEffect(() => {
     getAllTags();
-    getBlog((id && parseInt(id)) || 0);
+    if (id) {
+      getBlog((id && parseInt(id)) || 0);
+    } else {
+      const userInfo = localStorage.getItem('userInfo');
+      if (!userInfo) return;
+      setBlog({
+        id: -1,
+        title: '',
+        description: '',
+        tags: [],
+        firstPicture: '',
+        content: '',
+        user: JSON.parse(userInfo),
+      });
+    }
   }, [id]);
 
   return (
@@ -135,7 +166,7 @@ const BlogEdit: React.FC<IProps> = () => {
           type='submit'
           onClick={(e) => {
             e.preventDefault();
-            edit();
+            submit();
           }}
         >
           onClick

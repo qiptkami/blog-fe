@@ -73,6 +73,14 @@ const AppRouters: React.FC = () => {
             </AdminLayout>
           ),
         },
+        {
+          path: 'blog',
+          element: (
+            <AdminLayout>
+              <BlogEdit />
+            </AdminLayout>
+          ),
+        },
       ],
     },
   ];

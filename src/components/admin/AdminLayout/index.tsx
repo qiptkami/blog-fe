@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from '../Header/index';
 import Sider from '../Sider/index';
+import { useNavigate } from 'react-router-dom';
 import './index.less';
 
 interface IProps {
@@ -8,6 +9,13 @@ interface IProps {
 }
 
 const MainLayout: React.FC<IProps> = ({ children }) => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const userInfo = localStorage.getItem('userInfo');
+    if (!userInfo) {
+      navigate('/admin/login');
+    }
+  });
   return (
     <div className='admin-container'>
       <Sider></Sider>
