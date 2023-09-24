@@ -7,12 +7,12 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [activeUrl, setActiveUrl] = useState<string>(
-    `/${location.pathname.split('/')[1]}`
-  );
+  const [activeUrl, setActiveUrl] = useState<string>();
 
   useEffect(() => {
-    setActiveUrl(`/${location.pathname.split('/')[1]}`);
+    const res = location.pathname.split('/');
+    console.log('res: ', res);
+    setActiveUrl(`/${res[res.length - 1]}`);
   }, [location]);
 
   const [jinrishici, setJinrishici] = useState<string>('正在加载今日诗词....');
@@ -32,15 +32,10 @@ const Header: React.FC = () => {
     <div className='header-container'>
       <div className='header-menu'>
         <div
-          className={
-            activeUrl === '/'
-              ? classnames(
-                  'header-menu-index',
-                  'header-menu-item',
-                  'header-active'
-                )
-              : classnames('header-menu-index', 'header-menu-item')
-          }
+          className={classnames(
+            'header-menu-item',
+            activeUrl === '/' ? 'header-active' : ''
+          )}
           onClick={() => {
             navigate('/');
             setActiveUrl('/');
@@ -49,15 +44,10 @@ const Header: React.FC = () => {
           <span>首页</span>
         </div>
         <div
-          className={
-            activeUrl === '/tags'
-              ? classnames(
-                  'header-menu-tags',
-                  'header-menu-item',
-                  'header-active'
-                )
-              : classnames('header-menu-tags', 'header-menu-item')
-          }
+          className={classnames(
+            'header-menu-item',
+            activeUrl === '/tags' ? 'header-active' : ''
+          )}
           onClick={() => {
             navigate('/tags');
             setActiveUrl('/tags');

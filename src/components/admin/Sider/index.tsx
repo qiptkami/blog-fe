@@ -1,26 +1,27 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './index.less';
 import classNames from 'classnames';
 
+import { useNavigate, useLocation } from 'react-router-dom';
+
 const titles = [
-  {
-    title: 'blog',
-    children: [
-      { title: '博客列表', children: [] },
-      { title: 'blog', children: [] },
-    ],
-  },
-  { title: 'tag' },
-  { title: 'user' },
-  { title: 'history' },
+  { title: 'blogs', icon: '&#xe7de;' },
+  { title: 'tags', icon: '&#xe87c;' },
+  { title: 'user', icon: '&#xe6b5;' },
+  { title: 'history', icon: '&#xe674;' },
 ];
 
 const AdminSider: React.FC = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    const res = location.pathname.split('/');
+    setChecked(res[res.length - 1]);
+  }, [location]);
+
   const [checked, setChecked] = useState<string>('');
-  const [clicked, setClicked] = useState<string>('');
 
   const handleClick = (c: string) => {
-    setClicked((prev) => (prev === c ? '' : c));
     setChecked(c);
   };
 
@@ -32,30 +33,29 @@ const AdminSider: React.FC = () => {
     >
       <div
         className={classNames(
-          'sider-blog',
-          checked === item.title ? 'sider-blog-checked' : ''
+          'sider-item-wrapper',
+          checked === item.title ? 'sider-item-wrapper-checked' : ''
         )}
       >
         <div
           className={classNames(
-            'sider-blog-item',
-            checked === item.title ? 'sider-blog-item-checked' : ''
+            'sider-item-icon',
+            checked === item.title ? 'sider-item-icon-checked' : ''
           )}
         >
           <i
             className={classNames(
-              'blog-icon',
+              'sider-icon',
               'iconfont',
-              checked === item.title ? 'blog-icon-checked' : ''
+              checked === item.title ? 'icon-checked' : ''
             )}
           >
-            &#xe7de;
+            <span dangerouslySetInnerHTML={{ __html: item.icon }}></span>
+            {/* &#xe87c; {item.icon} */}
           </i>
         </div>
-        <div className='side-blog-content'>{item.title}</div>
-        <i className={classNames('drop-icon', 'iconfont')}>&#xe6b9;</i>
+        <div className='side-item-content'>{item.title}</div>
       </div>
-      {clicked === item.title && <div className='test'>12</div>}
     </div>
   ));
 

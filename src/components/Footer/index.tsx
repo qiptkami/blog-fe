@@ -1,5 +1,4 @@
-import classnames from 'classnames';
-import React, { useState } from 'react';
+import React from 'react';
 import './index.less';
 
 const Footer: React.FC = () => {
