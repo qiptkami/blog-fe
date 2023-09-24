@@ -82,8 +82,9 @@ const MarkDown2Html: React.FC<IProps> = ({ content }) => {
   }, [handleObserver, tocNodes]);
 
   const Toc = tocNodes?.map(({ hash, tag }, index) => {
+    const checked = checkedTitle === hash;
     return (
-      <div key={index} className='blog-table-item'>
+      <div key={index} className='blog-table-item' id={`toc-${hash}`}>
         <a
           key={index}
           className={`blog-table-item-${tag.substring(0, 2)}`}
@@ -92,9 +93,7 @@ const MarkDown2Html: React.FC<IProps> = ({ content }) => {
         >
           <span
             className={
-              checkedTitle === hash
-                ? `blog-table-item-${tag.substring(0, 2)}-checked`
-                : ''
+              checked ? `blog-table-item-${tag.substring(0, 2)}-checked` : ''
             }
           >
             {hash}
@@ -103,6 +102,13 @@ const MarkDown2Html: React.FC<IProps> = ({ content }) => {
       </div>
     );
   });
+
+  useEffect(() => {
+    const tocChecked = document.getElementById(`toc-${checkedTitle}`);
+    if (tocChecked) {
+      tocChecked.scrollIntoView();
+    }
+  }, [checkedTitle]);
 
   const handleScroll = (hash: string) => {
     setCheckedTitle(hash);

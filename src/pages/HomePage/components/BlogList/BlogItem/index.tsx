@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Blog, Tag } from '../../../../../typings/index';
 import moment from 'moment';
 import './index.less';
 import classNames from 'classnames';
 import { scrollToAnchor } from '../../../../../utils/scrollToAnchor';
+import unknown from '../../../../../assets/img/unknown.png';
 
 interface Props {
   blog: Blog;
@@ -13,6 +14,16 @@ interface Props {
 const BlogItem: React.FC<Props> = ({ blog }) => {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [src, setSrc] = useState<string | undefined>('');
+
+  useEffect(() => {
+    if (!blog?.firstPicture) {
+      setSrc(unknown);
+      return;
+    }
+    setSrc(blog?.firstPicture);
+  }, [blog]);
 
   const tags = (tags?: Tag[]) => {
     return tags?.map((tag: Tag) => {
@@ -57,7 +68,14 @@ const BlogItem: React.FC<Props> = ({ blog }) => {
           {tags(blog?.tags)}
         </div>
       </div>
-      <img className='blog-item-img' src={blog.firstPicture} alt='' />
+      <img
+        className='blog-item-img'
+        src={src}
+        alt=''
+        onError={() => {
+          setSrc(unknown);
+        }}
+      />
     </div>
   );
 };
