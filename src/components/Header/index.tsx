@@ -15,6 +15,17 @@ const Header: React.FC = () => {
     setActiveUrl(`/${location.pathname.split('/')[1]}`);
   }, [location]);
 
+  const [jinrishici, setJinrishici] = useState<string>('正在加载今日诗词....');
+
+  useEffect(() => {
+    const jinrishici = require('jinrishici');
+    jinrishici.load((result: any) => {
+      if (result.status === 'success') {
+        setJinrishici(result.data.content);
+      }
+    });
+  }, []);
+
   useEffect(() => {}, [activeUrl]);
 
   return (
@@ -64,6 +75,7 @@ const Header: React.FC = () => {
           </a>
         </div>
       </div>
+      <span style={{ position: 'absolute', left: '10px' }}>{jinrishici}</span>
     </div>
   );
 };

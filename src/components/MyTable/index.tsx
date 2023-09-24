@@ -117,7 +117,7 @@ const MyTable: React.FC<IProps> = memo(
     return (
       <div className='container'>
         <TableSearch columns={baseColumns} onSubmit={onSubmit} />
-        {TopRender}
+        <div className='table-top'> {TopRender}</div>
         <table id='table' className='table-container' ref={tableRef}>
           {colGroup}
           {tHead}
