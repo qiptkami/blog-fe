@@ -13,7 +13,7 @@
   box-shadow: none;
   overflow-y: auto;
   flex: 1 0 auto;
-  z-index: 1200;
+  z-index: 900;
   position: fixed;
   top: 0px;
   outline: 0px;
@@ -93,7 +93,9 @@
       border-radius: 0.5rem;
       cursor: pointer;
       padding: 0.675rem 0.8rem 0.675rem 1rem;
-      transition: max-height 1.2s ease-in-out;
+      transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+
+      // transition: max-height 1.2s ease-in-out;
       transition-timing-function: cubic-bezier(0.22, 0.68, 0, 1.71);
     }
   }

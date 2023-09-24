@@ -162,7 +162,7 @@ const BlogList: React.FC<IProps> = () => {
           }}
           TopRender={
             <button
-              className='btn-new'
+              className='btn-new btn'
               onClick={() => {
                 navigate('/admin/blog');
               }}

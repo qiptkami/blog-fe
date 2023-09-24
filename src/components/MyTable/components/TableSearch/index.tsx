@@ -65,7 +65,7 @@ const TableSearch: React.FC<IProps> = memo(({ columns, onSubmit }) => {
         onClick={() => {
           onSubmit?.(inputValues);
         }}
-        className='submit-btn'
+        className='btn'
       >
         提交
       </button>

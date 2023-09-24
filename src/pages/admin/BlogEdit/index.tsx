@@ -164,12 +164,13 @@ const BlogEdit: React.FC<IProps> = () => {
         </div>
         <button
           type='submit'
+          className='btn'
           onClick={(e) => {
             e.preventDefault();
             submit();
           }}
         >
-          onClick
+          提交
         </button>
       </form>
     </div>

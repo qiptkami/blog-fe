@@ -35,7 +35,7 @@ const PopConfirm: React.FC<IProps> = ({
               onCancel?.();
               setVisible(false);
             }}
-            className='confirm-btn'
+            className='btn'
           >
             No
           </button>
@@ -47,7 +47,7 @@ const PopConfirm: React.FC<IProps> = ({
               onOk?.();
               setVisible(false);
             }}
-            className={classNames('confirm-btn', 'primary')}
+            className={classNames('btn', 'primary')}
             style={{ marginLeft: '5px' }}
           >
             Yes
