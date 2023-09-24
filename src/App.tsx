@@ -5,7 +5,7 @@ import './App.less';
 const App: React.FC = () => {
   return (
     <div className='app-container'>
-      <AppRouters></AppRouters>
+      <AppRouters />
     </div>
   );
 };

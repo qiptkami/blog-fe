@@ -35,7 +35,7 @@ const BlogList: React.FC = () => {
 
   const blogs = data.length
     ? data.map((item: any) => {
-        return <BlogItem key={item.id} blog={item}></BlogItem>;
+        return <BlogItem key={item.id} blog={item} />;
       })
     : // <div className='loading-animation'>  </div>
       null;
@@ -43,12 +43,7 @@ const BlogList: React.FC = () => {
   return (
     <div className='blog-list-container'>
       {blogs}
-      <MyPagination
-        total={total}
-        page={page}
-        size={size}
-        onRequest={getData}
-      ></MyPagination>
+      <MyPagination total={total} page={page} size={size} onRequest={getData} />
     </div>
   );
 };

@@ -62,7 +62,7 @@ const AdminSider: React.FC = () => {
   return (
     <div className='admin-sider'>
       <div className='sider-title'>喜多喜多</div>
-      <div className='sider-line'></div>
+      <div className='sider-line' />
       {items}
     </div>
   );

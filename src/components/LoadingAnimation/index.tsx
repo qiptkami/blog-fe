@@ -6,21 +6,21 @@ const LoadingAnimation: React.FC = () => {
     <div className='redirecting-animation'>
       <div className='body'>
         <span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
+          <span />
+          <span />
+          <span />
+          <span />
         </span>
         <div className='base'>
-          <span></span>
-          <div className='face'></div>
+          <span />
+          <div className='face' />
         </div>
       </div>
       <div className='longfazers'>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
+        <span />
+        <span />
+        <span />
+        <span />
       </div>
       <h1>Redirecting</h1>
     </div>

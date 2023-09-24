@@ -27,14 +27,14 @@ const HomePage: React.FC = () => {
 
   return (
     <>
-      <div className='home-page-header'></div>
+      <div className='home-page-header' />
       <div className='home-page-container'>
         <div className='home-page-blog'>
           <BlogList />
         </div>
         <div className='home-page-info'>
-          <UserInfo></UserInfo>
-          <TagList data={tagListData}></TagList>
+          <UserInfo />
+          <TagList data={tagListData} />
         </div>
       </div>
     </>

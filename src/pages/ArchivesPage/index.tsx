@@ -35,19 +35,19 @@ const Archives: React.FC = () => {
     <div className='archives-body'>
       <li className='archives-item'>
         <div className='archives-timeline'>
-          <div className='archives-timeline-node'></div>
-          <div className='archives-timeline-line'></div>
+          <div className='archives-timeline-node' />
+          <div className='archives-timeline-line' />
         </div>
         <div className='archives-item-info'>
           <div className='archives-item-content'>共计 {total} 篇文章</div>
-          <div className='archives-item-timestamp'></div>
+          <div className='archives-item-timestamp' />
         </div>
       </li>
       {list.map((blog: Blog) => (
         <li className='archives-item' key={blog.id}>
           <div className='archives-timeline'>
-            <div className='archives-timeline-node'></div>
-            <div className='archives-timeline-line'></div>
+            <div className='archives-timeline-node' />
+            <div className='archives-timeline-line' />
           </div>
           <div className='archives-item-info'>
             <div className='archives-item-content'>
@@ -75,11 +75,7 @@ const Archives: React.FC = () => {
 
   return (
     <ul className='archives-container'>
-      <InfiniteScroll
-        getData={getData}
-        render={archives}
-        msg={msg}
-      ></InfiniteScroll>
+      <InfiniteScroll getData={getData} render={archives} msg={msg} />
     </ul>
   );
 };

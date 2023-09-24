@@ -67,7 +67,7 @@ const TagPage: React.FC = () => {
 
   return (
     <div className='tag-container'>
-      <div className='tag-info-header'></div>
+      <div className='tag-info-header' />
       <div className='tag-info-body'>
         <div className='tag-info-wrap'>
           <TagList data={tags} />

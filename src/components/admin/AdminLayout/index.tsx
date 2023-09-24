@@ -18,7 +18,7 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
   });
   return (
     <div className='admin-container'>
-      <Sider></Sider>
+      <Sider />
       <div className='admin-body'>
         <Header />
         <div style={{ flex: 1 }}> {children}</div>

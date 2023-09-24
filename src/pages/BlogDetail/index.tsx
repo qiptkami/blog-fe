@@ -115,7 +115,7 @@ const BlogDetail: React.FC = () => {
             {/* <img className='blog-picture' src={blog?.firstPicture} alt='' /> */}
           </div>
           <div className='blog-main'>
-            <MarkDown2Html content={blog?.content}></MarkDown2Html>
+            <MarkDown2Html content={blog?.content} />
           </div>
           <div className='blog-footer'>
             <div className='blog-footer-tags'>
@@ -126,7 +126,7 @@ const BlogDetail: React.FC = () => {
               bid={bid}
               list={commentList}
               handleSubmit={handleSubmit}
-            ></Comments>
+            />
           </div>
         </div>
       )}

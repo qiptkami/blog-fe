@@ -10,9 +10,9 @@ interface IProps {
 const MainLayout: React.FC<IProps> = ({ children }) => {
   return (
     <>
-      <Header></Header>
+      <Header />
       <div className='body-container'>{children}</div>
-      <Footer></Footer>
+      <Footer />
     </>
   );
 };

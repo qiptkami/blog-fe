@@ -53,7 +53,7 @@ const PopConfirm: React.FC<IProps> = ({
             Yes
           </button>
         </div>
-        <div className='confirm-arrow'></div>
+        <div className='confirm-arrow' />
       </div>
       <div onClick={() => setVisible((prev) => !prev)}>{children}</div>
     </div>

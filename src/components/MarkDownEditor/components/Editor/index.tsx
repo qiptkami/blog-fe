@@ -26,10 +26,10 @@ const Editor: React.FC<IProps> = ({ content, onChange, className }) => {
           id='input'
           contentEditable={true}
           className='input-container'
-        ></div>
-        <div id='toolbar' className='toolbar-container'></div>
+        />
+        <div id='toolbar' className='toolbar-container' />
       </div>
-      <div id='preview' className='preview-container'></div>
+      <div id='preview' className='preview-container' />
     </div>
   );
 };

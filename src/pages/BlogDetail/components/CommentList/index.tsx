@@ -63,7 +63,7 @@ const CommentList: React.FC<IProps> = ({ bid, list, handleSubmit }) => {
         <i className={classNames('iconfont', 'icon-comments')}>&#xe8e8;</i>
         评论
       </div>
-      <div className='comment-list'></div>
+      <div className='comment-list' />
       <CommentInput
         isReply={false}
         parent={replyParent}
@@ -78,7 +78,7 @@ const CommentList: React.FC<IProps> = ({ bid, list, handleSubmit }) => {
         ) => {
           handleSubmit(nickname, content, email, parentId);
         }}
-      ></CommentInput>
+      />
       <ReplyList
         replyId={replyParent?.id}
         bid={bid}
@@ -87,7 +87,7 @@ const CommentList: React.FC<IProps> = ({ bid, list, handleSubmit }) => {
         uname={adminName}
         uEmail={adminEmail}
         handleSubmit={handleSubmit}
-      ></ReplyList>
+      />
     </div>
   );
 };

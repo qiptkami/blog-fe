@@ -109,16 +109,14 @@ const MarkDown2Html: React.FC<IProps> = ({ content }) => {
   };
 
   return (
-    <>
-      <div v-html='content' className='markdown-body'>
-        <div
-          className='markdown-content'
-          ref={blogBody}
-          dangerouslySetInnerHTML={{ __html: markdownContent }}
-        ></div>
-        <div className='blog-toc'>{Toc}</div>
-      </div>
-    </>
+    <div v-html='content' className='markdown-body'>
+      <div
+        className='markdown-content'
+        ref={blogBody}
+        dangerouslySetInnerHTML={{ __html: markdownContent }}
+      />
+      <div className='blog-toc'>{Toc}</div>
+    </div>
   );
 };
 

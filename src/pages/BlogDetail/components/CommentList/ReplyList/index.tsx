@@ -115,7 +115,7 @@ const ReplyList: React.FC<IProps> = ({
               handleSubmit(nickname, content, email, parentId);
               setIsReplySubmit(false);
             }}
-          ></CommentInput>
+          />
         ) : null}
         <ReplyList
           bid={bid}
@@ -125,7 +125,7 @@ const ReplyList: React.FC<IProps> = ({
           uname={uname}
           uEmail={uEmail}
           handleSubmit={handleSubmit}
-        ></ReplyList>
+        />
       </div>
     );
   });
