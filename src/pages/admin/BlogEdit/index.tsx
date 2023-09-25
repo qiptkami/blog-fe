@@ -93,11 +93,11 @@ const BlogEdit: React.FC<IProps> = () => {
   return (
     <div className='blog-editor-container'>
       <form>
-        <div className='form-item'>
+        <div className='form-item form-item-title'>
           <Input
-            label='title'
-            className='form-item-title'
             value={blog?.title}
+            className='form-item-title-input'
+            placeholder='type title.'
             onChange={(value: string) => {
               setBlog((prev: Blog | undefined) => {
                 if (!prev) return;
@@ -105,11 +105,8 @@ const BlogEdit: React.FC<IProps> = () => {
               });
             }}
           />
-        </div>
-        <div className='form-item'>
           <InputSelect
             multiple
-            label='tags'
             options={tags}
             defaultValue={blog?.tags?.map((tag) => tag.id)}
             onChange={(value: any) => {
@@ -126,10 +123,10 @@ const BlogEdit: React.FC<IProps> = () => {
             }}
           />
         </div>
-        <div className='form-item'>
+        <div className='form-item form-item-description'>
           <TextArea
-            label={'description'}
             value={blog?.description}
+            placeholder='type description.'
             onChange={(value: string) => {
               setBlog((prev: Blog | undefined) => {
                 if (!prev) return;
@@ -138,20 +135,7 @@ const BlogEdit: React.FC<IProps> = () => {
             }}
           />
         </div>
-        <div className='form-item'>
-          <label className='content-label'>content</label>
-          <MarkDownEditor
-            content={blog?.content}
-            onChange={(value: string | undefined) => {
-              setBlog((prev: Blog | undefined) => {
-                if (!prev) return;
-                return { ...prev, content: value };
-              });
-            }}
-          />
-        </div>
-        <div className='form-item'>
-          <label className='content-label'>picture</label>
+        <div className='form-item form-item-upload'>
           <FileUpload
             url={blog?.firstPicture}
             onChange={(url: string) => {
@@ -162,9 +146,20 @@ const BlogEdit: React.FC<IProps> = () => {
             }}
           />
         </div>
+        <div className='form-item form-item-content'>
+          <MarkDownEditor
+            content={blog?.content}
+            onChange={(value: string | undefined) => {
+              setBlog((prev: Blog | undefined) => {
+                if (!prev) return;
+                return { ...prev, content: value };
+              });
+            }}
+          />
+        </div>
         <button
           type='submit'
-          className='btn'
+          className='btn form-btn'
           onClick={(e) => {
             e.preventDefault();
             submit();

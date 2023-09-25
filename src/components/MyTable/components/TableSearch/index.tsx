@@ -26,7 +26,6 @@ const TableSearch: React.FC<IProps> = memo(({ columns, onSubmit }) => {
     if (column.valueType === ESearchType.select) {
       return (
         <InputSelect
-          label={column.title}
           options={column.valueEnum}
           onChange={(value: any, options: any) => {
             const newInputValues = { ...inputValues };
@@ -38,7 +37,6 @@ const TableSearch: React.FC<IProps> = memo(({ columns, onSubmit }) => {
     } else if (column.valueType === ESearchType.text) {
       return (
         <Input
-          label={column.title}
           className='table-search-item-input'
           value={inputValues[column.dataIndex]}
           onChange={(value: any) => {

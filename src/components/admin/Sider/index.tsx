@@ -1,8 +1,6 @@
-import { useEffect, useState } from 'react';
-import './index.less';
 import classNames from 'classnames';
-
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import './index.less';
 
 const titles = [
   { title: 'blogs', icon: '&#xe7de;' },
@@ -11,18 +9,15 @@ const titles = [
   { title: 'history', icon: '&#xe674;' },
 ];
 
-const AdminSider: React.FC = () => {
-  const location = useLocation();
+interface IProps {
+  activeUrl?: string;
+}
 
-  useEffect(() => {
-    const res = location.pathname.split('/');
-    setChecked(res[res.length - 1]);
-  }, [location]);
-
-  const [checked, setChecked] = useState<string>('');
+const AdminSider: React.FC<IProps> = ({ activeUrl }) => {
+  const navigate = useNavigate();
 
   const handleClick = (c: string) => {
-    setChecked(c);
+    navigate(`/admin/${c}`);
   };
 
   const items = titles.map((item: any, index: number) => (
@@ -34,24 +29,23 @@ const AdminSider: React.FC = () => {
       <div
         className={classNames(
           'sider-item-wrapper',
-          checked === item.title ? 'sider-item-wrapper-checked' : ''
+          activeUrl === item.title ? 'sider-item-wrapper-checked' : ''
         )}
       >
         <div
           className={classNames(
             'sider-item-icon',
-            checked === item.title ? 'sider-item-icon-checked' : ''
+            activeUrl === item.title ? 'sider-item-icon-checked' : ''
           )}
         >
           <i
             className={classNames(
               'sider-icon',
               'iconfont',
-              checked === item.title ? 'icon-checked' : ''
+              activeUrl === item.title ? 'icon-checked' : ''
             )}
           >
             <span dangerouslySetInnerHTML={{ __html: item.icon }}></span>
-            {/* &#xe87c; {item.icon} */}
           </i>
         </div>
         <div className='side-item-content'>{item.title}</div>

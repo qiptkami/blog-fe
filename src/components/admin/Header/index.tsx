@@ -1,10 +1,12 @@
-import moment from 'moment';
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import './index.less';
 
-const AdminHeader: React.FC = () => {
-  const navigate = useNavigate();
+interface IProps {
+  activeUrl?: string;
+}
+
+const AdminHeader: React.FC<IProps> = ({ activeUrl }) => {
+  console.log('activeUrl: ', activeUrl);
 
   const getData = (page: number) => {};
 

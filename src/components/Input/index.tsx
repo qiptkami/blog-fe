@@ -4,31 +4,29 @@ import classNames from 'classnames';
 import './index.less';
 
 interface IProps {
-  label?: string;
   value?: string;
+  placeholder?: string;
   onChange?: (value: string) => void;
   className?: string | undefined;
 }
 
-const Input: React.FC<IProps> = ({ label, value, onChange, className }) => {
+const Input: React.FC<IProps> = ({
+  value,
+  placeholder,
+  onChange,
+  className,
+}) => {
   return (
-    <>
-      {label && (
-        <label htmlFor={label} className='input-label'>
-          {label}
-        </label>
-      )}
-      <span className={classNames('input-wrapper', className)}>
-        <input
-          id={label}
-          type='text'
-          value={value || ''}
-          onInput={(e: React.FormEvent<HTMLInputElement>) => {
-            onChange?.((e.target as HTMLInputElement).value);
-          }}
-        />
-      </span>
-    </>
+    <span className={classNames('input-wrapper', className)}>
+      <input
+        type='text'
+        placeholder={placeholder}
+        value={value || ''}
+        onInput={(e: React.FormEvent<HTMLInputElement>) => {
+          onChange?.((e.target as HTMLInputElement).value);
+        }}
+      />
+    </span>
   );
 };
 

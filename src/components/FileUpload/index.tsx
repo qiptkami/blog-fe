@@ -33,7 +33,7 @@ const FileUpload: React.FC<IProps> = ({ url, onChange }) => {
     if (!uploadedFile?.url) return;
     setImgUrl(uploadedFile?.url);
     onChange(uploadedFile?.url);
-  }, [onChange, uploadedFile]);
+  }, [uploadedFile]);
 
   const handleInputFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files;
@@ -47,6 +47,7 @@ const FileUpload: React.FC<IProps> = ({ url, onChange }) => {
         <>
           <label htmlFor='fileInput'>
             <img
+              className='upload-file-img'
               src={imgUrl}
               alt=''
               onError={(e: any) => {
@@ -63,6 +64,7 @@ const FileUpload: React.FC<IProps> = ({ url, onChange }) => {
         </>
       ) : (
         <div className='upload-file-container'>
+          <i className='iconfont upload-icon'>&#xe69d;</i>
           <input
             type='file'
             title=''

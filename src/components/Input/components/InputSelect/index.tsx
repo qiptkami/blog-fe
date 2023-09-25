@@ -7,7 +7,6 @@ interface IOptions {
   label: string;
 }
 interface IProps {
-  label?: string;
   multiple?: boolean;
   defaultValue?: string | number | string[] | number[];
   onChange?: (
@@ -75,7 +74,6 @@ const insertDom = (
   }
 };
 const InputSelect: React.FC<IProps> = ({
-  label,
   multiple = false,
   defaultValue,
   onChange,
@@ -195,64 +193,57 @@ const InputSelect: React.FC<IProps> = ({
   };
 
   return (
-    <>
-      {label && (
-        <label htmlFor={label} className='input-label'>
-          {label}
-        </label>
-      )}
-      <div
-        ref={wrapperRef}
-        className={classNames('input-select-wrapper', className)}
-        onClick={() => {
-          setShowDrop(true);
-          inputRef.current.focus();
+    <div
+      ref={wrapperRef}
+      className={classNames('input-select-wrapper', className)}
+      onClick={() => {
+        setShowDrop(true);
+        inputRef.current.focus();
+      }}
+    >
+      <input
+        ref={inputRef}
+        type='search'
+        value={searchState}
+        style={{
+          opacity: multiple ? 1 : 0,
         }}
+        autoComplete={'off'}
+        onChange={(e: any) => {
+          setSearchState(e.target.value);
+          if (!e.target.value) {
+            inputRef.current.style.width = '12px';
+            return;
+          }
+          const tempElement = document.createElement('span');
+          tempElement.textContent = e.target.value;
+          tempElement.style.visibility = 'hidden'; // 保证元素不可见
+          document.body.appendChild(tempElement);
+          const inputWidth = tempElement.offsetWidth;
+          document.body.removeChild(tempElement);
+          inputRef.current.style.width = `${inputWidth + 10}px`;
+        }}
+        onBlur={() => {
+          // setShowDrop(false);
+        }}
+      />
+      <div
+        className={classNames(
+          'select-dropdown',
+          showDrop ? 'dropdown-open' : 'dropdown-close'
+        )}
+        style={{
+          top: wrapperRef.current
+            ? `${wrapperRef.current.offsetHeight}px`
+            : '0px',
+          maxHeight: getDropdownContentHeight(),
+        }}
+        ref={dropdownContentRef}
       >
-        <input
-          id={label}
-          ref={inputRef}
-          type='search'
-          value={searchState}
-          style={{
-            opacity: multiple ? 1 : 0,
-          }}
-          autoComplete={'off'}
-          onChange={(e: any) => {
-            setSearchState(e.target.value);
-            if (!e.target.value) {
-              inputRef.current.style.width = '12px';
-              return;
-            }
-            const tempElement = document.createElement('span');
-            tempElement.textContent = e.target.value;
-            tempElement.style.visibility = 'hidden'; // 保证元素不可见
-            document.body.appendChild(tempElement);
-            const inputWidth = tempElement.offsetWidth;
-            document.body.removeChild(tempElement);
-            inputRef.current.style.width = `${inputWidth + 10}px`;
-          }}
-          onBlur={() => {
-            // setShowDrop(false);
-          }}
-        />
-        <div
-          className={classNames(
-            'select-dropdown',
-            showDrop ? 'dropdown-open' : 'dropdown-close'
-          )}
-          style={{
-            top: wrapperRef.current
-              ? `${wrapperRef.current.offsetHeight}px`
-              : '0px',
-            maxHeight: getDropdownContentHeight(),
-          }}
-          ref={dropdownContentRef}
-        >
-          {dropDom()}
-        </div>
+        {dropDom()}
       </div>
-    </>
+      <i className='iconfont drop-icon'>&#xe6b9;</i>
+    </div>
   );
 };
 

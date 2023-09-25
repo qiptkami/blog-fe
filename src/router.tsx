@@ -9,6 +9,7 @@ import AdminLayout from './components/admin/AdminLayout';
 import AdminHome from './pages/admin/HomePage';
 import BlogAdmin from './pages/admin/BlogList';
 import BlogEdit from './pages/admin/BlogEdit';
+import TagAdmin from './pages/admin/TagList';
 
 const AppRouters: React.FC = () => {
   const routes = [
@@ -78,6 +79,14 @@ const AppRouters: React.FC = () => {
           element: (
             <AdminLayout>
               <BlogEdit />
+            </AdminLayout>
+          ),
+        },
+        {
+          path: 'tags',
+          element: (
+            <AdminLayout>
+              <TagAdmin />
             </AdminLayout>
           ),
         },
