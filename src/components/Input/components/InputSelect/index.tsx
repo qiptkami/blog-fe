@@ -242,7 +242,7 @@ const InputSelect: React.FC<IProps> = ({
         }}
       />
 
-      {(!selectValue || !(selectValue as string[] | number[]).length) && (
+      {(multiple ? !(selectValue as any)?.length : !selectValue) && (
         <span className='placeholder'>{placeholder}</span>
       )}
       <div
