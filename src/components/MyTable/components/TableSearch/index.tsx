@@ -27,6 +27,7 @@ const TableSearch: React.FC<IProps> = memo(({ columns, onSubmit }) => {
       return (
         <InputSelect
           options={column.valueEnum}
+          placeholder={column.title}
           onChange={(value: any, options: any) => {
             const newInputValues = { ...inputValues };
             newInputValues[column.dataIndex] = value;
@@ -39,6 +40,7 @@ const TableSearch: React.FC<IProps> = memo(({ columns, onSubmit }) => {
         <Input
           className='table-search-item-input'
           value={inputValues[column.dataIndex]}
+          placeholder={column.title}
           onChange={(value: any) => {
             const newInputValues = { ...inputValues };
             newInputValues[column.dataIndex] = value;

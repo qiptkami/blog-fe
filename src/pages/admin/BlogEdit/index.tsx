@@ -97,7 +97,7 @@ const BlogEdit: React.FC<IProps> = () => {
           <Input
             value={blog?.title}
             className='form-item-title-input'
-            placeholder='type title.'
+            placeholder='title'
             onChange={(value: string) => {
               setBlog((prev: Blog | undefined) => {
                 if (!prev) return;
@@ -108,6 +108,7 @@ const BlogEdit: React.FC<IProps> = () => {
           <InputSelect
             multiple
             options={tags}
+            placeholder='tags'
             defaultValue={blog?.tags?.map((tag) => tag.id)}
             onChange={(value: any) => {
               setBlog((prev: Blog | undefined) => {
@@ -126,7 +127,7 @@ const BlogEdit: React.FC<IProps> = () => {
         <div className='form-item form-item-description'>
           <TextArea
             value={blog?.description}
-            placeholder='type description.'
+            placeholder='description'
             onChange={(value: string) => {
               setBlog((prev: Blog | undefined) => {
                 if (!prev) return;

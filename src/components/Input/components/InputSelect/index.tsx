@@ -15,6 +15,7 @@ interface IProps {
   ) => void;
   className?: string | undefined;
   options?: IOptions[];
+  placeholder?: string;
 }
 
 const findLabel = (
@@ -79,6 +80,7 @@ const InputSelect: React.FC<IProps> = ({
   onChange,
   className,
   options,
+  placeholder,
 }) => {
   const inputRef = useRef<any>();
   const wrapperRef = useRef<any>();
@@ -87,6 +89,25 @@ const InputSelect: React.FC<IProps> = ({
   const [currentClick, setCurrentClick] = useState<string | number | undefined>(
     undefined
   );
+
+  useEffect(() => {
+    const dropdownDom = dropdownContentRef.current;
+    if (!showDrop) {
+      dropdownDom.classList.remove('dropdown-enter');
+      dropdownDom.classList.add('dropdown-leave');
+      setTimeout(() => {
+        dropdownDom.classList.remove('dropdown-leave');
+        dropdownDom.classList.add('dropdown-close');
+      }, 150);
+    } else {
+      dropdownDom.classList.add('dropdown-enter');
+      dropdownDom.classList.remove('dropdown-close');
+      setTimeout(() => {
+        dropdownDom.classList.remove('dropdown-enter');
+      }, 150);
+    }
+  }, [showDrop]);
+
   const [selectValue, setSelectValue] = useState<
     string[] | number[] | string | number | undefined
   >(undefined);
@@ -122,10 +143,6 @@ const InputSelect: React.FC<IProps> = ({
       currentClick
     );
   }, [selectValue, multiple, options, currentClick]);
-
-  const getDropdownContentHeight = () => {
-    return showDrop ? '200px' : '0px';
-  };
 
   const getClassName = (
     selected: string | number | string[] | number[] | undefined,
@@ -197,7 +214,7 @@ const InputSelect: React.FC<IProps> = ({
       ref={wrapperRef}
       className={classNames('input-select-wrapper', className)}
       onClick={() => {
-        setShowDrop(true);
+        setShowDrop((prev) => !prev);
         inputRef.current.focus();
       }}
     >
@@ -217,26 +234,23 @@ const InputSelect: React.FC<IProps> = ({
           }
           const tempElement = document.createElement('span');
           tempElement.textContent = e.target.value;
-          tempElement.style.visibility = 'hidden'; // 保证元素不可见
+          tempElement.style.visibility = 'hidden';
           document.body.appendChild(tempElement);
           const inputWidth = tempElement.offsetWidth;
           document.body.removeChild(tempElement);
           inputRef.current.style.width = `${inputWidth + 10}px`;
         }}
-        onBlur={() => {
-          // setShowDrop(false);
-        }}
       />
+
+      {(!selectValue || !(selectValue as string[] | number[]).length) && (
+        <span className='placeholder'>{placeholder}</span>
+      )}
       <div
-        className={classNames(
-          'select-dropdown',
-          showDrop ? 'dropdown-open' : 'dropdown-close'
-        )}
+        className={classNames('select-dropdown', 'dropdown-close')}
         style={{
           top: wrapperRef.current
             ? `${wrapperRef.current.offsetHeight}px`
             : '0px',
-          maxHeight: getDropdownContentHeight(),
         }}
         ref={dropdownContentRef}
       >
