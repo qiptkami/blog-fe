@@ -256,7 +256,15 @@ const InputSelect: React.FC<IProps> = ({
       >
         {dropDom()}
       </div>
-      <i className='iconfont drop-icon'>&#xe6b9;</i>
+      <i
+        className={classNames(
+          'iconfont',
+          'drop-icon',
+          showDrop && 'icon-reverse'
+        )}
+      >
+        &#xe6b9;
+      </i>
     </div>
   );
 };
