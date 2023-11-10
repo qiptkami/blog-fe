@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Button from '../Button';
 import './index.less';
 
 interface IProps {
-  open?: boolean;
+  visible?: boolean;
   title?: string;
   onOk?: () => void;
   onCancel?: () => void;
@@ -12,21 +12,56 @@ interface IProps {
 }
 
 const Modal: React.FC<IProps> = ({
-  open,
+  visible,
   title = 'title',
-  width,
+  width = 520,
   onOk,
   onCancel,
   children,
 }) => {
-  if (!open) {
-    return <></>;
+  const [first, setFirst] = useState<boolean>(true);
+
+  const wrapRef = useRef<any>(null);
+  const modalRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (first && visible) {
+      const modalEle = modalRef.current;
+      modalEle.classList.add('modal-enter');
+      wrapRef.current.style.display = 'block';
+      setTimeout(() => {
+        modalEle.classList.remove('modal-enter');
+      }, 300);
+      setFirst(false);
+    } else if (!first && visible) {
+      const modalEle = modalRef.current;
+      wrapRef.current.style.display = 'block';
+      modalEle.classList.add('modal-enter');
+      setTimeout(() => {
+        modalEle.classList.remove('modal-enter');
+      }, 300);
+    } else if (!visible && !first) {
+      const modalEle = modalRef.current;
+      modalEle.classList.add('modal-leave');
+      setTimeout(() => {
+        modalEle.classList.remove('modal-leave');
+        wrapRef.current.style.display = 'none';
+      }, 300);
+    }
+  }, [first, visible]);
+
+  if (first && !visible) {
+    return null;
   }
+
   return (
-    <>
+    <div className='modal-wrap' ref={wrapRef}>
       <div
-        className='modal-wrapper'
-        style={{ width: width ? `${width}px` : 'auto' }}
+        ref={modalRef}
+        className='modal'
+        style={{
+          width: `${width}px`,
+        }}
       >
         <i className='iconfont icon-modal-close' onClick={onCancel}>
           &#xe723;
@@ -51,7 +86,7 @@ const Modal: React.FC<IProps> = ({
           />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

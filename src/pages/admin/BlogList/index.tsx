@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import MyTable from '../../../components/MyTable';
 import PopConfirm from '../../../components/Popconfirm';
 import Button from '../../../components/Button';
+import BlogModal from '../BlogModal';
 import { useNavigate } from 'react-router-dom';
 import { delBlog, getBlogsList } from '../../../services/blogService';
 import { getAllTag } from '../../../services/tagService';
@@ -21,6 +22,8 @@ const BlogList: React.FC<IProps> = () => {
   const [tagEnum, setTagEnum] = useState<any[]>([]);
   const [params, setParams] = useState<any>({});
   const [loading, setLoading] = useState<boolean>(false);
+  const [visible, setVisible] = useState<boolean>(false);
+  const [editId, setEditId] = useState<number>(-1);
 
   const handleOk = (id: number) => {
     delBlog(id);
@@ -90,7 +93,8 @@ const BlogList: React.FC<IProps> = () => {
             className={classNames('iconfont', 'icon-edit')}
             title='编辑'
             onClick={() => {
-              navigate(`/admin/blog/${_.id}`, { state: _.id });
+              setEditId(_.id);
+              setVisible(true);
             }}
           >
             &#xe66e;
@@ -170,15 +174,28 @@ const BlogList: React.FC<IProps> = () => {
               buttonText='添加'
               size='default'
               onClick={() => {
-                navigate('/admin/blog');
+                setEditId(-1);
+                setVisible(true);
               }}
             />
           }
           onRow={(record: any) => {
-            navigate(`/admin/blog/${record.id}`, { state: record.id });
+            setEditId(record.id);
+            setVisible(true);
           }}
         />
       </div>
+      <BlogModal
+        visible={visible}
+        id={editId}
+        onOk={() => {
+          getData({ page, size });
+          setVisible(false);
+        }}
+        onCancel={() => {
+          setVisible(false);
+        }}
+      />
     </div>
   );
 };
