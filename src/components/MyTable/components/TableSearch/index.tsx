@@ -1,6 +1,7 @@
 import React, { useEffect, useState, memo } from 'react';
 import Input from '../../../Input';
 import InputSelect from '../../../Input/components/InputSelect';
+import Button from '../../../Button';
 import { ESearchType, IColumn } from '../../typing';
 import './index.less';
 
@@ -61,14 +62,12 @@ const TableSearch: React.FC<IProps> = memo(({ columns, onSubmit }) => {
   return (
     <div className='table-search'>
       {searchDom}
-      <button
+      <Button
+        buttonText='提交'
         onClick={() => {
           onSubmit?.(inputValues);
         }}
-        className='btn'
-      >
-        提交
-      </button>
+      />
     </div>
   );
 });

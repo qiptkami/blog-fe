@@ -3,11 +3,13 @@ import moment from 'moment';
 import React, { useState } from 'react';
 import MyTable from '../../../components/MyTable';
 import PopConfirm from '../../../components/Popconfirm';
+import Button from '../../../components/Button';
 import { useNavigate } from 'react-router-dom';
 import { delBlog, getBlogsList } from '../../../services/blogService';
 import { getAllTag } from '../../../services/tagService';
 import { Tag, Blog } from '../../../typings/index';
 import './index.less';
+import Loading from '../../../components/Loading';
 
 interface IProps {}
 
@@ -161,14 +163,13 @@ const BlogList: React.FC<IProps> = () => {
             });
           }}
           TopRender={
-            <button
-              className='btn-new btn'
+            <Button
+              buttonText='new'
+              size='default'
               onClick={() => {
                 navigate('/admin/blog');
               }}
-            >
-              new
-            </button>
+            />
           }
           onRow={(record: any) => {
             navigate(`/admin/blog/${record.id}`, { state: record.id });

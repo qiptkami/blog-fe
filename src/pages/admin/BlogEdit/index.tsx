@@ -5,6 +5,7 @@ import Input from '../../../components/Input';
 import InputSelect from '../../../components/Input/components/InputSelect';
 import TextArea from '../../../components/Input/components/TextArea';
 import MarkDownEditor from '../../../components/MarkDownEditor';
+import Button from '../../../components/Button';
 import Message from '../../../components/Message/index.js';
 import { addBlog, editBlog, getBlogInfo } from '../../../services/blogService';
 import { getAllTag } from '../../../services/tagService';
@@ -158,16 +159,13 @@ const BlogEdit: React.FC<IProps> = () => {
             }}
           />
         </div>
-        <button
-          type='submit'
-          className='btn form-btn'
+        <Button
+          buttonText='提交'
           onClick={(e) => {
             e.preventDefault();
             submit();
           }}
-        >
-          提交
-        </button>
+        />
       </form>
     </div>
   );

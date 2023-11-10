@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '../Button';
 import './index.less';
 
 interface IProps {
@@ -35,16 +36,19 @@ const Modal: React.FC<IProps> = ({
         </div>
         <div className='modal-body'>{children}</div>
         <div className='modal-footer'>
-          <button className='btn' onClick={onCancel}>
-            取消
-          </button>
-          <button
-            className='btn primary'
+          <Button
+            buttonText='取消'
+            onClick={() => {
+              onCancel?.();
+            }}
+          />
+          <Button
+            buttonText='确认'
             style={{ marginLeft: '12px' }}
-            onClick={onOk}
-          >
-            确认
-          </button>
+            onClick={() => {
+              onOk?.();
+            }}
+          />
         </div>
       </div>
     </>
