@@ -222,9 +222,6 @@ const InputSelect: React.FC<IProps> = ({
         ref={inputRef}
         type='search'
         value={searchState}
-        style={{
-          opacity: multiple ? 1 : 0,
-        }}
         autoComplete={'off'}
         onChange={(e: any) => {
           setSearchState(e.target.value);
@@ -242,9 +239,10 @@ const InputSelect: React.FC<IProps> = ({
         }}
       />
 
-      {(multiple ? !(selectValue as any)?.length : !selectValue) && (
-        <span className='placeholder'>{placeholder}</span>
-      )}
+      {(multiple ? !(selectValue as any)?.length : !selectValue) &&
+        !searchState && (
+          <span className='placeholder select-placeholder'>{placeholder}</span>
+        )}
       <div
         className={classNames('select-dropdown', 'dropdown-close')}
         style={{
@@ -265,6 +263,7 @@ const InputSelect: React.FC<IProps> = ({
       >
         &#xe6b9;
       </i>
+      {/* <i className={classNames('iconfont', 'drop-icon')}>&#xe670;</i> */}
     </div>
   );
 };
