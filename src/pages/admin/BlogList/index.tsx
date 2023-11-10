@@ -9,7 +9,6 @@ import { delBlog, getBlogsList } from '../../../services/blogService';
 import { getAllTag } from '../../../services/tagService';
 import { Tag, Blog } from '../../../typings/index';
 import './index.less';
-import Loading from '../../../components/Loading';
 
 interface IProps {}
 
@@ -21,6 +20,7 @@ const BlogList: React.FC<IProps> = () => {
   const [size, setSize] = useState<number>(5); //页面大小
   const [tagEnum, setTagEnum] = useState<any[]>([]);
   const [params, setParams] = useState<any>({});
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleOk = (id: number) => {
     delBlog(id);
@@ -118,6 +118,7 @@ const BlogList: React.FC<IProps> = () => {
     title?: string;
     tagId?: number;
   }) => {
+    setLoading(true);
     if (params.title) {
       param.title = params.title;
     }
@@ -131,6 +132,7 @@ const BlogList: React.FC<IProps> = () => {
         setPage(res.data.page);
         setSize(res.data.size);
       }
+      setLoading(false);
     });
     getAllTag().then((res: any) => {
       if (res.status === 200) {
@@ -150,6 +152,7 @@ const BlogList: React.FC<IProps> = () => {
           total={total}
           page={page}
           size={size}
+          loading={loading}
           onRequest={getData}
           dataSource={blogs}
           columns={columns}
@@ -164,7 +167,7 @@ const BlogList: React.FC<IProps> = () => {
           }}
           TopRender={
             <Button
-              buttonText='new'
+              buttonText='添加'
               size='default'
               onClick={() => {
                 navigate('/admin/blog');
