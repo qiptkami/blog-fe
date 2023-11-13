@@ -32,9 +32,10 @@ const Login: React.FC = () => {
           setErrMsg(res.data.message);
           return;
         }
+        console.log(user);
+
         //存储token
         localStorage.setItem('userInfo', JSON.stringify(user));
-        localStorage.setItem('token', user.token);
         //登录成功
         navigate('/admin/home');
       }
