@@ -3,13 +3,17 @@ import Editor from './components/Editor';
 import './index.less';
 
 interface IProps {
-  content?: string;
+  defaultContent?: string;
   onChange?: (value: string | undefined) => void;
 }
 
-const MarkDownEditor: React.FC<IProps> = ({ content, onChange }) => {
-  return content === '' || content ? (
-    <Editor className='markdown-editor' content={content} onChange={onChange} />
+const MarkDownEditor: React.FC<IProps> = ({ defaultContent, onChange }) => {
+  return defaultContent === '' || defaultContent ? (
+    <Editor
+      className='markdown-editor'
+      defaultContent={defaultContent}
+      onChange={onChange}
+    />
   ) : null;
 };
 

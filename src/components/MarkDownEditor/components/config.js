@@ -117,16 +117,61 @@ const toolBarConfig = [
   },
 ];
 
-export const createEditor = (content, callback) => {
-  const editorRef = document.getElementById('editor');
-  const viewRef = document.getElementById('preview');
-  const inputRef = document.getElementById('input');
-  const toolbarRef = document.getElementById('toolbar');
+let editorRef;
+let viewRef;
+let inputRef;
+let toolbarRef;
 
-  if (content) {
-    inputRef.innerText = content;
-    viewRef.innerHTML = marked.parse(content);
+function createToolbar() {
+  const toolbar = document.createElement('div');
+  for (let i = 0; i < toolBarConfig.length; i++) {
+    const item = toolBarConfig[i];
+    const toolBarItem = document.createElement('div');
+    toolBarItem.className = 'toolbar-item';
+    toolBarItem.setAttribute('key', item.id);
+
+    const toolBarItemNav = document.createElement('span');
+    toolBarItemNav.className = 'toolbar-item-nav';
+    toolBarItemNav.textContent = item.title;
+    toolBarItem.appendChild(toolBarItemNav);
+
+    const toolBarItemOptions = document.createElement('div');
+    toolBarItemOptions.className = 'toolbar-item-options';
+
+    for (let j = 0; j < item.children.length; j++) {
+      const option = item.children[j];
+      const optionsItem = document.createElement('div');
+      optionsItem.className = 'options-item';
+      optionsItem.setAttribute('key', option.id);
+
+      if (option.key) {
+        const optionsItemIcon = document.createElement('img');
+        optionsItemIcon.src = `../../assets/markdownjs/img/${option.key}.png`;
+        optionsItemIcon.alt = '';
+        optionsItemIcon.className = 'options-item-icon';
+        optionsItem.appendChild(optionsItemIcon);
+      }
+
+      const optionsItemName = document.createElement('span');
+      optionsItemName.className = 'options-item-name';
+      optionsItemName.textContent = option.name;
+      optionsItem.appendChild(optionsItemName);
+
+      toolBarItemOptions.appendChild(optionsItem);
+    }
+
+    toolBarItem.appendChild(toolBarItemOptions);
+    toolbar.appendChild(toolBarItem);
   }
+  toolbarRef.appendChild(toolbar);
+  toolbarRef.style.display = 'none';
+}
+
+export const createEditor = (callback) => {
+  editorRef = document.getElementById('editor');
+  viewRef = document.getElementById('preview');
+  inputRef = document.getElementById('input');
+  toolbarRef = document.getElementById('toolbar');
 
   function onClickOption() {
     //获取光标选中
@@ -139,50 +184,6 @@ export const createEditor = (content, callback) => {
     onClickOption();
   });
 
-  function createToolbar() {
-    const toolbar = document.createElement('div');
-    for (let i = 0; i < toolBarConfig.length; i++) {
-      const item = toolBarConfig[i];
-      const toolBarItem = document.createElement('div');
-      toolBarItem.className = 'toolbar-item';
-      toolBarItem.setAttribute('key', item.id);
-
-      const toolBarItemNav = document.createElement('span');
-      toolBarItemNav.className = 'toolbar-item-nav';
-      toolBarItemNav.textContent = item.title;
-      toolBarItem.appendChild(toolBarItemNav);
-
-      const toolBarItemOptions = document.createElement('div');
-      toolBarItemOptions.className = 'toolbar-item-options';
-
-      for (let j = 0; j < item.children.length; j++) {
-        const option = item.children[j];
-        const optionsItem = document.createElement('div');
-        optionsItem.className = 'options-item';
-        optionsItem.setAttribute('key', option.id);
-
-        if (option.key) {
-          const optionsItemIcon = document.createElement('img');
-          optionsItemIcon.src = `../../assets/markdownjs/img/${option.key}.png`;
-          optionsItemIcon.alt = '';
-          optionsItemIcon.className = 'options-item-icon';
-          optionsItem.appendChild(optionsItemIcon);
-        }
-
-        const optionsItemName = document.createElement('span');
-        optionsItemName.className = 'options-item-name';
-        optionsItemName.textContent = option.name;
-        optionsItem.appendChild(optionsItemName);
-
-        toolBarItemOptions.appendChild(optionsItem);
-      }
-
-      toolBarItem.appendChild(toolBarItemOptions);
-      toolbar.appendChild(toolBarItem);
-    }
-    toolbarRef.appendChild(toolbar);
-    toolbarRef.style.display = 'none';
-  }
   toolbarRef && createToolbar();
   inputRef.addEventListener('input', function (event) {
     const updatedContent = event.target.innerText;
@@ -251,3 +252,10 @@ export const createEditor = (content, callback) => {
     handleScroll('view');
   });
 };
+
+export const setDefaultValue = (content) => {
+  inputRef.innerText = content;
+  viewRef.innerHTML = marked.parse(content);
+};
+
+export const onInput = () => {};

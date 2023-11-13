@@ -5,7 +5,6 @@ import MyTable from '../../../components/MyTable';
 import PopConfirm from '../../../components/Popconfirm';
 import Button from '../../../components/Button';
 import BlogModal from '../BlogModal';
-import { useNavigate } from 'react-router-dom';
 import { delBlog, getBlogsList } from '../../../services/blogService';
 import { getAllTag } from '../../../services/tagService';
 import { Tag, Blog } from '../../../typings/index';
@@ -14,7 +13,6 @@ import './index.less';
 interface IProps {}
 
 const BlogList: React.FC<IProps> = () => {
-  const navigate = useNavigate();
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [total, setTotal] = useState<number>(0); //数据总量
   const [page, setPage] = useState<number>(1); //当前页数

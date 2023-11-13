@@ -16,7 +16,7 @@ const FileUpload: React.FC<IProps> = ({ url, onChange }) => {
   const [imgUrl, setImgUrl] = useState<string>('');
 
   useEffect(() => {
-    url && setImgUrl(url);
+    setImgUrl(url || '');
   }, [url]);
 
   useEffect(() => {

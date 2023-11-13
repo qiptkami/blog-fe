@@ -1,22 +1,26 @@
 import classNames from 'classnames';
 import React, { useEffect, useRef } from 'react';
-import { createEditor } from '../config';
+import { createEditor, setDefaultValue } from '../config';
 import './index.less';
 
 interface IProps {
-  content?: string;
+  defaultContent?: string;
   onChange?: (value: string | undefined) => void;
   className?: string;
 }
 
-const Editor: React.FC<IProps> = ({ content, onChange, className }) => {
+const Editor: React.FC<IProps> = ({ defaultContent, onChange, className }) => {
   const inputRef = useRef<any>();
 
   useEffect(() => {
-    createEditor(content, (value: string) => {
+    createEditor((value: string) => {
       onChange?.(value);
     });
   }, []);
+
+  useEffect(() => {
+    setDefaultValue(defaultContent || '');
+  }, [defaultContent]);
 
   return (
     <div className={classNames(className, 'editor')}>

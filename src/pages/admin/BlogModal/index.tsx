@@ -23,6 +23,8 @@ const BlogModal: React.FC<IProps> = ({ id, visible, onOk, onCancel }) => {
   const [blog, setBlog] = useState<Blog>();
   const [tags, setTags] = useState<any[]>([]);
 
+  const [defaultContent, setDefaultContent] = useState<string>('');
+
   useEffect(() => {
     getAllTags();
     if (id !== -1) {
@@ -30,6 +32,7 @@ const BlogModal: React.FC<IProps> = ({ id, visible, onOk, onCancel }) => {
     } else {
       const userInfo = localStorage.getItem('userInfo');
       if (!userInfo) return;
+      setDefaultContent('');
       setBlog({
         id: -1,
         title: '',
@@ -46,7 +49,7 @@ const BlogModal: React.FC<IProps> = ({ id, visible, onOk, onCancel }) => {
     getBlogInfo(id).then((res: any) => {
       if (res.status === 200) {
         const data = res.data.value;
-        console.log('data: ', data);
+        setDefaultContent(data.content || '');
         setBlog({
           id: data.id || 0,
           title: data.title || '',
@@ -118,7 +121,7 @@ const BlogModal: React.FC<IProps> = ({ id, visible, onOk, onCancel }) => {
               multiple
               options={tags}
               placeholder='tags'
-              defaultValue={blog?.tags?.map((tag) => tag.id)}
+              value={blog?.tags?.map((tag) => tag.id)}
               onChange={(value: any) => {
                 setBlog((prev: Blog | undefined) => {
                   if (!prev) return;
@@ -158,7 +161,7 @@ const BlogModal: React.FC<IProps> = ({ id, visible, onOk, onCancel }) => {
           </div>
           <div className='form-item form-item-content'>
             <MarkDownEditor
-              content={blog?.content}
+              defaultContent={defaultContent}
               onChange={(value: string | undefined) => {
                 setBlog((prev: Blog | undefined) => {
                   if (!prev) return;

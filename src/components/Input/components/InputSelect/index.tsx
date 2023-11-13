@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useMemo,
+} from 'react';
 import classNames from 'classnames';
 
 import './index.less';
@@ -8,7 +14,7 @@ interface IOptions {
 }
 interface IProps {
   multiple?: boolean;
-  defaultValue?: string | number | string[] | number[];
+  value?: string | number | string[] | number[];
   onChange?: (
     value: string | number | (string | undefined)[],
     options: IOptions[]
@@ -57,18 +63,27 @@ const insertDom = (
       delDom && delDom.remove();
       return;
     }
+    const selectedDoms = document.querySelectorAll("[id^='input-selected']");
+    selectedDoms.forEach((item: any) => {
+      const f = item.id.split('-')[2];
+      if (
+        (value as string[] | number[]).findIndex((item) => item == f) === -1
+      ) {
+        item.remove();
+      }
+    });
     (value as string[] | number[]).forEach((item: string | number) => {
       const label = findLabel(options, item);
       if (!label) return;
       const dom = document.getElementById(`input-selected-${item}`);
-      // const delDom = document.getElementById(`input-selected-${currentClick}`);
       if (!dom) {
         const newSpan = document.createElement('span');
         newSpan.className = 'input-select-wrapper-selected';
         newSpan.id = `input-selected-${item}`;
         label && (newSpan.textContent = label);
         wrapperRef.current.insertBefore(newSpan, inputRef.current);
-      } else if (delDom) {
+      }
+      if (delDom) {
         delDom.remove();
       }
     });
@@ -76,7 +91,7 @@ const insertDom = (
 };
 const InputSelect: React.FC<IProps> = ({
   multiple = false,
-  defaultValue,
+  value,
   onChange,
   className,
   options,
@@ -114,24 +129,22 @@ const InputSelect: React.FC<IProps> = ({
 
   const [searchState, setSearchState] = useState<string>('');
 
-  const handleClickOutside = (event: any) => {
+  const handleClickOutside = useCallback((event: any) => {
     if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
       setShowDrop(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
-  }, []);
+  }, [handleClickOutside]);
 
   useEffect(() => {
-    if (selectValue === undefined) {
-      setSelectValue(defaultValue);
-    }
-  }, [defaultValue, selectValue, options, multiple]);
+    setSelectValue(value);
+  }, [value]);
 
   useEffect(() => {
     insertDom(
@@ -158,6 +171,8 @@ const InputSelect: React.FC<IProps> = ({
     return className;
   };
 
+  const memoizedGetClassName = useMemo(() => getClassName, []);
+
   const dropDom = () => {
     if (!options || !options.length) {
       return <div className='select-dropdown-empty'>暂无数据</div>;
@@ -175,7 +190,7 @@ const InputSelect: React.FC<IProps> = ({
       <div
         className={classNames(
           'select-dropdown-item',
-          getClassName(selectValue, option.value)
+          memoizedGetClassName(selectValue, option.value)
         )}
         key={option.value}
         onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
