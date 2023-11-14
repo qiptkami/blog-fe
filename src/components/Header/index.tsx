@@ -11,7 +11,6 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     const res = location.pathname.split('/');
-    console.log('res: ', res);
     setActiveUrl(`/${res[res.length - 1]}`);
   }, [location]);
 

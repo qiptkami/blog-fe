@@ -97,9 +97,9 @@ const InputSelect: React.FC<IProps> = ({
   options,
   placeholder,
 }) => {
-  const inputRef = useRef<any>();
-  const wrapperRef = useRef<any>();
-  const dropdownContentRef = useRef<any>();
+  const inputRef = useRef<HTMLInputElement>(null!);
+  const wrapperRef = useRef<HTMLDivElement>(null!);
+  const dropdownContentRef = useRef<HTMLDivElement>(null!);
   const [showDrop, setShowDrop] = useState<boolean>(false);
   const [currentClick, setCurrentClick] = useState<string | number | undefined>(
     undefined

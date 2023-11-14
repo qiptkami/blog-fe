@@ -21,31 +21,37 @@ const Modal: React.FC<IProps> = ({
 }) => {
   const [first, setFirst] = useState<boolean>(true);
 
-  const wrapRef = useRef<any>(null);
-  const modalRef = useRef<any>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (first && visible) {
-      const modalEle = modalRef.current;
+      const modalEle = modalRef.current!;
+      const wrapEle = wrapRef.current!;
+
       modalEle.classList.add('modal-enter');
-      wrapRef.current.style.display = 'block';
+      wrapEle.style.display = 'block';
       setTimeout(() => {
         modalEle.classList.remove('modal-enter');
       }, 300);
       setFirst(false);
     } else if (!first && visible) {
-      const modalEle = modalRef.current;
-      wrapRef.current.style.display = 'block';
+      const modalEle = modalRef.current!;
+      const wrapEle = wrapRef.current!;
+
+      wrapEle.style.display = 'block';
       modalEle.classList.add('modal-enter');
       setTimeout(() => {
         modalEle.classList.remove('modal-enter');
       }, 300);
     } else if (!visible && !first) {
-      const modalEle = modalRef.current;
+      const modalEle = modalRef.current!;
+      const wrapEle = wrapRef.current!;
+
       modalEle.classList.add('modal-leave');
       setTimeout(() => {
         modalEle.classList.remove('modal-leave');
-        wrapRef.current.style.display = 'none';
+        wrapEle.style.display = 'none';
       }, 300);
     }
   }, [first, visible]);

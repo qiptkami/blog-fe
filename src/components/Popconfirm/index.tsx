@@ -6,7 +6,7 @@ interface IProps {
   description?: string;
   onOk?: () => void;
   onCancel?: () => void;
-  children: any;
+  children: React.ReactNode;
 }
 
 const PopConfirm: React.FC<IProps> = ({

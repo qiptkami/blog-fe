@@ -20,8 +20,9 @@ interface Tag {
 interface User {
   id?: number;
   username: string;
-  password: string;
+  password?: string;
   email?: string;
+  sign?: string;
   avatar?: string; //头像
   createTime?: string;
   updateTime?: string;

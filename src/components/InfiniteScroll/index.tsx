@@ -10,9 +10,9 @@ interface Props {
 const InfiniteScroll: React.FC<Props> = ({ getData, render, msg }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
-  const container = useRef<any>();
+  const container = useRef<HTMLDivElement>(null!);
   const [page, setPage] = useState<number>(1);
-  const scrollFooter = useRef<any>(null);
+  const scrollFooter = useRef<HTMLDivElement>(null!);
 
   const loadMore = useCallback(async () => {
     try {

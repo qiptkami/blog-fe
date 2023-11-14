@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './index.less';
 
 interface IProps {
-  children: any;
+  children: React.ReactNode;
 }
 
 const MainLayout: React.FC<IProps> = ({ children }) => {

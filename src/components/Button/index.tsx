@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 import classNames from 'classnames';
 import Loading from '../Loading';
@@ -14,7 +14,7 @@ interface IProps {
   disabled?: boolean;
   loading?: boolean;
   buttonText?: string;
-  onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 const Button: React.FC<IProps> = ({
@@ -26,31 +26,32 @@ const Button: React.FC<IProps> = ({
   buttonText = 'default',
   onClick,
 }) => {
-  const clickRef = useRef<any>();
-  const loadingRef = useRef<any>();
+  const buttonRef = useRef<HTMLButtonElement>(null!);
+  const loadingRef = useRef<HTMLSpanElement>();
 
-  useEffect(() => {
-    const clickEle = clickRef.current;
-    clickEle.addEventListener('click', (event: PointerEvent) => {
+  const rippleAnimation = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      const button = buttonRef.current;
       const rippleEle = document.createElement('span');
-      const x = event.clientX - clickEle.getBoundingClientRect().x;
-      const y = event.clientY - clickEle.getBoundingClientRect().y;
+      const x = event.clientX - button.getBoundingClientRect().x;
+      const y = event.clientY - button.getBoundingClientRect().y;
       rippleEle.style.left = `${x}px`;
       rippleEle.style.top = `${y}px`;
       rippleEle.classList.add('ripple');
-      clickEle.appendChild(rippleEle);
+      button.appendChild(rippleEle);
       rippleEle.addEventListener('animationend', () => {
-        clickEle.removeChild(rippleEle);
+        button.removeChild(rippleEle);
       });
-    });
-  }, []);
+    },
+    []
+  );
 
   useEffect(() => {
     if (loading) {
       const newContainer = document.createElement('span');
       loadingRef.current = newContainer;
       newContainer.classList.add('loading-wrap');
-      clickRef.current.appendChild(newContainer);
+      buttonRef.current!.appendChild(newContainer);
 
       const root = createRoot(newContainer);
       root.render(<Loading size={1} />);
@@ -68,7 +69,7 @@ const Button: React.FC<IProps> = ({
 
   return (
     <button
-      ref={clickRef}
+      ref={buttonRef}
       style={style}
       className={classNames(
         `button-${size}`,
@@ -77,7 +78,10 @@ const Button: React.FC<IProps> = ({
         className
       )}
       disabled={disabled}
-      onClick={onClick}
+      onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        rippleAnimation(e);
+        onClick?.(e);
+      }}
     >
       {buttonText}
     </button>

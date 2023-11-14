@@ -10,7 +10,7 @@ interface IProps {
 }
 
 const Editor: React.FC<IProps> = ({ defaultContent, onChange, className }) => {
-  const inputRef = useRef<any>();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     createEditor((value: string) => {

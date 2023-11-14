@@ -1,22 +1,30 @@
 import React, { useState, useEffect } from 'react';
+import { getUserInfo } from '../../../../services/userService';
+import { User } from '../../../../typings/index';
+
 import './index.less';
 
 const UserInfo: React.FC = () => {
-  const [userInfo, setUserInfo] = useState<any>({});
+  const [userInfo, setUserInfo] = useState<User>();
 
   const handleClick = (id: number) => {};
 
   useEffect(() => {
-    getUserInfo();
+    getUserInfo(1).then((res: any) => {
+      if (res.status === 200) {
+        const user = res.data.value;
+        console.log('user: ', user);
+        setUserInfo({
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          sign: user.sign,
+          avatar: user.avatar,
+        });
+      }
+    });
   }, []);
 
-  const getUserInfo = () => {
-    setUserInfo({
-      avatar: 'https://i.loli.net/2021/09/22/Sy8wbjzfPk4hpeG.jpg',
-      username: 'qiptkami',
-      sign: '这个人很懒，什么都没有留下',
-    });
-  };
   return JSON.stringify(userInfo) === '{}' ? null : (
     <div className='user-info'>
       <div className='user-info-avatar'>
@@ -24,11 +32,11 @@ const UserInfo: React.FC = () => {
           alt='user avatar'
           className='user-info-avatar-img'
           style={{ height: '100%', width: '100%' }}
-          src={userInfo.avatar}
+          src={userInfo?.avatar}
         />
       </div>
-      <div className='user-info-username'>{userInfo.username}</div>
-      <div className='user-info-sign'>{userInfo.sign}</div>
+      <div className='user-info-username'>{userInfo?.username}</div>
+      <div className='user-info-sign'>{userInfo?.sign}</div>
     </div>
   );
 };

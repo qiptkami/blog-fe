@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getBlogsList } from '../../../../services/blogService';
 import MyPagination from '../../../../components/MyPagination';
+import { Blog } from '../../../../typings/index';
 import BlogItem from './BlogItem';
 import './index.less';
 
@@ -10,7 +11,7 @@ const BlogList: React.FC = () => {
   const [total, setTotal] = useState<number>(0); //数据总量
   const [page, setPage] = useState<number>(1); //当前页数
   const [size, setSize] = useState<number>(5); //页面大小
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<Blog[]>([]);
 
   // useEffect(() => {
   //   if (location.state) {
@@ -34,7 +35,7 @@ const BlogList: React.FC = () => {
   };
 
   const blogs = data.length
-    ? data.map((item: any) => {
+    ? data.map((item: Blog) => {
         return <BlogItem key={item.id} blog={item} />;
       })
     : // <div className='loading-animation'>  </div>

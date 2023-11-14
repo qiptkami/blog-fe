@@ -18,7 +18,7 @@ const MarkDown2Html: React.FC<IProps> = ({ content }) => {
   const [markdownContent, setMarkdownContent] =
     useState<string>('加载中。。。请稍后'); //html内容
   const [tocNodes, setTocNodes] = useState<TreeNode[]>([]);
-  const blogBody = useRef<any>();
+  const blogBody = useRef<HTMLDivElement>(null!);
   const [checkedTitle, setCheckedTitle] = useState<string>('');
 
   marked.setOptions({

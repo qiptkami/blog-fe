@@ -1,7 +1,8 @@
-import classNames from 'classnames';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../../../services/loginService';
+import classNames from 'classnames';
+
 import './index.less';
 
 const Login: React.FC = () => {
@@ -32,7 +33,6 @@ const Login: React.FC = () => {
           setErrMsg(res.data.message);
           return;
         }
-        console.log(user);
 
         //存储token
         localStorage.setItem('userInfo', JSON.stringify(user));

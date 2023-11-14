@@ -1,7 +1,7 @@
 import { _get, _post } from '../index';
 import { Comment } from '../../typings/index';
 
-const baseUrl = '/comments';
+const baseUrl = '/comment';
 
 export const getCommentInfo = (id: number) => _get(baseUrl + `/${id}`);
 

@@ -1,11 +1,16 @@
 import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
 import './index.less';
+import { useEffect, useState } from 'react';
 
-const titles = [
+interface IMenu {
+  title: string;
+  icon: string;
+}
+
+const menus: IMenu[] = [
   { title: 'blogs', icon: '&#xe7de;' },
   { title: 'tags', icon: '&#xe87c;' },
-  { title: 'user', icon: '&#xe6b5;' },
   { title: 'history', icon: '&#xe674;' },
 ];
 
@@ -15,40 +20,50 @@ interface IProps {
 
 const AdminSider: React.FC<IProps> = ({ activeUrl }) => {
   const navigate = useNavigate();
+  const [userInfo, serUserInfo] = useState<any>({});
+
+  useEffect(() => {
+    const user = localStorage.getItem('userInfo');
+    if (!user) {
+      navigate('/admin/login');
+      return;
+    }
+    serUserInfo(JSON.parse(user));
+  }, []);
 
   const handleClick = (c: string) => {
     navigate(`/admin/${c}`);
   };
 
-  const items = titles.map((item: any, index: number) => (
+  const items = menus.map((menu: IMenu, index: number) => (
     <div
       className='sider-item'
       key={index}
-      onClick={() => handleClick(item.title)}
+      onClick={() => handleClick(menu.title)}
     >
       <div
         className={classNames(
           'sider-item-wrapper',
-          activeUrl === item.title ? 'sider-item-wrapper-checked' : ''
+          activeUrl === menu.title ? 'sider-item-wrapper-checked' : ''
         )}
       >
         <div
           className={classNames(
             'sider-item-icon',
-            activeUrl === item.title ? 'sider-item-icon-checked' : ''
+            activeUrl === menu.title ? 'sider-item-icon-checked' : ''
           )}
         >
           <i
             className={classNames(
               'sider-icon',
               'iconfont',
-              activeUrl === item.title ? 'icon-checked' : ''
+              activeUrl === menu.title ? 'icon-checked' : ''
             )}
           >
-            <span dangerouslySetInnerHTML={{ __html: item.icon }}></span>
+            <span dangerouslySetInnerHTML={{ __html: menu.icon }}></span>
           </i>
         </div>
-        <div className='side-item-content'>{item.title}</div>
+        <div className='side-item-content'>{menu.title}</div>
       </div>
     </div>
   ));
@@ -58,6 +73,11 @@ const AdminSider: React.FC<IProps> = ({ activeUrl }) => {
       <div className='sider-title'>喜多喜多</div>
       <div className='sider-line' />
       {items}
+
+      <div className='sider-user'>
+        <img className='sider-user-avatar' src={userInfo?.avatar} alt='' />
+        <span className='sider-user-name'>{userInfo?.username}</span>
+      </div>
     </div>
   );
 };

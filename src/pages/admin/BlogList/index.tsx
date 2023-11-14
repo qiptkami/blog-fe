@@ -148,7 +148,7 @@ const BlogList: React.FC<IProps> = () => {
   };
 
   return (
-    <div className='blog-admin-container'>
+    <div className='admin-blog-container'>
       <div className='blog-table'>
         <MyTable
           total={total}

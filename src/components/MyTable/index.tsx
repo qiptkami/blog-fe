@@ -33,9 +33,9 @@ const MyTable: React.FC<IProps> = memo(
     onSubmit,
     TopRender,
   }) => {
-    const tableRef = useRef<any>(null);
-    const blurRef = useRef<any>(null);
-    const loadingRef = useRef<any>(null);
+    const tableRef = useRef<HTMLTableElement>(null);
+    const blurRef = useRef<HTMLDivElement>(null!);
+    const loadingRef = useRef<HTMLDivElement>(null!);
 
     const [baseColumns, setBaseColumns] = useState<IColumn[]>([]);
     useEffect(() => {

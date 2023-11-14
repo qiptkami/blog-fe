@@ -26,6 +26,7 @@ const BlogModal: React.FC<IProps> = ({ id, visible, onOk, onCancel }) => {
   const [defaultContent, setDefaultContent] = useState<string>('');
 
   useEffect(() => {
+    if (!visible) return;
     getAllTags();
     if (id !== -1) {
       getBlog(id || 0);
@@ -43,7 +44,7 @@ const BlogModal: React.FC<IProps> = ({ id, visible, onOk, onCancel }) => {
         user: JSON.parse(userInfo),
       });
     }
-  }, [id]);
+  }, [id, visible]);
 
   const getBlog = (id: number) => {
     getBlogInfo(id).then((res: any) => {
