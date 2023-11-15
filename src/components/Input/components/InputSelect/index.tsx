@@ -43,19 +43,25 @@ const insertDom = (
   if (!options) return;
   //考虑单选
   if (!multiple) {
-    if (!value) return;
+    if (!value) {
+      if (wrapperRef.firstChild.className === 'input-select-wrapper-selected') {
+        wrapperRef.firstChild.remove();
+        return;
+      }
+      return;
+    }
     //删除原先的dom
     const label = findLabel(options, value as string | number);
     if (!label) return;
-    if (wrapperRef.current.firstChild === inputRef.current) {
+    if (wrapperRef.firstChild === inputRef) {
       //没有选中任何
       const newSpan = document.createElement('span');
       newSpan.className = 'input-select-wrapper-selected';
       label && (newSpan.textContent = label);
-      wrapperRef.current.insertBefore(newSpan, inputRef.current);
+      wrapperRef.insertBefore(newSpan, inputRef);
     } else {
       //替换
-      wrapperRef.current.firstChild.textContent = label;
+      wrapperRef.firstChild.textContent = label;
     }
   } else {
     const delDom = document.getElementById(`input-selected-${currentClick}`);
@@ -81,7 +87,7 @@ const insertDom = (
         newSpan.className = 'input-select-wrapper-selected';
         newSpan.id = `input-selected-${item}`;
         label && (newSpan.textContent = label);
-        wrapperRef.current.insertBefore(newSpan, inputRef.current);
+        wrapperRef.insertBefore(newSpan, inputRef);
       }
       if (delDom) {
         delDom.remove();
@@ -101,6 +107,7 @@ const InputSelect: React.FC<IProps> = ({
   const wrapperRef = useRef<HTMLDivElement>(null!);
   const dropdownContentRef = useRef<HTMLDivElement>(null!);
   const [showDrop, setShowDrop] = useState<boolean>(false);
+  const [hover, setHover] = useState<boolean>(false);
   const [currentClick, setCurrentClick] = useState<string | number | undefined>(
     undefined
   );
@@ -149,8 +156,8 @@ const InputSelect: React.FC<IProps> = ({
   useEffect(() => {
     insertDom(
       multiple,
-      wrapperRef,
-      inputRef,
+      wrapperRef.current,
+      inputRef.current,
       options,
       selectValue,
       currentClick
@@ -232,6 +239,12 @@ const InputSelect: React.FC<IProps> = ({
         setShowDrop((prev) => !prev);
         inputRef.current.focus();
       }}
+      onMouseEnter={() => {
+        setHover(true);
+      }}
+      onMouseLeave={() => {
+        setHover(false);
+      }}
     >
       <input
         ref={inputRef}
@@ -275,10 +288,24 @@ const InputSelect: React.FC<IProps> = ({
           'drop-icon',
           showDrop && 'icon-reverse'
         )}
+        style={{ opacity: !multiple && selectValue && hover ? 0 : 1 }}
       >
         &#xe6b9;
       </i>
-      {/* <i className={classNames('iconfont', 'drop-icon')}>&#xe670;</i> */}
+      {
+        <i
+          className={classNames('iconfont', 'drop-icon')}
+          style={{
+            opacity: !multiple && selectValue && hover ? 1 : 0,
+          }}
+          onClick={(e) => {
+            e.stopPropagation();
+            setSelectValue('');
+          }}
+        >
+          &#xe670;
+        </i>
+      }
     </div>
   );
 };
