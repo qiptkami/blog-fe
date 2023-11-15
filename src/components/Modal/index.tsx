@@ -78,13 +78,13 @@ const Modal: React.FC<IProps> = ({
         <div className='modal-body'>{children}</div>
         <div className='modal-footer'>
           <Button
-            buttonText='取消'
+            text='取消'
             onClick={() => {
               onCancel?.();
             }}
           />
           <Button
-            buttonText='确认'
+            text='确认'
             style={{ marginLeft: '12px' }}
             onClick={() => {
               onOk?.();

@@ -103,7 +103,13 @@ const BlogModal: React.FC<IProps> = ({ id, visible, onOk, onCancel }) => {
   };
 
   return (
-    <Modal visible={visible} onOk={submit} onCancel={onCancel} width={725}>
+    <Modal
+      title='blog'
+      visible={visible}
+      onOk={submit}
+      onCancel={onCancel}
+      width={725}
+    >
       <div className='blog-editor-container'>
         <form>
           <div className='form-item form-item-title'>

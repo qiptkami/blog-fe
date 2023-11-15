@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import moment from 'moment';
 import React, { useState } from 'react';
 import MyTable from '../../../components/MyTable';
-import PopConfirm from '../../../components/Popconfirm';
+import PopConfirm from '../../../components/PopConfirm';
 import Button from '../../../components/Button';
 import BlogModal from '../BlogModal';
 import { delBlog, getBlogsList } from '../../../services/blogService';
@@ -26,13 +26,11 @@ const BlogList: React.FC<IProps> = () => {
   const handleOk = (id: number) => {
     delBlog(id);
     setPage(1);
-    setSize(5);
     getData({
       page: 1,
       size: size,
     });
   };
-  const handelCancel = () => {};
 
   const columns = [
     {
@@ -103,7 +101,6 @@ const BlogList: React.FC<IProps> = () => {
             onOk={() => {
               handleOk(_.id);
             }}
-            onCancel={handelCancel}
           >
             <i className={classNames('iconfont', 'icon-del')} title='删除'>
               &#xe7c3;
@@ -169,7 +166,8 @@ const BlogList: React.FC<IProps> = () => {
           }}
           TopRender={
             <Button
-              buttonText='添加'
+              text='添加'
+              disabled={loading}
               size='default'
               onClick={() => {
                 setEditId(-1);

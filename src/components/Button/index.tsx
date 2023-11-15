@@ -13,7 +13,7 @@ interface IProps {
   style?: React.CSSProperties;
   disabled?: boolean;
   loading?: boolean;
-  buttonText?: string;
+  text?: string;
   onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
@@ -23,7 +23,7 @@ const Button: React.FC<IProps> = ({
   style,
   disabled = false,
   loading,
-  buttonText = 'default',
+  text = 'default',
   onClick,
 }) => {
   const buttonRef = useRef<HTMLButtonElement>(null!);
@@ -83,7 +83,7 @@ const Button: React.FC<IProps> = ({
         onClick?.(e);
       }}
     >
-      {buttonText}
+      {text}
     </button>
   );
 };

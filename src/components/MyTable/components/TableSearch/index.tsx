@@ -61,13 +61,19 @@ const TableSearch: React.FC<IProps> = memo(({ columns, onSubmit }) => {
   });
   return (
     <div className='table-search'>
-      {searchDom}
-      <Button
-        buttonText='搜索'
-        onClick={() => {
-          onSubmit?.(inputValues);
-        }}
-      />
+      {searchMap.length === 0 ? (
+        <></>
+      ) : (
+        <>
+          {searchDom}
+          <Button
+            text='搜索'
+            onClick={() => {
+              onSubmit?.(inputValues);
+            }}
+          />
+        </>
+      )}
     </div>
   );
 });

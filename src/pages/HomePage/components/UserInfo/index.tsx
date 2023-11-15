@@ -13,7 +13,6 @@ const UserInfo: React.FC = () => {
     getUserInfo(1).then((res: any) => {
       if (res.status === 200) {
         const user = res.data.value;
-        console.log('user: ', user);
         setUserInfo({
           id: user.id,
           username: user.username,
