@@ -31,51 +31,49 @@ const Archives: React.FC = () => {
     // });
   };
 
-  const archives = () => (
-    <div className='archives-body'>
-      <li className='archives-item'>
-        <div className='archives-timeline'>
-          <div className='archives-timeline-node' />
-          <div className='archives-timeline-line' />
-        </div>
-        <div className='archives-item-info'>
-          <div className='archives-item-content'>共计 {total} 篇文章</div>
-          <div className='archives-item-timestamp' />
-        </div>
-      </li>
-      {list.map((blog: Blog) => (
-        <li className='archives-item' key={blog.id}>
-          <div className='archives-timeline'>
-            <div className='archives-timeline-node' />
-            <div className='archives-timeline-line' />
-          </div>
-          <div className='archives-item-info'>
-            <div className='archives-item-content'>
-              <div
-                className='archives-item-content'
-                onClick={() => handleClickBlog(blog.id)}
-              >
-                {blog.title}
-              </div>
-              <span
-                className='archives-item-tag'
-                // onClick={() => handleClickTag(blog?.tag?.id ?? 0)}
-              >
-                {/* {blog?.tag?.name} */}
-              </span>
-            </div>
-            <div className='archives-item-timestamp'>
-              {moment(blog.createTime).format('YYYY-MM-DD HH:mm:ss')}
-            </div>
-          </div>
-        </li>
-      ))}
-    </div>
-  );
-
   return (
     <ul className='archives-container'>
-      <InfiniteScroll getData={getData} render={archives} msg={msg} />
+      <InfiniteScroll next={getData} msg={msg}>
+        <div className='archives-body'>
+          <li className='archives-item'>
+            <div className='archives-timeline'>
+              <div className='archives-timeline-node' />
+              <div className='archives-timeline-line' />
+            </div>
+            <div className='archives-item-info'>
+              <div className='archives-item-content'>共计 {total} 篇文章</div>
+              <div className='archives-item-timestamp' />
+            </div>
+          </li>
+          {list.map((blog: Blog) => (
+            <li className='archives-item' key={blog.id}>
+              <div className='archives-timeline'>
+                <div className='archives-timeline-node' />
+                <div className='archives-timeline-line' />
+              </div>
+              <div className='archives-item-info'>
+                <div className='archives-item-content'>
+                  <div
+                    className='archives-item-content'
+                    onClick={() => handleClickBlog(blog.id)}
+                  >
+                    {blog.title}
+                  </div>
+                  <span
+                    className='archives-item-tag'
+                    // onClick={() => handleClickTag(blog?.tag?.id ?? 0)}
+                  >
+                    {/* {blog?.tag?.name} */}
+                  </span>
+                </div>
+                <div className='archives-item-timestamp'>
+                  {moment(blog.createTime).format('YYYY-MM-DD HH:mm:ss')}
+                </div>
+              </div>
+            </li>
+          ))}
+        </div>
+      </InfiniteScroll>
     </ul>
   );
 };

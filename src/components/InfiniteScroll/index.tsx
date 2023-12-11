@@ -1,40 +1,32 @@
-import './index.less';
 import React, { useCallback, useRef, useState, useEffect } from 'react';
+import Loading from '../Loading';
+
+import './index.less';
 
 interface Props {
-  getData: (param?: any) => void;
-  render: any;
-  msg: string;
+  next: (param?: any) => any;
+  children?: React.ReactNode;
+  hasMore?: boolean;
+  msg?: string;
 }
 
-const InfiniteScroll: React.FC<Props> = ({ getData, render, msg }) => {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<boolean>(false);
-  const container = useRef<HTMLDivElement>(null!);
-  const [page, setPage] = useState<number>(1);
-  const scrollFooter = useRef<HTMLDivElement>(null!);
+const InfiniteScroll: React.FC<Props> = ({
+  next,
+  children,
+  hasMore,
+  msg = '你已经到达世界的尽头',
+}) => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const container = useRef<HTMLDivElement>(null);
+  const scrollFooter = useRef<HTMLDivElement>(null);
 
   const loadMore = useCallback(async () => {
-    try {
-      await setLoading(true);
-      await setError(false);
-      await getData(page);
-      setLoading(false);
-    } catch (err) {
-      setError(true);
-    }
-  }, [page, getData]);
+    if (!hasMore || loading) return;
+    setLoading(true);
+    await next();
 
-  const handleObserver = useCallback((entries: any) => {
-    const target = entries[0];
-    if (target.isIntersecting) {
-      setPage((prev) => prev + 1);
-    }
-  }, []);
-
-  useEffect(() => {
-    loadMore();
-  }, [loadMore]);
+    setLoading(false);
+  }, [hasMore, loading, next]);
 
   useEffect(() => {
     const option = {
@@ -42,17 +34,35 @@ const InfiniteScroll: React.FC<Props> = ({ getData, render, msg }) => {
       rootMargin: '0px',
       threshold: 0,
     };
-    const observer = new IntersectionObserver(handleObserver, option);
-    if (scrollFooter.current) observer.observe(scrollFooter.current);
-  }, [handleObserver]);
+
+    const currentFooter = scrollFooter.current;
+
+    const observer = new IntersectionObserver(async (entries) => {
+      const target = entries[0];
+      if (target.isIntersecting) {
+        loadMore();
+      }
+    }, option);
+
+    if (currentFooter) observer.observe(currentFooter);
+
+    return () => {
+      if (currentFooter) observer.disconnect();
+    };
+  }, [loadMore]);
 
   return (
     <>
       <div ref={container} className='infinite-scroll-container'>
-        {render()}
-        {loading && <p>Loading...</p>}
-        {error && <p>Error!</p>}
-        <span>{msg}</span>
+        {children}
+        {loading && (
+          <div className='infinite-scroll-center'>
+            <Loading size={2} />
+          </div>
+        )}
+        {!loading && !hasMore && (
+          <p className='infinite-scroll-center'>{msg}</p>
+        )}
       </div>
       <div ref={scrollFooter} className='infinite-scroll-footer' />
     </>
