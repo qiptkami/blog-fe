@@ -33,33 +33,25 @@ const ReplyList: React.FC<IProps> = ({
   const [rid, setRid] = useState<number>();
   const [isReply, setIsReply] = useState<boolean>(false);
   const [isReplySubmit, setIsReplySubmit] = useState<boolean>(true);
-  const [isHover, setIsHover] = useState<boolean>(false);
-  /*
-  1.如果回复评论发布，就要关闭对应的评论input（v）
-  2.如果点开了一个input，再去点当前这个回复，就会关闭对应input （v）
-  3.如果点开了一个回复input，再去点击另一个，当前评论框关闭，另一个打开 （x）(同级不能实现)
-   */
+
   useEffect(() => {
     setRid(replyId);
   }, [replyId, rid]);
 
   const list = replyList?.map((reply: Comment) => {
     return (
-      <div className='comment-body' key={reply.id}>
-        <div
-          onMouseEnter={() => setIsHover(true)}
-          onMouseLeave={() => setIsHover(false)}
-          className={
-            reply.parentComment
-              ? classNames('comment-content', 'comment-content-reply')
-              : 'comment-content'
-          }
-        >
-          <img className='comment-avatar' alt='' src={reply.avatar} />
-          <div className='comment-header'>
-            <div className='comment-user'>
+      <div key={reply.id}>
+        <div className='comment-wrap'>
+          <div
+            className={classNames(
+              'comment-content',
+              reply.parentComment ? 'comment-content-reply' : ''
+            )}
+          >
+            <img className='comment-avatar' alt='' src={reply.avatar} />
+            <div className='comment-main'>
               <div className='comment-user-meta'>
-                <span className='comment-nickname'>{reply.nickname}</span>
+                <span className='comment-nickname'>{reply.nickname} </span>
                 {reply.isAdminComment && (
                   <div className='comment-author'>(作者)</div>
                 )}
@@ -70,9 +62,13 @@ const ReplyList: React.FC<IProps> = ({
                   </span>
                 )}
               </div>
-              {isHover && (
+              <div className='comment-text'>{reply.content}</div>
+              <div className='comment-info'>
+                <div className='comment-date'>
+                  {moment(reply.createTime).format('YYYY-MM-DD HH:mm:ss')}
+                </div>
                 <div
-                  className='comment-action'
+                  className='comment-action-reply'
                   onClick={() => {
                     getReplyParent(reply?.id ?? 0);
                     if (rid === reply?.id) {
@@ -86,23 +82,25 @@ const ReplyList: React.FC<IProps> = ({
                     }
                   }}
                 >
-                  <div className='comment-action-reply'>
-                    {isReplySubmit && isReply && rid === reply?.id
-                      ? '取消回复'
-                      : '回复'}
-                  </div>
+                  回复
                 </div>
-              )}
+              </div>
             </div>
-            <div className='comment-date'>
-              {moment(reply.createTime).format('YYYY-MM-DD HH:mm:ss')}
-            </div>
-            <div className='comment-text'>{reply.content}</div>
+          </div>
+          <div className='sub-comment'>
+            <ReplyList
+              bid={bid}
+              replyId={rid}
+              replyList={reply?.replyComment}
+              getReplyParent={getReplyParent}
+              uname={uname}
+              uEmail={uEmail}
+              handleSubmit={handleSubmit}
+            />
           </div>
         </div>
         {isReplySubmit && isReply && rid === reply?.id ? (
           <CommentInput
-            isReply
             parent={reply}
             uname={uname}
             uEmail={uEmail}
@@ -117,15 +115,6 @@ const ReplyList: React.FC<IProps> = ({
             }}
           />
         ) : null}
-        <ReplyList
-          bid={bid}
-          replyId={rid}
-          replyList={reply?.replyComment}
-          getReplyParent={getReplyParent}
-          uname={uname}
-          uEmail={uEmail}
-          handleSubmit={handleSubmit}
-        />
       </div>
     );
   });

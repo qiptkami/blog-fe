@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Comment } from '../../../../typings/index';
 import ReplyList from './ReplyList';
-import './index.less';
 import CommentInput from './CommentInput';
 import classNames from 'classnames';
+import './index.less';
 
 interface IProps {
   bid: number;
@@ -60,13 +60,10 @@ const CommentList: React.FC<IProps> = ({ bid, list, handleSubmit }) => {
   return (
     <div className='comment-container'>
       <div className='comment-title'>
-        <i className={classNames('iconfont', 'icon-comments')}>&#xe8e8;</i>
         评论
+        <span className='comment-num'> {list?.length || 0}</span>
       </div>
-      <div className='comment-list' />
       <CommentInput
-        isReply={false}
-        parent={replyParent}
         bid={bid}
         uname={adminName}
         uEmail={adminEmail}

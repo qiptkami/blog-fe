@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Comment } from '../../../../../typings/index';
 import classNames from 'classnames';
-import './index.less';
 import TextArea from '../../../../../components/Input/components/TextArea';
+import './index.less';
 
 interface IProps {
-  isReply: boolean;
   parent?: Comment;
   bid?: number;
   uname?: string;
@@ -19,13 +18,11 @@ interface IProps {
 }
 
 const CommentInput: React.FC<IProps> = ({
-  isReply,
   parent,
   uname,
   uEmail,
   handleSubmit,
 }) => {
-  // const [replyPid, setReplyPid] = useState<number>();
   const [content, setContent] = useState<string>('');
   const [nickname, setNickname] = useState<string>('');
   const [email, setEmail] = useState<string>('');
@@ -50,15 +47,10 @@ const CommentInput: React.FC<IProps> = ({
   };
 
   return (
-    <div
-      className={classNames(
-        'comment-input',
-        isReply ? 'comment-input-reply' : ''
-      )}
-    >
+    <div className={'comment-input'}>
       <TextArea
         value={content}
-        placeholder={isReply ? `回复@${parent?.nickname}：` : '写下你的评论...'}
+        placeholder={parent ? `回复@${parent?.nickname}：` : '写下你的评论...'}
         onChange={(e) => handleContentChange(e)}
       />
       <div className='comment-input-info'>
