@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState, useEffect } from 'react';
+import React, { useCallback, useRef, useEffect } from 'react';
 import Loading from '../Loading';
 
 import './index.less';
@@ -8,6 +8,7 @@ interface Props {
   children?: React.ReactNode;
   hasMore?: boolean;
   msg?: string;
+  loading?: boolean;
 }
 
 const InfiniteScroll: React.FC<Props> = ({
@@ -15,17 +16,14 @@ const InfiniteScroll: React.FC<Props> = ({
   children,
   hasMore,
   msg = '你已经到达世界的尽头',
+  loading,
 }) => {
-  const [loading, setLoading] = useState<boolean>(false);
   const container = useRef<HTMLDivElement>(null);
   const scrollFooter = useRef<HTMLDivElement>(null);
 
   const loadMore = useCallback(async () => {
     if (!hasMore || loading) return;
-    setLoading(true);
     await next();
-
-    setLoading(false);
   }, [hasMore, loading, next]);
 
   useEffect(() => {

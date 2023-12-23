@@ -1,30 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { getAllTag } from '../../services/tagService';
-import { Tag } from '../../typings/index';
+import React from 'react';
 import BlogList from './components/BlogList';
-import TagList from '../../components/TagList';
-import UserInfo from './components/UserInfo';
+
 import './index.less';
 
 const HomePage: React.FC = () => {
-  const [tagListData, setTagListData] = useState<Tag[]>([]);
-
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const getData = (params?: { id?: number; page: number; size: number }) => {
-    getTags();
-  };
-
-  const getTags = () => {
-    getAllTag().then((res: any) => {
-      if (res.status === 200) {
-        setTagListData(res.data.value);
-      }
-    });
-  };
-
   return (
     <>
       <div className='home-page-header' />
@@ -32,10 +11,7 @@ const HomePage: React.FC = () => {
         <div className='home-page-blog'>
           <BlogList />
         </div>
-        <div className='home-page-info'>
-          <UserInfo />
-          <TagList data={tagListData} />
-        </div>
+        <div className='home-page-info'>{/* <UserInfo /> */}</div>
       </div>
     </>
   );
