@@ -84,7 +84,7 @@ const MarkDown2Html: React.FC<IProps> = ({ content }) => {
   const Toc = tocNodes?.map(({ hash, tag }, index) => {
     const checked = checkedTitle === hash;
     return (
-      <div key={index} className='blog-table-item' id={`toc-${hash}`}>
+      <li key={index} className='blog-table-item' id={`toc-${hash}`}>
         <a
           key={index}
           className={`blog-table-item-${tag.substring(0, 2)}`}
@@ -99,7 +99,7 @@ const MarkDown2Html: React.FC<IProps> = ({ content }) => {
             {hash}
           </span>
         </a>
-      </div>
+      </li>
     );
   });
 
@@ -121,7 +121,7 @@ const MarkDown2Html: React.FC<IProps> = ({ content }) => {
         ref={blogBody}
         dangerouslySetInnerHTML={{ __html: markdownContent }}
       />
-      <div className='blog-toc'>{Toc}</div>
+      <ul className='blog-toc'>{Toc}</ul>
     </div>
   );
 };

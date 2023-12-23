@@ -8,8 +8,8 @@ import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import { scrollToAnchor } from '../../utils/scrollToAnchor';
 import classNames from 'classnames';
-import './index.less';
 import LoadingAnimation from '../../components/LoadingAnimation';
+import './index.less';
 
 const BlogDetail: React.FC = () => {
   const { id } = useParams();
@@ -36,13 +36,13 @@ const BlogDetail: React.FC = () => {
     return tags?.map((tag: Tag) => {
       return (
         <div
-          className='blog-footer-tags-item'
+          className='blog-tags-item'
           key={tag.id}
           onClick={() => {
             scrollToAnchor(location.pathname, '/tags', tag?.name, navigate);
           }}
         >
-          <span className='blog-footer-tags-item-info'>{tag?.name + ' '}</span>
+          <span className='blog-tags-item-info'>{tag?.name + ' '}</span>
         </div>
       );
     });
@@ -91,34 +91,34 @@ const BlogDetail: React.FC = () => {
         <LoadingAnimation />
       ) : (
         <div className='blog-container'>
-          <div className='blog-header'>
-            <div className='blog-header-title'>{blog?.title}</div>
-            <div className='blog-header-info'>
-              <div className='blog-header-info-time'>
-                <i className={classNames('iconfont', 'icon-clock')}>&#xe62a;</i>
-                {moment(blog?.createTime).format('YYYY-MM-DD HH:mm:ss')}
-              </div>
-              <div className='blog-header-info-comment'>
-                <i className={classNames('', 'icon-comment')}>&#xe689;</i>
-                {commentList?.length}
-              </div>
-              <div className='blog-header-info-reader'>
-                <i className={classNames('iconfont', 'icon-pen')}>&#xe795;</i>
-                本文章共 1055 字
-                <i className={classNames('iconfont', 'icon-hourglass')}>
-                  &#xe62e;
-                </i>
-                预计阅读时间 3 分钟
-              </div>
-            </div>
-
-            {/* <img className='blog-picture' src={blog?.firstPicture} alt='' /> */}
-          </div>
           <div className='blog-main'>
+            <div className='blog-header'>
+              <div className='blog-header-title'>{blog?.title}</div>
+              <div className='blog-header-info'>
+                <div className='blog-header-info-time'>
+                  <i className={classNames('iconfont', 'icon-clock')}>
+                    &#xe62a;
+                  </i>
+                  {moment(blog?.createTime).format('YYYY-MM-DD HH:mm:ss')}
+                </div>
+                <div className='blog-header-info-comment'>
+                  <i className={classNames('', 'icon-comment')}>&#xe689;</i>
+                  {commentList?.length}
+                </div>
+                <div className='blog-header-info-reader'>
+                  <i className={classNames('iconfont', 'icon-pen')}>&#xe795;</i>
+                  本文章共 1055 字
+                  <i className={classNames('iconfont', 'icon-hourglass')}>
+                    &#xe62e;
+                  </i>
+                  预计阅读时间 3 分钟
+                </div>
+              </div>
+
+              {/* <img className='blog-picture' src={blog?.firstPicture} alt='' /> */}
+            </div>
             <MarkDown2Html content={blog?.content} />
-          </div>
-          <div className='blog-footer'>
-            <div className='blog-footer-tags'>
+            <div className='blog-tags'>
               <i className={classNames('iconfont', 'icon-tags')}>&#xe87c;</i>
               {tags(blog?.tags)}
             </div>
