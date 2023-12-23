@@ -60,6 +60,7 @@ const CommentInput: React.FC<IProps> = ({
             className='comment-input-name-content'
             type='text'
             name='nickname'
+            autoComplete='off'
             placeholder='昵称'
             value={nickname}
             onChange={(e) => handleNameChange(e)}
@@ -71,6 +72,7 @@ const CommentInput: React.FC<IProps> = ({
             className='comment-input-email-content'
             type='text'
             name='email'
+            autoComplete='off'
             placeholder='邮箱'
             value={email}
             onChange={(e) => handleEmailChange(e)}

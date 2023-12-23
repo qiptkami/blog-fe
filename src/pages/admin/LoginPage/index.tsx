@@ -60,6 +60,7 @@ const Login: React.FC = () => {
               <input
                 id='username'
                 type='text'
+                autoComplete='off'
                 value={username}
                 placeholder='Type your username'
                 className='username-input-content'
@@ -80,6 +81,7 @@ const Login: React.FC = () => {
               <input
                 id='password'
                 type='password'
+                autoComplete='off'
                 value={password}
                 placeholder='Type your password'
                 className='password-input-content'

@@ -24,6 +24,7 @@ const TextArea: React.FC<IProps> = ({
         className='text-area-wrapper-content'
         name={name}
         value={value || ''}
+        autoComplete='off'
         placeholder={placeholder}
         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
           onChange?.(e.target.value);

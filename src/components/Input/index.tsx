@@ -20,6 +20,7 @@ const Input: React.FC<IProps> = ({
     <span className={classNames('input-wrapper', className)}>
       <input
         type='text'
+        autoComplete='off'
         placeholder={placeholder}
         value={value || ''}
         onInput={(e: React.FormEvent<HTMLInputElement>) => {
